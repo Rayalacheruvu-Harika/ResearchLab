@@ -3,6 +3,7 @@
 This project extracts and analyzes Generative AI policy guidelines from global universities.
 
 **#Setup Guide**
+
 **1. Create Virtual Environment**
 
 cd "C:\Users\harik\Documents\Research_Lab\LLM_Policy_Analysis"
@@ -29,21 +30,21 @@ pip install -r requirements.txt
 
 LLM_POLICY_ANALYSIS/
 │
-├── data/
-│   ├── raw_extracted_data.xlsx         # Automatically scraped
-│   ├── manual_corrected_data.xlsx      # Human-filled missing policies
-│   ├── merged_dataset.csv              # Combined dataset
-│   ├── final_clean_dataset.csv         # After text cleaning
+├──1. data/
+│   ├──1. raw_extracted_data.xlsx         # Automatically scraped
+│   ├──2. manual_corrected_data.xlsx      # Human-filled missing policies
+│   ├──3. merged_dataset.csv              # Combined dataset
+│   ├──4. final_clean_dataset.csv         # After text cleaning
 │
-├── extraction/
-│   └── extract_data.py             # Web scraping script
+├──2. extraction/
+│   └──1. extract_data.py             # Web scraping script
 │
-├── manual/
-│   └── merge_manual_data.py            # Insert manually corrected text
+├──3. manual/
+│   └──1. merge_manual_data.py            # Insert manually corrected text
 │
-├── cleaning/
-│   └── clean_data.py                   # Preprocessing & NLP cleaning
+├──4. cleaning/
+│   └──1. clean_data.py                   # Preprocessing & NLP cleaning
 │
 │
-├── README.md
-└── requirements.txt
+├──5. README.md
+└──6. requirements.txt
