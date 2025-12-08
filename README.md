@@ -30,21 +30,21 @@ pip install -r requirements.txt
 
 LLM_POLICY_ANALYSIS/
 │
-├──1. data/
-│   ├──1. raw_extracted_data.xlsx         # Automatically scraped
-│   ├──2. manual_corrected_data.xlsx      # Human-filled missing policies
-│   ├──3. merged_dataset.csv              # Combined dataset
-│   ├──4. final_clean_dataset.csv         # After text cleaning
+├── data/
+│   ├── raw_extracted_data.xlsx
+│   ├── manual_corrected_data.xlsx
+│   ├── merged_dataset.csv
+│   ├── final_clean_dataset.csv
 │
-├──2. extraction/
-│   └──1. extract_data.py             # Web scraping script
+├── extraction/
+│   └── extract_policies.py
 │
-├──3. manual/
-│   └──1. merge_manual_data.py            # Insert manually corrected text
+├── manual/
+│   └── merge_manual_data.py
 │
-├──4. cleaning/
-│   └──1. clean_data.py                   # Preprocessing & NLP cleaning
+├── cleaning/
+│   └── clean_data.py
 │
-│
-├──5. README.md
-└──6. requirements.txt
+├── README.md
+└── requirements.txt
+
