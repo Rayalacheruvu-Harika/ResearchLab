@@ -9,5 +9,7 @@ This project extracts and analyzes Generative AI policy guidelines from global u
 
 ## How to Run
 python extraction/extract_data.py
+
 python manual/merge_manual_data.py
+
 python cleaning/clean_data.py
