@@ -2,7 +2,7 @@
 
 This project extracts and analyzes Generative AI policy guidelines from global universities.
 
-**#Setup Guide**
+# Setup Guide
 
 **1. Create Virtual Environment**
 
