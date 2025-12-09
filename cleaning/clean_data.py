@@ -7,7 +7,7 @@ from nltk.stem import WordNetLemmatizer
 nltk.download("stopwords")
 nltk.download("wordnet")
 
-df = pd.read_excel("data/merged_dataset.xlsx")
+df = pd.read_csv("data/merged_dataset.csv")
 
 stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
@@ -28,4 +28,6 @@ ai_terms = ["ai", "artificial intelligence", "chatgpt", "llm", "genai", "machine
 df["ai_term_count"] = df["clean_text"].apply(lambda t: sum(t.count(a) for a in ai_terms))
 
 df.to_csv("data/final_clean_dataset.csv", index=False, encoding="utf-8")
+#df.to_excel("final.xlsx", index=False)
+#print(df)
 print("✔ Saved → data/final_clean_dataset.csv")
