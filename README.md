@@ -20,10 +20,12 @@ pip install -r requirements.txt
 1. Data extraction using Selenium + Trafilatura + PDFMiner
 2. Manual correction of protected/missing pages
 3. NLP-based cleaning and preprocessing
+4. NLP-based computational analysis - baseline Topic modeling using LDA 
 
 ## How to Run
 1. python extraction/extract_data.py
 2. python manual/merge_manual_data.py
 3. python cleaning/clean_data.py
+4. python analysis/topic_modelling.py
 
 
