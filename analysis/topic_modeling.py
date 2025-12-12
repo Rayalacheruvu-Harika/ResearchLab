@@ -9,7 +9,7 @@ from gensim.models import CoherenceModel
 from collections import defaultdict
 
 # 1. LOAD DATA
-df = pd.read_excel("./final.xlsx")
+df = pd.read_csv("../data/final_clean_dataset.csv")
 
 needed_cols = [
     "url",
