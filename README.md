@@ -21,11 +21,13 @@ pip install -r requirements.txt
 2. Manual correction of protected/missing pages
 3. NLP-based cleaning and preprocessing
 4. NLP-based computational analysis - baseline Topic modeling using LDA 
+5. NLP-based computational analysis - advanced Topic modeling using Bertopic
 
 ## How to Run
 1. python extraction/extract_data.py
 2. python manual/merge_manual_data.py
 3. python cleaning/clean_data.py
-4. python analysis/topic_modelling.py
+4. python analysis/topic_modeling.py or python analysis1/topic_modeling.py
+5. python analysis1/country_distribution.py
 
 
