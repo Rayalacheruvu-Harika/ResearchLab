@@ -7,9 +7,9 @@ from scipy.stats import chi2_contingency
 # ------------------------------
 # File paths (EDIT IF NEEDED)
 # ------------------------------
-CLEAN_DATA = "../data/final_clean_dataset.csv"
-TOPIC_DATA = "../data/topic_model_results.csv"
-LABELS_DATA = "../data/topic_labels.csv"
+CLEAN_DATA = "data/final_clean_dataset.csv"
+TOPIC_DATA = "data/bert_topic_model_results.csv"
+LABELS_DATA = "data/bert_topic_labels.csv"
 
 OUTPUT_DIR = "analysis_results"
 os.makedirs(OUTPUT_DIR, exist_ok=True)

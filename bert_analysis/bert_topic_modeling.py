@@ -10,9 +10,9 @@ import os
 # -----------------------------
 # Paths
 # -----------------------------
-INPUT_FILE = "../data/final_clean_dataset.csv"
-OUTPUT_TOPICS_FILE = "../data/topic_model_results.csv"
-OUTPUT_SUMMARY_FILE = "../data/topic_summary.csv"
+INPUT_FILE = "data/final_clean_dataset.csv"
+OUTPUT_TOPICS_FILE = "data/bert_topic_model_results.csv"
+OUTPUT_SUMMARY_FILE = "data/bert_topic_summary.csv"
 MODEL_SAVE_DIR = "models/bertopic_model"
 
 # -----------------------------
