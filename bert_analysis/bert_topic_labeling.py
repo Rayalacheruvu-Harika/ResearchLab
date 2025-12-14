@@ -16,8 +16,8 @@ from bertopic import BERTopic
 # Paths (EDIT IF NEEDED)
 # -----------------------------
 MODEL_PATH = "models/bertopic_model/bertopic_model.pkl"
-DATA_PATH = "../data/topic_model_results.csv"
-OUTPUT_PATH = "../data/topic_labels.csv"
+DATA_PATH = "data/bert_topic_model_results.csv"
+OUTPUT_PATH = "data/bert_topic_labels.csv"
 
 
 # ----------------------------------------
