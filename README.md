@@ -27,7 +27,9 @@ pip install -r requirements.txt
 1. python extraction/extract_data.py
 2. python manual/merge_manual_data.py
 3. python cleaning/clean_data.py
-4. python analysis/topic_modeling.py or python analysis1/topic_modeling.py
-5. python analysis1/country_distribution.py
+4. python lda_analysis/lda_topic_modeling.py
+5. python bert_analysis/bert_topic_modeling.py
+6. python bert_analysis/bert_topic_labeling.py
+7. python bert_analysis/country_distribution.py
 
 
