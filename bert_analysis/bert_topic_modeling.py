@@ -1,11 +1,14 @@
 # -----------------------------
-# Topic Modeling using BERTopic
+# Forced 6–7 Topic Modeling with BERTopic
 # -----------------------------
 
 import pandas as pd
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
+import hdbscan
+import umap
 import os
+import numpy as np
 
 # -----------------------------
 # Paths
@@ -16,80 +19,80 @@ OUTPUT_SUMMARY_FILE = "data/bert_topic_summary.csv"
 MODEL_SAVE_DIR = "models/bertopic_model"
 
 # -----------------------------
-# Load cleaned dataset
+# Load data
 # -----------------------------
 df = pd.read_csv(INPUT_FILE)
-
-# Use the cleaned text
 texts = df["clean_text"].astype(str).tolist()
-
-print(f"Loaded {len(texts)} documents for topic modeling.")
+print(f"Loaded {len(texts)} documents.")
 
 # -----------------------------
-# Sentence Embeddings Model
+# Embedding Model
 # -----------------------------
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # -----------------------------
-# Create BERTopic Model
+# CUSTOM UMAP + HDBSCAN → prevents collapsing topics
+# -----------------------------
+umap_model = umap.UMAP(
+    n_neighbors=15,
+    n_components=5,
+    min_dist=0.0,
+    metric="cosine"
+)
+
+hdbscan_model = hdbscan.HDBSCAN(
+    min_cluster_size=3,
+    min_samples=1,
+    metric="euclidean",
+    cluster_selection_method="eom",
+    prediction_data=True
+)
+
+# -----------------------------
+# CREATE BERTopic WITH FORCED 7 TOPICS
 # -----------------------------
 topic_model = BERTopic(
-    min_topic_size=3,
-    nr_topics="auto",
     embedding_model=embedding_model,
+    umap_model=umap_model,
+    hdbscan_model=hdbscan_model,
+    nr_topics=7,        # ⬅⬅⬅ FORCE EXACTLY 7 TOPICS
+    min_topic_size=3,
     verbose=True
 )
 
 # -----------------------------
-# Fit the model
+# Fit model
 # -----------------------------
 topics, probabilities = topic_model.fit_transform(texts)
 
-# Save results to dataframe
 df["topic"] = topics
-# ----------------------------------------------------
-# Safe probability extraction (fix for axis error)
-# ----------------------------------------------------
-try:
-    if probabilities is None:
-        df["topic_probability"] = 0.0
-    elif isinstance(probabilities, list):
-        df["topic_probability"] = probabilities
-    elif probabilities.ndim == 1:
-        df["topic_probability"] = probabilities
-    else:
-        df["topic_probability"] = probabilities.max(axis=1)
-except Exception as e:
-    print("Probability extraction failed:", e)
+if probabilities is None:
     df["topic_probability"] = 0.0
 
+else:
+    probabilities = np.array(probabilities)
 
-df.to_csv(OUTPUT_TOPICS_FILE, index=False, encoding="utf-8")
-print(f"Saved topic assignments → {OUTPUT_TOPICS_FILE}")
+    # Case 1: probabilities is 1D → already max probability
+    if probabilities.ndim == 1:
+        df["topic_probability"] = probabilities
+
+    # Case 2: probabilities is 2D → take max across topics
+    else:
+        df["topic_probability"] = probabilities.max(axis=1)
+
+df.to_csv(OUTPUT_TOPICS_FILE, index=False)
+print("Saved →", OUTPUT_TOPICS_FILE)
 
 # -----------------------------
-# Topic Summary Table
+# Save summary
 # -----------------------------
 topic_summary = topic_model.get_topic_info()
 topic_summary.to_csv(OUTPUT_SUMMARY_FILE, index=False)
-print(f"Saved topic summary → {OUTPUT_SUMMARY_FILE}")
+print("Saved summary →", OUTPUT_SUMMARY_FILE)
 
 # -----------------------------
-# Save Model
+# Save model
 # -----------------------------
-if not os.path.exists(MODEL_SAVE_DIR):
-    os.makedirs(MODEL_SAVE_DIR)
-# -----------------------------
-# Save Model Safely
-# -----------------------------
-import os
-
-if not os.path.exists(MODEL_SAVE_DIR):
-    os.makedirs(MODEL_SAVE_DIR)
-
-# Save the model inside the folder as a file
+os.makedirs(MODEL_SAVE_DIR, exist_ok=True)
 topic_model.save(f"{MODEL_SAVE_DIR}/bertopic_model.pkl")
-
-print(f"BERTopic model saved to → {MODEL_SAVE_DIR}")
-
-print("\nTopic Modeling Completed Successfully!")
+print("Model saved.")
