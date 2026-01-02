@@ -9,6 +9,7 @@ data/*.html
 analysis_results/
 models/
 logs/
+topic_cooccurence/
 
 # IDE / OS
 .vscode/
@@ -17,3 +18,5 @@ logs/
 
 # Secrets
 .env
+.venv311/
+.venv/
