@@ -3,8 +3,8 @@ from datetime import datetime
 import sys
 import os
 
-df = pd.read_csv("../data/raw_genai_data.csv")
-manual_df = pd.read_excel("../data/manual_corrected_data.xlsx") # Your file CELL 2
+df = pd.read_csv("data/raw_genai_data.csv")
+manual_df = pd.read_excel("data/manual_corrected_data.xlsx") # Your file CELL 2
 
 def detect_document_type(text):
     if "policy" in text.lower(): return "Policy"
@@ -56,5 +56,5 @@ for _, row in manual_df.iterrows():
 
 print(f"✔ Manually updated rows: {updated}")
 
-df.to_csv("../data/merged_dataset.csv", index=False, encoding="utf-8")
+df.to_csv("data/merged_dataset.csv", index=False, encoding="utf-8")
 print("📌 Saved → ../data/merged_dataset.csv")
