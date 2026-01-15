@@ -13,7 +13,7 @@ import os
 # Paths
 # -------------------------------------------------
 INPUT_FILE = "analysis_results/university_top_topics.csv"
-OUTPUT_DIR = "analysis_results"
+OUTPUT_DIR = "analysis_results/country"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # -------------------------------------------------

@@ -14,7 +14,7 @@ import os
 # -------------------------------------------------
 TOPIC_RESULTS = "data/bert_topic_model_results.csv"
 TOPIC_LABELS = "data/bert_topic_labels.csv"
-OUTPUT_DIR = "topic_cooccurence"
+OUTPUT_DIR = "analysis_results/topic_cooccurence"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # -------------------------------------------------
@@ -75,6 +75,8 @@ co_counts = (
     co_df.value_counts()
          .reset_index(name="count")
 )
+
+os.makedirs(os.path.dirname(OUTPUT_DIR), exist_ok=True)
 
 co_counts.to_csv(f"{OUTPUT_DIR}/topic_cooccurrence_pairs.csv", index=False)
 
