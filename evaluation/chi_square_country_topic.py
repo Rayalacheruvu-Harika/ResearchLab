@@ -11,7 +11,7 @@ import os
 # -------------------------------------------------
 TOPIC_RESULTS = "data/bert_topic_model_results.csv"
 TOPIC_LABELS = "data/bert_topic_labels.csv"
-OUTPUT_DIR = "analysis_results"
+OUTPUT_DIR = "analysis_results/chi_square"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # -------------------------------------------------
@@ -40,6 +40,7 @@ contingency = pd.crosstab(
     df["topic_name"]
 )
 
+os.makedirs(os.path.dirname(OUTPUT_DIR), exist_ok=True)
 contingency.to_csv(f"{OUTPUT_DIR}/chi_square_contingency_table.csv")
 
 # -------------------------------------------------

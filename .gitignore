@@ -6,6 +6,7 @@ __pycache__/
 data/*.csv
 data/*.xlsx
 data/*.html
+data/*.txt
 analysis_results/
 models/
 logs/
