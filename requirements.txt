@@ -17,3 +17,5 @@ sentence-transformers
 umap-learn==0.5.3
 matplotlib
 seaborn
+transformers
+tqdm
