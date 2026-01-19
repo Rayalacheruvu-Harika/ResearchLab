@@ -1,0 +1,71 @@
+# ResearchLab Configuration
+# This file contains all paths and settings for the project
+
+# Data paths
+data:
+  merged: "data/merged_dataset.csv"
+  clean: "data/final_clean_dataset.csv"
+  bert_results: "data/bert_topic_model_results.csv"
+  bert_summary: "data/bert_topic_summary.csv"
+  bert_labels: "data/bert_topic_labels.csv"
+  lda_results: "data/lda_topic_model_results.csv"
+  lda_summary: "data/lda_topic_summary.csv"
+  lda_topics: "data/lda_topics.txt"
+  lda_viz: "data/lda_visualization.html"
+
+# Directory paths
+paths:
+  models: "models/bertopic_model"
+  bertopic_model: "models/bertopic_model/bertopic_model.pkl"
+  analysis: "analysis_results"
+  logs: "logs"
+
+# Preprocessing settings
+preprocessing:
+  ai_terms:
+    - "ai"
+    - "artificial intelligence"
+    - "chatgpt"
+    - "llm"
+    - "genai"
+    - "machine learning"
+  negation_words:
+    - "not"
+    - "no"
+    - "cannot"
+    - "can't"
+    - "don't"
+    - "doesn't"
+    - "didn't"
+    - "shouldn't"
+    - "wouldn't"
+    - "won't"
+    - "haven't"
+    - "hasn't"
+    - "hadn't"
+    - "never"
+    - "neither"
+    - "nor"
+    - "none"
+    - "nobody"
+    - "nothing"
+    - "nowhere"
+    - "no one"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  file: "logs/research_lab.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# LDA settings
+lda:
+  num_topics: 6
+  passes: 20
+  random_state: 42
+
+# BERT settings
+bert:
+  model_name: "all-MiniLM-L6-v2"
+  num_topics: 7
+  min_topic_size: 3

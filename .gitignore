@@ -1,3 +1,23 @@
-.venv/
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated outputs
+data/*.csv
+data/*.xlsx
+data/*.html
+data/*.txt
+analysis_results/
+models/
+logs/
+topic_cooccurence/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets
+.env
 .venv311/
-analysis/venv_bertopic
+.venv/
