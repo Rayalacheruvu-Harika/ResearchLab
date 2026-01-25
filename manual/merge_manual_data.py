@@ -3,8 +3,17 @@ from datetime import datetime
 import sys
 import os
 
-df = pd.read_csv("../data/raw_genai_data.csv")
-manual_df = pd.read_excel("../data/manual_corrected_data.xlsx") # Your file CELL 2
+# Get the project root directory (parent of the script's parent directory)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)
+
+# Construct paths relative to project root
+raw_data_path = os.path.join(project_root, "data/raw_genai_data.csv")
+manual_data_path = os.path.join(project_root, "data/manual_corrected_data.xlsx")
+
+# Load the data
+df = pd.read_csv(raw_data_path)
+manual_df = pd.read_excel(manual_data_path)
 
 def detect_document_type(text):
     if "policy" in text.lower(): return "Policy"
@@ -56,5 +65,6 @@ for _, row in manual_df.iterrows():
 
 print(f"✔ Manually updated rows: {updated}")
 
-df.to_csv("../data/merged_dataset.csv", index=False, encoding="utf-8")
-print("📌 Saved → ../data/merged_dataset.csv")
+merged_dataset_path = os.path.join(project_root, "data/merged_dataset.csv")
+df.to_csv(merged_dataset_path, index=False, encoding="utf-8")
+print(f"📌 Saved → {merged_dataset_path}")
