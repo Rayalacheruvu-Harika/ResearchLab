@@ -38,8 +38,8 @@ pip install -r requirements.txt
 9. python bert_analysis/topic_cooccurence.py
 10. python bert_analysis/country_topic_analysis_all.py
 11. python bert_analysis/uni_multi_topic_profiling.py
-12. python framing_analysis\framing.py
-13. python framing_analysis\framing_interpret.py
-14. python evaluation\chi_square_country_topic.py
+12. python framing_analysis/framing.py
+13. python framing_analysis/framing_interpret.py
+14. python evaluation/chi_square_country_topic.py
 
 
