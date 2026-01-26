@@ -12,6 +12,10 @@ data:
   lda_summary: "data/lda_topic_summary.csv"
   lda_topics: "data/lda_topics.txt"
   lda_viz: "data/lda_visualization.html"
+  bertopic_model: "models/bertopic_model/bertopic_model.pkl"
+  lda_model: "lda_analysis/lda_model.gensim"
+
+
 
 # Directory paths
 paths:
@@ -69,3 +73,26 @@ bert:
   model_name: "all-MiniLM-L6-v2"
   num_topics: 7
   min_topic_size: 3
+
+# Evaluation Metrics Configuration
+evaluation_metrics:
+  enabled: true
+  
+  # ====== LDA OUTPUTS (7 METRICS) ======
+  chi_square_lda_output: 'analysis_results/lda_chi_square_results.txt'
+  coherence_lda_output: 'analysis_results/lda_coherence_scores.csv'
+  perplexity_lda_output: 'analysis_results/lda_perplexity_scores.txt'
+  topic_diversity_lda_output: 'analysis_results/lda_topic_diversity.csv'
+  silhouette_lda_output: 'analysis_results/lda_silhouette_scores.txt'
+  davies_bouldin_lda_output: 'analysis_results/lda_davies_bouldin_index.txt'
+  cosine_similarity_lda_output: 'analysis_results/lda_cosine_similarity.csv'
+  lda_report_output: 'analysis_results/lda_evaluation_report.json'
+  
+  # ====== BERT OUTPUTS (6 METRICS) ======
+  chi_square_bert_output: 'analysis_results/bert_chi_square_results.txt'
+  coherence_bert_output: 'analysis_results/bert_coherence_scores.csv'
+  topic_diversity_bert_output: 'analysis_results/bert_topic_diversity.csv'
+  silhouette_bert_output: 'analysis_results/bert_silhouette_scores.txt'
+  davies_bouldin_bert_output: 'analysis_results/bert_davies_bouldin_index.txt'
+  cosine_similarity_bert_output: 'analysis_results/bert_cosine_similarity.csv'
+  bert_report_output: 'analysis_results/bert_evaluation_report.json'
