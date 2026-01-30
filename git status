@@ -1,0 +1,150 @@
+[33mcommit bde42af4e3e26a09b1a875d2a71d293a6602f60d[m[33m ([m[1;36mHEAD -> [m[1;32mdashownsandbox[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/dash[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m, [m[1;32mdash[m[33m)[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 15 15:17:00 2025 +0100
+
+    Update README.md
+
+[33mcommit 7730e193f6d07b8389bb351cf37b5232960a38ca[m
+Merge: b8cf2ac 6c1abc6
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 15 15:15:07 2025 +0100
+
+    Merge pull request #4 from Rayalacheruvu-Harika/harika_analysis
+    
+    Bertopic changes
+
+[33mcommit 6c1abc6355b60899c970ea69c480ea1e07f3e7d2[m[33m ([m[1;31morigin/harika_analysis[m[33m)[m
+Author: Harika Rayalacheruvu <harikha198@gmail.com>
+Date:   Mon Dec 15 15:13:51 2025 +0100
+
+    Bertopic changes
+
+[33mcommit b8cf2acd28bea52cf1e3c1b4795aaaef68cf6e07[m[33m ([m[1;31morigin/momena[m[33m)[m
+Merge: b43bb4c b56bcce
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Sun Dec 14 16:59:28 2025 +0100
+
+    Merge pull request #3 from Rayalacheruvu-Harika/siya_analysis
+    
+    Renamed selected files and folders and updated LDA topic modeling script
+
+[33mcommit b56bccebb09f4be8bde30d201d5574a330dfbcac[m[33m ([m[1;31morigin/siya_analysis[m[33m)[m
+Author: Siya-Kamat30 <kamatsiya04@gmail.com>
+Date:   Sat Dec 13 20:59:43 2025 +0100
+
+    Renamed selected files and folders and updated LDA topic modeling script
+
+[33mcommit b43bb4ce1d5367ddd416b3bb5713bbf49de5e064[m
+Merge: b9f154d 2e53a36
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Fri Dec 12 20:17:41 2025 +0100
+
+    Merge pull request #2 from Rayalacheruvu-Harika/harika_analysis
+    
+    Bertopic modeling
+
+[33mcommit 2e53a367a3e4018449c5db9237d2966250f7bf31[m
+Author: Harika Rayalacheruvu <harikha198@gmail.com>
+Date:   Fri Dec 12 20:16:40 2025 +0100
+
+    Bertopic modeling
+
+[33mcommit b9f154d509ee7bcdd6834c6d5733f50eb65c20e1[m
+Merge: 6b747b6 8ae1dcb
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Thu Dec 11 13:44:52 2025 +0100
+
+    Merge pull request #1 from Rayalacheruvu-Harika/siya_analysis
+    
+    baseline Topic modeling using LDA
+
+[33mcommit 8ae1dcb409a39a710da2953a7d87a7b9344cabd4[m
+Author: Siya-Kamat30 <kamatsiya04@gmail.com>
+Date:   Thu Dec 11 13:39:14 2025 +0100
+
+    baseline Topic modeling using LDA
+
+[33mcommit 6b747b6c496e515cf0387ecdf8e32e72d74ba18b[m
+Merge: 4131213 cd25430
+Author: Harika Rayalacheruvu <harikha198@gmail.com>
+Date:   Tue Dec 9 14:52:59 2025 +0100
+
+    Merge branch 'main' of https://github.com/Rayalacheruvu-Harika/ResearchLab
+
+[33mcommit 4131213a5ec2266a20825196df0b8d6d3cedb594[m
+Author: Harika Rayalacheruvu <harikha198@gmail.com>
+Date:   Tue Dec 9 14:52:47 2025 +0100
+
+    Cleaning
+
+[33mcommit cd25430765d44c15a9e1250ef162758f94cd3053[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:14:45 2025 +0100
+
+    Update README.md
+
+[33mcommit fafd177ddb3560bc86e4b91e22883f221b5cd69a[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:13:32 2025 +0100
+
+    Rename Project_Structure to Project_Structure.md
+
+[33mcommit cb926ad0d572110594bc64a0497f20cd1c5e7602[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:13:00 2025 +0100
+
+    Create Project_Structure
+
+[33mcommit bf9dd82774e569324d39e3f2756b2cec191dd7eb[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:10:58 2025 +0100
+
+    Update README.md
+
+[33mcommit cbcafccfc22089acc84e3ebd93961ce83b93328f[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:09:25 2025 +0100
+
+    Update README.md
+
+[33mcommit d11be313f663d99a944cb6f9ff1b862a2de519e2[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:07:48 2025 +0100
+
+    Update README.md
+
+[33mcommit 6848ed33d506277d6d4eb88cd63a97b1a7ee1d33[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:06:28 2025 +0100
+
+    Update README.md
+
+[33mcommit abd955237125ff817107770d394c4c096025cd50[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 18:05:06 2025 +0100
+
+    Update README.md
+
+[33mcommit 72dc43a19b74b21ae4d8d1e704197e96991dfd51[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 17:56:49 2025 +0100
+
+    Update README.md
+
+[33mcommit 8ec24b59e22a96c2c12a46da57105af57efb1383[m
+Author: Rayalacheruvu Harika <63226614+Rayalacheruvu-Harika@users.noreply.github.com>
+Date:   Mon Dec 8 17:43:33 2025 +0100
+
+    Create README.md
+
+[33mcommit c3a2cf192d9513faef5c4b73c4d23ed64f57ae9d[m
+Author: Harika Rayalacheruvu <harikha198@gmail.com>
+Date:   Mon Dec 8 15:16:17 2025 +0100
+
+    Extraction
+
+[33mcommit eaa5f057ad69d24e20db22b34699897ddb0d1b60[m
+Author: Harika Rayalacheruvu <harikha198@gmail.com>
+Date:   Mon Dec 8 14:27:31 2025 +0100
+
+    Initial commit
