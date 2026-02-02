@@ -25,8 +25,9 @@ warnings.filterwarnings('ignore')
 # ================================================================================
 
 INPUT_FILE = "analysis_results/sentiment_analysis/policy_tone_distilbert.csv"
+uni_df = pd.read_csv("manual/university_list.csv", sep=";")
 
-OUTPUT_DIR = "analysis_results/Stance_detection"
+OUTPUT_DIR = "analysis_results/rq3/Stance_detection"
 FIG_DIR = os.path.join(OUTPUT_DIR, "figures")
 
 # Output files
@@ -309,33 +310,47 @@ print("\n  → Visualization 1: Scatter plot (university-wise stance)")
 
 plt.figure(figsize=(14, 8))
 
-# Create scatter plot
+# -----------------------------
+# Fixed high-contrast colors (5 countries)
+# -----------------------------
 countries = uni_stance['country'].unique()
-colors = plt.cm.tab20(np.linspace(0, 1, len(countries)))
-country_colors = {country: colors[i] for i, country in enumerate(countries)}
 
+country_colors = {
+    countries[0]: "#0072B2",  # Blue
+    countries[1]: "#D55E00",  # Vermillion
+    countries[2]: "#009E73",  # Green
+    countries[3]: "#CC79A7",  # Purple
+    countries[4]: "#E69F00"   # Orange
+}
+
+# -----------------------------
+# Scatter plot (Top 10 per country)
+# -----------------------------
 for country in countries:
-    country_data = uni_stance[uni_stance['country'] == country]
+    country_data = (
+        uni_stance[uni_stance['country'] == country]
+        .sort_values("stance_score_mean")
+        .head(10)
+        .reset_index(drop=True)
+    )
+
     plt.scatter(
-        range(len(country_data)),
+        country_data.index,
         country_data['stance_score_mean'],
         label=country,
-        s=country_data['n_policies'] * 15,  # Size by number of policies
-        alpha=0.6,
+        s=country_data['n_policies'] * 15,
+        alpha=0.7,
         color=country_colors[country]
     )
 
+# -----------------------------
 # Highlight extremes
+# -----------------------------
 top_restrictive_first = top_restrictive.reset_index(drop=True).loc[0]
 top_permissive_first = top_permissive.reset_index(drop=True).loc[0]
 
-# Get index position safely
-restrictive_idx = uni_stance.index[
-    uni_stance['url'] == top_restrictive_first['url']
-][0]
-
 plt.scatter(
-    restrictive_idx,
+    0,
     top_restrictive_first['stance_score_mean'],
     s=500,
     marker='X',
@@ -346,13 +361,8 @@ plt.scatter(
     zorder=5
 )
 
-
-permissive_idx = uni_stance.index[
-    uni_stance['url'] == top_permissive_first['url']
-][0]
-
 plt.scatter(
-    permissive_idx,
+    9,
     top_permissive_first['stance_score_mean'],
     s=500,
     marker='*',
@@ -363,20 +373,31 @@ plt.scatter(
     zorder=5
 )
 
-
-# Format plot
+# -----------------------------
+# Reference lines
+# -----------------------------
 plt.axhline(y=0, color='gray', linestyle='--', alpha=0.5, label='Neutral')
 plt.axhline(y=0.3, color='orange', linestyle=':', alpha=0.3)
 plt.axhline(y=-0.3, color='blue', linestyle=':', alpha=0.3)
 
-plt.xlabel('University Index', fontsize=12, fontweight='bold')
-plt.ylabel('Stance Score (-1=Permissive, +1=Restrictive)', fontsize=12, fontweight='bold')
-plt.title('Policy Stance by University (Size = Number of Policies)', fontsize=14, fontweight='bold')
+# -----------------------------
+# Formatting
+# -----------------------------
+plt.xticks(range(10))
+plt.xlabel("University Rank", fontsize=12, fontweight="bold")
+plt.ylabel("Stance Score (-1 = Permissive, +1 = Restrictive)", fontsize=12, fontweight="bold")
+plt.title(
+    "Policy Stance by University (Size = Number of Policies)",
+    fontsize=14,
+    fontweight="bold"
+)
+
 plt.ylim(-1, 1)
 plt.grid(True, alpha=0.3)
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left", fontsize=9)
+
 plt.tight_layout()
-plt.savefig(FIG_SCATTER, dpi=300, bbox_inches='tight')
+plt.savefig(FIG_SCATTER, dpi=300, bbox_inches="tight")
 plt.close()
 
 print(f"  ✓ Saved → {FIG_SCATTER}")
@@ -387,19 +408,34 @@ print(f"  ✓ Saved → {FIG_SCATTER}")
 
 print("  → Visualization 2: Extremes bar chart (top/bottom 5)")
 
+print(uni_df.columns)
+
+# Merge university names
+top_restrictive = top_restrictive.merge(
+    uni_df[["url", "university_name"]],
+    on="url",
+    how="left"
+)
+
+top_permissive = top_permissive.merge(
+    uni_df[["url", "university_name"]],
+    on="url",
+    how="left"
+)
+
+# Plot
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
 # Most restrictive
 top_res_sorted = top_restrictive.sort_values('stance_score_mean')
 ax1.barh(range(len(top_res_sorted)), top_res_sorted['stance_score_mean'], color='#d62728')
 ax1.set_yticks(range(len(top_res_sorted)))
-ax1.set_yticklabels(top_res_sorted['country'] + ' (' + top_res_sorted['country'].str[:2] + ')')
+ax1.set_yticklabels(top_res_sorted['university_name'])
 ax1.set_xlabel('Stance Score (Restrictive →)', fontweight='bold')
 ax1.set_title('Top 5 Most Restrictive Universities', fontweight='bold', color='#d62728')
 ax1.set_xlim(0, 1)
 ax1.grid(True, alpha=0.3, axis='x')
 
-# Add value labels
 for i, v in enumerate(top_res_sorted['stance_score_mean']):
     ax1.text(v + 0.02, i, f'{v:.3f}', va='center', fontweight='bold')
 
@@ -407,13 +443,12 @@ for i, v in enumerate(top_res_sorted['stance_score_mean']):
 top_perm_sorted = top_permissive.sort_values('stance_score_mean')
 ax2.barh(range(len(top_perm_sorted)), top_perm_sorted['stance_score_mean'], color='#2ca02c')
 ax2.set_yticks(range(len(top_perm_sorted)))
-ax2.set_yticklabels(top_perm_sorted['country'] + ' (' + top_perm_sorted['country'].str[:2] + ')')
+ax2.set_yticklabels(top_perm_sorted['university_name'])
 ax2.set_xlabel('← Stance Score (Permissive)', fontweight='bold')
 ax2.set_title('Top 5 Most Permissive Universities', fontweight='bold', color='#2ca02c')
 ax2.set_xlim(-1, 0)
 ax2.grid(True, alpha=0.3, axis='x')
 
-# Add value labels
 for i, v in enumerate(top_perm_sorted['stance_score_mean']):
     ax2.text(v - 0.05, i, f'{v:.3f}', va='center', fontweight='bold', ha='right')
 
@@ -657,7 +692,6 @@ with open(OUT_REPORT, 'w', encoding='utf-8') as f:
 
 
 print(f"✓ Saved report → {OUT_REPORT}")
-
 # ================================================================================
 # FINAL SUMMARY
 # ================================================================================
