@@ -13,10 +13,19 @@ Ensures:
 - Every topic gets a readable label
 """
 
-import pandas as pd
-from bertopic import BERTopic
+import sys
+import os
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
 from config import CONFIG
 from config.logger import setup_logger
+
+import pandas as pd
+from bertopic import BERTopic
 
 logger = setup_logger(__name__)
 
