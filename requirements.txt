@@ -20,3 +20,4 @@ seaborn
 transformers
 tqdm
 config
+wordcloud
