@@ -1,10 +1,19 @@
+import sys
+import os
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
 from config import CONFIG
+from config.logger import setup_logger
+
 import pandas as pd
 import re
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from config.logger import setup_logger
 
 logger = setup_logger(__name__)
 

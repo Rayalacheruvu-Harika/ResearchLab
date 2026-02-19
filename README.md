@@ -1,4 +1,3 @@
-
 # LLM Policy Analysis – Research Lab
 
 A comprehensive research pipeline for analyzing Generative AI and Large Language Model (LLM) policy guidelines across universities in multiple countries using advanced NLP and statistical techniques.
@@ -35,15 +34,6 @@ This project investigates how universities across different countries frame, gov
 - Dual topic modeling: LDA (6 topics) and BERTopic (7 topics)
 - 13 quantitative evaluation metrics
 
----
-
-## 🔬 Research Questions
-
-- **RQ1:** What are the dominant topics in university AI/LLM policies?
-- **RQ2:** Do policy topics differ significantly across countries?
-  - LDA: Significant differences detected (p = 0.001)
-  - BERT: No significant differences detected (p = 0.135)
-- **RQ3:** How do universities frame AI adoption, risks, and governance?
 
 ---
 
@@ -215,27 +205,3 @@ Trained models are saved under:
 
 - `lda_analysis/lda_model.gensim`
 - `models/bertopic_model/`
-
----
-
-## 📂 Repository Structure
-
-The repository is organized into modular directories for extraction, cleaning, modeling, evaluation, and framing analysis. See the folder tree in this repository for a detailed breakdown.
-
----
-
-## 🤝 Contributing
-
-1. Create a feature branch
-2. Commit your changes
-3. Push to your branch
-4. Open a Pull Request to `main`
-
----
-
-## 📝 License & Contact
-
-- **License:** MIT
-- **Project Lead:** Harika Rayalacheruvu
-- **GitHub:** Rayalacheruvu-Harika
-- **Support:** Please use GitHub Issues for bugs or questions
