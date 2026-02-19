@@ -2,6 +2,7 @@ import pandas as pd
 import spacy
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 import os
 
 # -----------------------------
@@ -61,31 +62,93 @@ uni_roles = uni_roles.loc[
 # Save output
 uni_roles.to_csv(OUT_DATA, index=False)
 print(f"✓ Saved university-level institutional roles → {OUT_DATA}")
-
 # -----------------------------
-# VISUALIZATION: GROUPED BAR CHART
+# VISUALIZATION: COUNTRY SMALL MULTIPLES (MANUAL, STABLE)
 # -----------------------------
-plt.figure(figsize=(10, 6))
 
-sns.countplot(
-    data=uni_roles,
-    x="country",
-    hue="role_assumption",
-    order=sorted(uni_roles["country"].unique()),
-    hue_order=[
-        "Institution-Led",
-        "Instructor-Led",
-        "Student-Responsible",
-        "Unspecified"
-    ]
+plot_df = (
+    uni_roles
+    .groupby(["country", "role_assumption"])
+    .size()
+    .reset_index(name="count")
 )
 
-plt.title("Institutional Role Assumptions in LLM Policies (University Level)")
-plt.xlabel("Country")
-plt.ylabel("Number of Universities")
-plt.xticks(rotation=0)
-plt.legend(title="Responsible Actor")
+roles = [
+    "Institution-Led",
+    "Instructor-Led",
+    "Student-Responsible",
+    "Unspecified"
+]
 
-plt.tight_layout()
-plt.savefig(f"{OUT_FIG}/institutional_roles_by_country_grouped.png", dpi=300)
+countries = sorted(plot_df["country"].unique())
+
+# Role-based colors (used in legend)
+role_palette = {
+    "Institution-Led": "#1f77b4",
+    "Instructor-Led": "#ff7f0e",
+    "Student-Responsible": "#2ca02c",
+    "Unspecified": "#d62728"
+}
+
+# Create subplots
+fig, axes = plt.subplots(2, 3, figsize=(14, 8), sharey=True)
+axes = axes.flatten()
+
+for i, country in enumerate(countries):
+    ax = axes[i]
+    data = plot_df[plot_df["country"] == country]
+
+    values = [
+        data.loc[data["role_assumption"] == r, "count"].sum()
+        for r in roles
+    ]
+
+    # Bars colored by role (legend explains roles)
+    ax.bar(
+        roles,
+        values,
+        color=[role_palette[r] for r in roles],
+        edgecolor="black"
+    )
+
+    ax.set_title(country)
+    ax.set_ylim(0, 6)
+
+    # remove all x ticks
+    ax.set_xticks([])
+    ax.set_xlabel("")
+
+# remove empty subplot if exists
+for j in range(len(countries), len(axes)):
+    fig.delaxes(axes[j])
+
+# Global labels
+fig.suptitle(
+    "Responsible Actor for LLM Policy Governance (University Level)",
+    fontsize=14
+)
+
+fig.text(0.04, 0.5, "Number of Universities", va="center", rotation="vertical")
+
+# Legend instead of ticks
+legend_handles = [
+    Patch(facecolor=color, edgecolor="black", label=role)
+    for role, color in role_palette.items()
+]
+
+fig.legend(
+    handles=legend_handles,
+    loc="lower center",
+    ncol=4,
+    frameon=False,
+    bbox_to_anchor=(0.5, 0.02)
+)
+
+# Layout (space for title + legend)
+plt.tight_layout(rect=[0.05, 0.08, 1, 0.93])
+
+plt.savefig(
+    f"{OUT_FIG}/institutional_roles_small_multiples_legend.png",
+    dpi=300
+)
 plt.show()

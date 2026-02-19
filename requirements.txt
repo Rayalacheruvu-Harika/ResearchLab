@@ -20,4 +20,5 @@ seaborn
 transformers
 tqdm
 config
+wordcloud
 spacy

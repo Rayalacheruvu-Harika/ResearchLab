@@ -65,5 +65,5 @@ for _, row in manual_df.iterrows():
 
 print(f"✔ Manually updated rows: {updated}")
 
-df.to_csv("../data/merged_dataset.csv", index=False, encoding="utf-8")
+df.to_csv("data/merged_dataset.csv", index=False, encoding="utf-8")
 print("📌 Saved → ../data/merged_dataset.csv")
