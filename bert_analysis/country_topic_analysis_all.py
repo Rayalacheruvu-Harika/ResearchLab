@@ -121,7 +121,7 @@ plt.figure(figsize=(10, 6))
 sns.barplot(
     x=primary_counts.values,
     y=primary_counts.index,
-    palette="viridis"
+    palette="Blues_r"
 )
 
 plt.title("Dominant Primary AI Policy Topics by Country")

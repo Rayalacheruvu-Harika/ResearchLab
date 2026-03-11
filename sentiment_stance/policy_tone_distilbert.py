@@ -4,6 +4,14 @@ from transformers import pipeline
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
+POLICY_TONE_PALETTE = {
+    "allowed-with-conditions": "#A8DADC",  
+    "allowed":                 "#2E86AB",  
+    "neutral":                 "#44BBA4",  
+    "risk-awareness":          "#1E3A5F",  
+    "restrictive":             "#48CAE4",  
+}
+
 # =====================================================
 # PATHS (FIXED)
 # =====================================================
@@ -113,7 +121,8 @@ pivot_df = pivot_df.reindex(columns=LABELS, fill_value=0)
 pivot_df.plot(
     kind="bar",
     stacked=True,
-    figsize=(12, 7)
+    figsize=(12, 7),
+    color=[POLICY_TONE_PALETTE.get(col, "#A0AEC0") for col in pivot_df.columns]
 )
 
 plt.title("Policy Tone Distribution by Country")

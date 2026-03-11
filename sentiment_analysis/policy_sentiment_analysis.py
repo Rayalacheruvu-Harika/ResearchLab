@@ -4,6 +4,14 @@ import os
 import numpy as np
 from scipy.stats import chi2_contingency
 
+SENTIMENT_PALETTE = {
+    "Supportive":   "#1E3A5F",  # deep navy
+    "Conditional":  "#2E86AB",  # steel blue
+    "Restrictive":  "#44BBA4",  # teal
+    "Risk-Focused": "#48CAE4",  # muted blue
+    "Neutral":      "#A0AEC0",  # grey — neutral concept = grey
+}
+
 # =====================================================
 # PATHS
 # =====================================================
@@ -112,7 +120,8 @@ country_pct = country_counts.div(
 country_pct.plot(
     kind="bar",
     stacked=True,
-    figsize=(11, 6)
+    figsize=(11, 6),
+    color=[SENTIMENT_PALETTE.get(col, "#A0AEC0") for col in country_pct.columns]
 )
 
 plt.title(
@@ -141,7 +150,10 @@ overall_counts = (
 overall_pct = overall_counts / overall_counts.sum() * 100
 
 plt.figure(figsize=(8, 5))
-overall_pct.plot(kind="bar")
+overall_pct.plot(
+    kind="bar",
+    color=[SENTIMENT_PALETTE.get(i, "#A0AEC0") for i in overall_pct.index]
+)
 
 plt.title(
     "Overall Policy-Oriented Sentiment of LLM Policies\n(University Level)"

@@ -354,8 +354,8 @@ plt.scatter(
     top_restrictive_first['stance_score_mean'],
     s=500,
     marker='X',
-    color='red',
-    edgecolors='darkred',
+    color='#1E3A5F',
+    edgecolors='#1E3A5F',
     linewidths=2,
     label='Most Restrictive',
     zorder=5
@@ -366,8 +366,8 @@ plt.scatter(
     top_permissive_first['stance_score_mean'],
     s=500,
     marker='*',
-    color='green',
-    edgecolors='darkgreen',
+    color='#44BBA4',
+    edgecolors='#44BBA4',
     linewidths=2,
     label='Most Permissive',
     zorder=5
@@ -428,11 +428,11 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
 # Most restrictive
 top_res_sorted = top_restrictive.sort_values('stance_score_mean')
-ax1.barh(range(len(top_res_sorted)), top_res_sorted['stance_score_mean'], color='#d62728')
+ax1.barh(range(len(top_res_sorted)), top_res_sorted['stance_score_mean'], color='#2E86AB')
 ax1.set_yticks(range(len(top_res_sorted)))
 ax1.set_yticklabels(top_res_sorted['university_name'])
 ax1.set_xlabel('Stance Score (Restrictive →)', fontweight='bold')
-ax1.set_title('Top 5 Most Restrictive Universities', fontweight='bold', color='#d62728')
+ax1.set_title('Top 5 Most Restrictive Universities', fontweight='bold', color='#2E86AB')
 ax1.set_xlim(0, 1)
 ax1.grid(True, alpha=0.3, axis='x')
 
@@ -441,11 +441,11 @@ for i, v in enumerate(top_res_sorted['stance_score_mean']):
 
 # Most permissive
 top_perm_sorted = top_permissive.sort_values('stance_score_mean')
-ax2.barh(range(len(top_perm_sorted)), top_perm_sorted['stance_score_mean'], color='#2ca02c')
+ax2.barh(range(len(top_perm_sorted)), top_perm_sorted['stance_score_mean'], color='#44BBA4')
 ax2.set_yticks(range(len(top_perm_sorted)))
 ax2.set_yticklabels(top_perm_sorted['university_name'])
 ax2.set_xlabel('← Stance Score (Permissive)', fontweight='bold')
-ax2.set_title('Top 5 Most Permissive Universities', fontweight='bold', color='#2ca02c')
+ax2.set_title('Top 5 Most Permissive Universities', fontweight='bold', color='#44BBA4')
 ax2.set_xlim(-1, 0)
 ax2.grid(True, alpha=0.3, axis='x')
 
@@ -478,7 +478,7 @@ bars = plt.bar(
     country_stats['mean_stance'],
     yerr=country_stats['std_stance'],
     capsize=5,
-    color=['#d62728' if x > 0 else '#2ca02c' for x in country_stats['mean_stance']],
+    color=['#2E86AB' if x > 0 else '#44BBA4' for x in country_stats['mean_stance']],
     alpha=0.7,
     edgecolor='black',
     linewidth=1.5
@@ -517,11 +517,11 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
 # Define color mapping by category name
 color_map = {
-    'Highly Restrictive': '#d62728',    # Dark red
-    'Moderately Restrictive': '#ff7f0e', # Orange-red
-    'Balanced': '#ffbb78',               # Light orange (neutral)
-    'Moderately Permissive': '#98df8a',  # Light green
-    'Highly Permissive': '#2ca02c'       # Dark green
+    'Highly Restrictive': '#1E3A5F',    # Dark red
+    'Moderately Restrictive': '#2E86AB', # Orange-red
+    'Balanced': '#A8DADC',               # Light orange (neutral)
+    'Moderately Permissive': '#44BBA4',  # Light green
+    'Highly Permissive': '#48CAE4'       # Dark green
 }
 
 # Pie chart
@@ -529,8 +529,14 @@ stance_dist = uni_stance['stance_category'].value_counts()
 # Get colors in the order of stance_dist.index (category names)
 colors_pie = [color_map[cat] for cat in stance_dist.index]
 
-ax1.pie(stance_dist.values, labels=stance_dist.index, autopct='%1.1f%%',
-        colors=colors_pie, startangle=90)
+ax1.pie(
+    stance_dist.values, 
+    labels=stance_dist.index, 
+    autopct='%1.1f%%',
+    colors=colors_pie, 
+    startangle=90
+)
+
 ax1.set_title('Distribution of Universities by Stance Category', fontweight='bold')
 
 # Bar chart with countries stacked
