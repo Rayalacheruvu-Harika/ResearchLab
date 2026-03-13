@@ -4,6 +4,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.cm as cm
 
+HUMAN_TONE_PALETTE = {
+    "neutral":               "#A8DADC",  
+    "allowed-with-conditions":"#2E86AB",  
+    "risk-awareness":        "#44BBA4",  
+    "restrictive":           "#1E3A5F",  
+    "allowed":               "#48CAE4",  
+}
+
 # ==============================
 # PATHS
 # ==============================
@@ -169,7 +177,8 @@ country_tone = pd.pivot_table(
 country_tone.plot(
     kind="bar",
     stacked=True,
-    figsize=(11, 6)
+    figsize=(11, 6),
+    color=[HUMAN_TONE_PALETTE.get(col, "#A0AEC0") for col in country_tone.columns]
 )
 
 plt.title("Country-wise Policy Tone Distribution (Human-annotated, University-Level)")

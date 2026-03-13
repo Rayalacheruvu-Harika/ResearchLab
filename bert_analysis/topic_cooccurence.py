@@ -101,7 +101,7 @@ matrix.to_csv(f"{OUTPUT_DIR}/topic_cooccurrence_matrix.csv")
 plt.figure(figsize=(14, 10))
 sns.heatmap(
     matrix,
-    cmap="Reds",
+    cmap="Blues",
     linewidths=0.5,
     annot=True
 )

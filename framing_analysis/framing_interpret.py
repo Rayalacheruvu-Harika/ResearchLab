@@ -3,6 +3,14 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 
+FRAME_PALETTE = {
+    "Regulatory / Governance":  "#1E3A5F",  # deep navy
+    "Pedagogical Support":      "#2E86AB",  # steel blue
+    "Technological Enablement": "#44BBA4",  # teal
+     "Risk & Compliance":        "#A8DADC",  # light blue
+     "Control & Integrity":      "#48CAE4",  # sky blue
+}
+
 # ---------------------------------
 # Paths
 # ---------------------------------
@@ -33,7 +41,8 @@ plt.figure(figsize=(10, 6))
 sns.barplot(
     data=frame_counts,
     y="frame",
-    x="count"
+    x="count",
+    palette=FRAME_PALETTE
 )
 plt.title("Overall Distribution of LLM Policy Frames")
 plt.xlabel("Number of Universities")
@@ -65,7 +74,8 @@ sns.barplot(
     data=dominant,
     x="country",
     y="count",
-    hue="frame"
+    hue="frame",
+    palette=FRAME_PALETTE
 )
 plt.title("Dominant LLM Policy Frame by Country")
 plt.ylabel("Number of Universities")

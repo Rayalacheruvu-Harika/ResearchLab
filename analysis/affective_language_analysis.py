@@ -13,6 +13,13 @@ OUT_FIG = "analysis_results/rq1/figures"
 os.makedirs(os.path.dirname(OUT_DATA), exist_ok=True)
 os.makedirs(OUT_FIG, exist_ok=True)
 
+# Color palette for affective tones 
+AFFECTIVE_PALETTE = {
+    "Cautionary":           "#2E86AB",
+    "Opportunity-Oriented": "#44BBA4",
+    "Threat-Oriented":      "#1E3A5F",
+}
+
 # -----------------------------
 # Affective Lexicon
 # -----------------------------
@@ -70,7 +77,8 @@ plt.figure(figsize=(8, 5))
 sns.countplot(
     data=uni_affect,
     y="dominant_affect",
-    order=uni_affect["dominant_affect"].value_counts().index
+    order=uni_affect["dominant_affect"].value_counts().index,
+    palette=AFFECTIVE_PALETTE 
 )
 plt.title("Overall Affective Framing of LLM Policies (University Level)")
 plt.xlabel("Number of Universities")
@@ -97,7 +105,8 @@ sns.barplot(
     data=dominant_country,
     x="country",
     y="count",
-    hue="dominant_affect"
+    hue="dominant_affect",
+    palette=AFFECTIVE_PALETTE
 )
 plt.title("Dominant Affective Tone by Country (University Level)")
 plt.xlabel("Country")
@@ -117,7 +126,8 @@ stacked = (
 stacked.plot(
     kind="bar",
     stacked=True,
-    figsize=(10, 6)
+    figsize=(10, 6),
+    color=[AFFECTIVE_PALETTE.get(col, "#999999") for col in stacked.columns]
 )
 
 plt.title("Distribution of Affective Tone Across Universities by Country")

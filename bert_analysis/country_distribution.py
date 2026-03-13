@@ -84,7 +84,7 @@ if __name__ == "__main__":
     # 4. Heatmap — Raw Counts
     logger.info("Creating counts heatmap...")
     plt.figure(figsize=(20, 10))
-    sns.heatmap(pivot_counts, annot=True, cmap="Greens", fmt="d", linewidths=0.5)
+    sns.heatmap(pivot_counts, annot=True, cmap="Blues", fmt="d", linewidths=0.5)
     plt.title("Country vs Topic Distribution (Counts)", fontsize=18)
     plt.ylabel("Country")
     plt.xlabel("Topic")

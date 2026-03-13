@@ -84,10 +84,10 @@ countries = sorted(plot_df["country"].unique())
 
 # Role-based colors (used in legend)
 role_palette = {
-    "Institution-Led": "#1f77b4",
-    "Instructor-Led": "#ff7f0e",
-    "Student-Responsible": "#2ca02c",
-    "Unspecified": "#d62728"
+    "Institution-Led": "#1E3A5F",
+    "Instructor-Led": "#2E86AB",
+    "Student-Responsible": "#44BBA4",
+    "Unspecified": "#48CAE4"
 }
 
 # Create subplots

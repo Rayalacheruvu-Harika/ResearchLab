@@ -69,10 +69,10 @@ pivot = pivot[frames]
 # VISUALIZATION: STACKED LOLLIPOP
 # -----------------------------
 colors = {
-    "Pedagogical": "#1f77b4",
-    "Governance": "#2ca02c",
-    "Threat": "#d62728",
-    "Unspecified": "#ff7f0e"
+    "Pedagogical": "#1E3A5F",
+    "Governance": "#2E86AB",
+    "Threat": "#44BBA4",
+    "Unspecified": "#A0AEC0"
 }
 
 countries = pivot.index.tolist()

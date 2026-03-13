@@ -37,7 +37,7 @@ wordcloud = WordCloud(
     stopwords=stopwords,
     max_words=100,
     collocations=False,
-    colormap="magma"
+    colormap="GnBu"
 ).generate(full_text)
 
 # -------------------------

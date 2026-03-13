@@ -2,12 +2,19 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+from matplotlib.colors import LinearSegmentedColormap
+
+#palette for heatmap (blue gradient)
+blue_cmap = LinearSegmentedColormap.from_list(
+    "custom_blues",
+    ["#A8DADC", "#2E86AB", "#1E3A5F"]  # light → mid → dark blue
+)
 
 # -----------------------------
 # Paths
 # -----------------------------
-AFFECT = "analysis_results/rq1/affective_language.csv"
-ROLES  = "analysis_results/rq1/institutional_roles.csv"
+AFFECT = "analysis_results/rq1/affective_language_university.csv"
+ROLES  = "analysis_results/rq1/institutional_roles_university.csv"
 FRAMES = "analysis_results/rq1/policy_frames.csv"
 
 OUT_DATA = "analysis_results/rq1/rq1_country_summary.csv"
@@ -80,7 +87,7 @@ sns.heatmap(
         ["dominant_affect", "role_assumption", "policy_frame"]
     ],
     fmt="",
-    cmap="tab20",
+    cmap= blue_cmap,
     cbar=False,
     linewidths=0.5
 )
