@@ -8,12 +8,13 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from itertools import combinations
 import os
+from config import CONFIG
 
 # -------------------------------------------------
 # Paths
 # -------------------------------------------------
-INPUT_FILE = "analysis_results/university_top_topics.csv"
-OUTPUT_DIR = "analysis_results/country"
+INPUT_FILE = CONFIG["data"]["country_top_topics"]
+OUTPUT_DIR = CONFIG["paths"]["country_topic_analysis"]
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # -------------------------------------------------
@@ -24,7 +25,7 @@ df = pd.read_csv(INPUT_FILE)
 # =================================================
 # A. Country → Topic Profile Table (SAVE)
 # =================================================
-df.to_csv(f"{OUTPUT_DIR}/country_topic_profile_table.csv", index=False)
+df.to_csv(CONFIG["data"]["country_topic_profile_table"], index=False)
 
 # =================================================
 # B. Heatmap: Topic Importance (Top-3 Weighted)
@@ -56,7 +57,7 @@ heatmap_df = long_df.pivot_table(
     fill_value=0
 )
 
-heatmap_df.to_csv(f"{OUTPUT_DIR}/country_topic_heatmap_data.csv")
+heatmap_df.to_csv(CONFIG["data"]["country_topic_heatmap_data"])
 
 plt.figure(figsize=(14, 7))
 sns.heatmap(
@@ -69,7 +70,7 @@ plt.title("Country × Topic Importance (Top-3 Topics Weighted)")
 plt.xlabel("Policy Topic")
 plt.ylabel("Country")
 plt.tight_layout()
-plt.savefig(f"{OUTPUT_DIR}/heatmap_topic_importance.png", dpi=300)
+plt.savefig(CONFIG["data"]["heatmap_topic_importance"], dpi=300)
 plt.show()
 
 # =================================================
@@ -108,7 +109,7 @@ nx.draw_networkx_labels(G, pos, font_size=10)
 plt.title("Topic Co-Occurrence Network Across Countries")
 plt.axis("off")
 plt.tight_layout()
-plt.savefig(f"{OUTPUT_DIR}/topic_cooccurrence_network.png", dpi=300)
+plt.savefig(CONFIG["data"]["topic_cooccurrence_network_country"], dpi=300)
 plt.show()
 
 # =================================================
@@ -121,15 +122,17 @@ plt.figure(figsize=(10, 6))
 sns.barplot(
     x=primary_counts.values,
     y=primary_counts.index,
-    palette="viridis"
+    hue=primary_counts.index,
+    palette="Blues_r",
+    legend=False
 )
 
 plt.title("Dominant Primary AI Policy Topics by Country")
 plt.xlabel("Number of Countries")
 plt.ylabel("Primary Topic")
 plt.tight_layout()
-plt.savefig(f"{OUTPUT_DIR}/primary_topic_bar_chart.png", dpi=300)
+plt.savefig(CONFIG["data"]["primary_topic_bar_chart"], dpi=300)
 plt.show()
 
-print("\n✅ ALL ANALYSES COMPLETED SUCCESSFULLY")
-print("📁 Outputs saved in:", OUTPUT_DIR)
+print("\nALL ANALYSES COMPLETED SUCCESSFULLY")
+print("Outputs saved in:", OUTPUT_DIR)

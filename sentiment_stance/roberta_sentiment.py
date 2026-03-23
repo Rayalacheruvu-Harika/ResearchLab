@@ -2,19 +2,12 @@ import os
 import pandas as pd
 from transformers import pipeline
 from tqdm import tqdm
+from config import CONFIG
 
-# -----------------------------
-# CONFIG
-# -----------------------------
-DATA_PATH = "data/final_clean_dataset.csv"
-
-# FIX: separate directory and file paths
-OUTPUT_DIR = "analysis_results/sentiment_analysis"
-OUTPUT_PATH = os.path.join(OUTPUT_DIR, "sentiment_results.csv")
-SUMMARY_PATH = os.path.join(OUTPUT_DIR, "sentiment_summary.csv")
-
-# create directory ONLY
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+DATA_PATH = CONFIG["data"]["clean"]
+OUTPUT_PATH = CONFIG["data"]["sentiment_results"]
+SUMMARY_PATH = CONFIG["data"]["sentiment_summary"]
+os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
 
 TEXT_COLUMN = "clean_text"
 
@@ -36,7 +29,8 @@ sentiment_pipeline = pipeline(
     model="cardiffnlp/twitter-roberta-base-sentiment",
     tokenizer="cardiffnlp/twitter-roberta-base-sentiment",
     truncation=True,
-    max_length=512
+    max_length=512,
+    device=-1
 )
 
 label_map = {
@@ -74,7 +68,7 @@ df["sentiment_confidence"] = df["sentiment_score"].apply(confidence_level)
 # -----------------------------
 df.to_csv(OUTPUT_PATH, index=False)
 print("Sentiment analysis completed!")
-print(f"Results saved to: {os.path.abspath(OUTPUT_PATH)}")
+print(f"Saved: {OUTPUT_PATH}")
 
 # -----------------------------
 # SENTIMENT SUMMARY
@@ -89,4 +83,4 @@ summary.columns = ["sentiment_label", "count"]
 summary["percentage"] = (summary["count"] / summary["count"].sum()) * 100
 
 summary.to_csv(SUMMARY_PATH, index=False)
-print("Sentiment summary saved to:", os.path.abspath(SUMMARY_PATH))
+print(f"Saved: {SUMMARY_PATH}")

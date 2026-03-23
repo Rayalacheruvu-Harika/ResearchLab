@@ -1,13 +1,4 @@
-import sys
-import os
-from pathlib import Path
-
-# Add project root to path
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
 from config import CONFIG
-from config.logger import setup_logger
 
 import pandas as pd
 import gensim
@@ -20,12 +11,10 @@ import warnings
 
 warnings.filterwarnings('ignore', category=DeprecationWarning)
 
-logger = setup_logger(__name__)
-
 if __name__ == "__main__":
-    logger.info("=" * 80)
-    logger.info("LDA TOPIC MODELING - 6 TOPICS FIXED")
-    logger.info("=" * 80)
+    print("=" * 80)
+    print("LDA TOPIC MODELING - 6 TOPICS FIXED")
+    print("=" * 80)
 
     # 1. LOAD DATA
     df = pd.read_csv(CONFIG["data"]["clean"])
@@ -35,7 +24,10 @@ if __name__ == "__main__":
     ]
     df = df[needed_cols]
     df["tokens"] = df["tokens"].apply(lambda x: eval(x) if isinstance(x, str) else x)
-    logger.info("Data loaded successfully")
+    print("Data loaded successfully")
+    # Load trained LDA model
+    lda_model = gensim.models.LdaModel.load(str(CONFIG["data"]["lda_model"]))
+    print(f"Loaded LDA model from {CONFIG['data']['lda_model']}") 
 
     # 2. DICTIONARY & CORPUS
     dictionary = corpora.Dictionary(df["tokens"])
@@ -47,19 +39,11 @@ if __name__ == "__main__":
             corpus.append(bow)
             valid_rows.append(idx)
     df = df.iloc[valid_rows].reset_index(drop=True)
-    logger.info("Dictionary and corpus created")
+    print("Dictionary and corpus created")
 
     # 3. FORCE EXACTLY 6 TOPICS (NO OPTIMIZATION)
-    best_k = 6
-    logger.info(f"Using fixed number of topics: {best_k}")
-
-    # 4. TRAIN FINAL MODEL
-    logger.info("Training final LDA model...")
-    lda_model = gensim.models.LdaModel(
-        corpus=corpus, id2word=dictionary, num_topics=best_k,
-        passes=20, random_state=42
-    )
-    logger.info("LDA model trained")
+    best_k = CONFIG["lda"]["num_topics"]
+    print(f"Using fixed number of topics: {best_k}")
 
     # 5. DOMINANT TOPIC PER DOCUMENT
     dominant_topics = []
@@ -82,22 +66,22 @@ if __name__ == "__main__":
     df["lda_topic_probability"] = dominant_probs
     df["lda_second_topic"] = second_topics
     df["lda_second_probability"] = second_probs
-    logger.info("Topics assigned to documents")
+    print("Topics assigned to documents")
 
     # 6. PRINT TOP WORDS PER TOPIC
     topics = lda_model.print_topics(num_words=15)
     with open(CONFIG["data"]["lda_topics"], "w") as f:
         for topic_num, words in topics:
             f.write(f"Topic {topic_num}: {words}\n")
-    logger.info(f"Saved: {CONFIG['data']['lda_topics']}")
+    print(f"Saved: {CONFIG['data']['lda_topics']}")
 
     # 7. PYLDAVIS VISUALIZATION
     try:
         vis = pyLDAvis.gensim.prepare(lda_model, corpus, dictionary)
         pyLDAvis.save_html(vis, CONFIG["data"]["lda_viz"])
-        logger.info(f"Saved: {CONFIG['data']['lda_viz']}")
+        print(f"Saved: {CONFIG['data']['lda_viz']}")
     except ImportError:
-        logger.warning("pyLDAvis not installed")
+        print("pyLDAvis not installed")
 
     # 8. HUMAN-READABLE TOPIC LABELS (ONLY 6)
     topic_labels = {
@@ -110,7 +94,7 @@ if __name__ == "__main__":
     }
     df["lda_topic"] = df["lda_topic"].astype(int)
     df["topic_label"] = df["lda_topic"].map(topic_labels)
-    logger.info("Topic labels assigned")
+    print("Topic labels assigned")
 
     # 9. TOPIC SUMMARY TABLE
     topic_summary = {
@@ -127,18 +111,18 @@ if __name__ == "__main__":
 
     summary_df = pd.DataFrame(topic_summary)
     summary_df.to_csv(CONFIG["data"]["lda_summary"], index=False)
-    logger.info(f"Saved: {CONFIG['data']['lda_summary']}")
+    print(f"Saved: {CONFIG['data']['lda_summary']}")
 
     # 10. FINAL DATASET
     df.to_csv(CONFIG["data"]["lda_results"], index=False)
-    logger.info(f"Saved: {CONFIG['data']['lda_results']}")
+    print(f"Saved: {CONFIG['data']['lda_results']}")
 
     # =============================================================================
     # 11. EXTENDED ANALYSIS: UNIVERSITY → POLICIES → TOPICS
     # =============================================================================
-    logger.info("=" * 80)
-    logger.info("EXTENDED ANALYSIS: UNIVERSITY -> POLICIES -> TOPICS")
-    logger.info("=" * 80)
+    print("=" * 80)
+    print("EXTENDED ANALYSIS: UNIVERSITY -> POLICIES -> TOPICS")
+    print("=" * 80)
 
     def extract_university_domain(url: str):
         m = re.search(r"https?://(?:www\.)?([^/]+)", str(url))
@@ -164,34 +148,34 @@ if __name__ == "__main__":
             "topic_distribution": topic_distribution,
         })
 
-    logger.info("=" * 80)
-    logger.info("SUMMARY: Universities with Multiple Topics")
-    logger.info("=" * 80)
-    logger.info(f"{'University':<15} {'Policies':<12} {'#Topics':<10} {'Topics':<30}")
-    logger.info("-" * 70)
+    print("=" * 80)
+    print("SUMMARY: Universities with Multiple Topics")
+    print("=" * 80)
+    print(f"{'University':<15} {'Policies':<12} {'#Topics':<10} {'Topics':<30}")
+    print("-" * 70)
     for stat in sorted(university_stats, key=lambda x: x["num_policies"], reverse=True):
         uni = stat["university"]
         policies = stat["num_policies"]
         n_topics = stat["num_unique_topics"]
         topic_ids = str(stat["topics_assigned"])
-        logger.info(f"{uni:<15} {policies:<12} {n_topics:<10} {topic_ids:<30}")
+        print(f"{uni:<15} {policies:<12} {n_topics:<10} {topic_ids:<30}")
 
     uni_topic_matrix = pd.crosstab(df["university_name"], df["lda_topic"])
-    logger.info("=" * 80)
-    logger.info("MATRIX: Which Topics Does Each University Cover?")
-    logger.info("=" * 80)
-    logger.info(str(uni_topic_matrix))
+    print("=" * 80)
+    print("MATRIX: Which Topics Does Each University Cover?")
+    print("=" * 80)
+    print(str(uni_topic_matrix))
 
-    logger.info("=" * 80)
-    logger.info("SAVING EXTENDED ANALYSIS RESULTS")
-    logger.info("=" * 80)
+    print("=" * 80)
+    print("SAVING EXTENDED ANALYSIS RESULTS")
+    print("=" * 80)
 
     uni_policy_topic_df = df[[
         "university_domain", "university_name", "url", "lda_topic",
         "topic_label", "lda_topic_probability"
     ]].copy()
-    uni_policy_topic_df.to_csv("data/university_policy_topic_mapping.csv", index=False)
-    logger.info("Saved: data/university_policy_topic_mapping.csv")
+    uni_policy_topic_df.to_csv(CONFIG["data"]["uni_policy_topic_mapping"], index=False)
+    print(f"Saved: {CONFIG['data']['uni_policy_topic_mapping']}")
 
     uni_stats_df = pd.DataFrame([{
         "university": stat["university"],
@@ -200,37 +184,37 @@ if __name__ == "__main__":
         "topics": ",".join(map(str, stat["topics_assigned"])),
         "topic_distribution": str(stat["topic_distribution"]),
     } for stat in university_stats])
-    uni_stats_df.to_csv("data/university_topic_statistics.csv", index=False)
-    logger.info("Saved: data/university_topic_statistics.csv")
+    uni_stats_df.to_csv(CONFIG["data"]["uni_topic_statistics"], index=False)
+    print(f"Saved: {CONFIG['data']['uni_topic_statistics']}")
 
-    uni_topic_matrix.to_csv("data/university_topic_matrix.csv")
-    logger.info("Saved: data/university_topic_matrix.csv")
+    uni_topic_matrix.to_csv(CONFIG["data"]["uni_topic_matrix"])
+    print(f"Saved: {CONFIG['data']['uni_topic_matrix']}")
 
-    logger.info("=" * 80)
-    logger.info("STATISTICAL SUMMARY")
-    logger.info("=" * 80)
+    print("=" * 80)
+    print("STATISTICAL SUMMARY")
+    print("=" * 80)
 
     multi_topic_unis = [s for s in university_stats if s["num_unique_topics"] > 1]
     multi_policy_unis = [s for s in university_stats if s["num_policies"] > 1]
     n_unis = len(university_stats)
     n_docs = len(df)
 
-    logger.info(f"Total Universities: {n_unis}")
-    logger.info(f"Total Policies: {n_docs}")
-    logger.info(f"Fixed Topics: {best_k}")
-    logger.info(f"Average Policies per University: {n_docs / n_unis:.1f}")
-    logger.info(f"Average Topics per University: {df.groupby('university_name')['lda_topic'].nunique().mean():.1f}")
-    logger.info(f"Universities with >1 topic: {len(multi_topic_unis)} ({len(multi_topic_unis)/n_unis*100:.1f}%)")
-    logger.info(f"Universities with >1 policy: {len(multi_policy_unis)} ({len(multi_policy_unis)/n_unis*100:.1f}%)")
+    print(f"Total Universities: {n_unis}")
+    print(f"Total Policies: {n_docs}")
+    print(f"Fixed Topics: {best_k}")
+    print(f"Average Policies per University: {n_docs / n_unis:.1f}")
+    print(f"Average Topics per University: {df.groupby('university_name')['lda_topic'].nunique().mean():.1f}")
+    print(f"Universities with >1 topic: {len(multi_topic_unis)} ({len(multi_topic_unis)/n_unis*100:.1f}%)")
+    print(f"Universities with >1 policy: {len(multi_policy_unis)} ({len(multi_policy_unis)/n_unis*100:.1f}%)")
 
-    logger.info("=" * 80)
-    logger.info("COMPLETE - 6 TOPIC LDA ANALYSIS FINISHED")
-    logger.info("=" * 80)
-    logger.info("ALL FILES CREATED:")
-    logger.info(f" - {CONFIG['data']['lda_topics']}")
-    logger.info(f" - {CONFIG['data']['lda_viz']}")
-    logger.info(f" - {CONFIG['data']['lda_summary']}")
-    logger.info(f" - {CONFIG['data']['lda_results']}")
-    logger.info(" - data/university_policy_topic_mapping.csv")
-    logger.info(" - data/university_topic_statistics.csv")
-    logger.info(" - data/university_topic_matrix.csv")
+    print("=" * 80)
+    print("COMPLETE - 6 TOPIC LDA ANALYSIS FINISHED")
+    print("=" * 80)
+    print("ALL FILES CREATED:")
+    print(f" - {CONFIG['data']['lda_topics']}")
+    print(f" - {CONFIG['data']['lda_viz']}")
+    print(f" - {CONFIG['data']['lda_summary']}")
+    print(f" - {CONFIG['data']['lda_results']}")
+    print(f" - {CONFIG['data']['uni_policy_topic_mapping']}")
+    print(f" - {CONFIG['data']['uni_topic_statistics']}")
+    print(f" - {CONFIG['data']['uni_topic_matrix']}")

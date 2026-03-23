@@ -1,13 +1,14 @@
 import pandas as pd
 import ast
 import os
+from config import CONFIG
 
 # -----------------------------
 # Paths
 # -----------------------------
-BERT_RESULTS = "data/bert_topic_model_results.csv"
-TOPIC_LABELS = "data/bert_topic_labels.csv"
-OUTPUT = "analysis_results/multi_topic_profiling/university_multi_topic_profiles.csv"
+BERT_RESULTS = CONFIG["data"]["bert_results"]
+TOPIC_LABELS = CONFIG["data"]["bert_labels"]
+OUTPUT = CONFIG["data"]["uni_multi_topic_profiles"]
 
 TOP_N = 3  # number of topics per university
 
@@ -59,5 +60,5 @@ final = (
 # -----------------------------
 os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
 final.to_csv(OUTPUT, index=False)
-print("✅ University-level multi-topic profiling completed")
-print("Saved →", OUTPUT)
+print(" University-level multi-topic profiling completed")
+print("Saved ", OUTPUT)

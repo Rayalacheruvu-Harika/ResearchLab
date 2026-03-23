@@ -1,23 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+from config import CONFIG
 
-# ==============================
-# PATHS
-# ==============================
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LABEL_FILE = CONFIG["data"]["sentiment_manual"]
+META_FILE = CONFIG["data"]["clean"]
 
-LABEL_FILE = os.path.join(BASE_DIR, "sentiment_manual.xlsx")
-META_FILE = os.path.join(BASE_DIR, "../data/final_clean_dataset.csv")
+os.makedirs(os.path.dirname(CONFIG["data"]["top10_manual_labels"]), exist_ok=True)
 
-OUT_DIR = os.path.join(BASE_DIR, "../analysis_results")
-FIG_DIR = os.path.join(OUT_DIR, "Manual_sentiment")
-
-os.makedirs(FIG_DIR, exist_ok=True)
-
-# ==============================
-# LOAD DATA
-# ==============================
 labels_df = pd.read_excel(LABEL_FILE)
 
 if not {"url", "label"}.issubset(labels_df.columns):
@@ -28,7 +18,7 @@ meta_df = pd.read_csv(META_FILE)[["url", "country"]]
 # Merge country info
 df = labels_df.merge(meta_df, on="url", how="left")
 
-print("✓ Loaded manual labels with country metadata")
+print(" Loaded manual labels with country metadata")
 
 # ==============================
 # SPLIT MULTI-LABEL CELLS
@@ -43,10 +33,7 @@ df["label_clean"] = df["label_list"].str.strip()
 label_counts = df["label_clean"].value_counts()
 top10_labels = label_counts.head(10)
 
-top10_labels.to_csv(
-    os.path.join(OUT_DIR, "top10_manual_labels.csv"),
-    header=["count"]
-)
+top10_labels.to_csv(CONFIG["data"]["top10_manual_labels"], header=["count"])
 
 # ==============================
 # BAR CHART: OVERALL
@@ -63,11 +50,10 @@ plt.ylabel("Count of Occurrences")
 plt.xticks(rotation=30, ha="right")
 plt.tight_layout()
 
-FIG_PATH = os.path.join(FIG_DIR, "top10_manual_labels.png")
-plt.savefig(FIG_PATH, dpi=300)
-plt.show()
+plt.savefig(CONFIG["data"]["top10_manual_labels_fig"], dpi=300)
+plt.close()
 
-print("✓ Overall label frequency plot saved")
+print(" Overall label frequency plot saved")
 
 # ==============================
 # COUNTRY × LABEL DISTRIBUTION
@@ -151,8 +137,7 @@ plt.legend(
 )
 plt.tight_layout()
 
-FIG_PATH = os.path.join(FIG_DIR, "manual_labels_by_country_top10_each.png")
-plt.savefig(FIG_PATH, dpi=300)
-plt.show()
+plt.savefig(CONFIG["data"]["manual_labels_by_country"], dpi=300)
+plt.close()
 
-print("✓ Country-wise top 10 stacked chart saved")
+print(" Country-wise top 10 stacked chart saved")

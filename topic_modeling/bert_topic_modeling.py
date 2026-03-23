@@ -1,14 +1,7 @@
-import sys
-import os
-from pathlib import Path
-
-# Add project root to path
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
-from config import CONFIG
-from config.logger import setup_logger
-
+import random
+random.seed(42)
+import numpy as np
+np.random.seed(42)
 import pandas as pd
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
@@ -16,8 +9,8 @@ import hdbscan
 import umap
 import os
 import numpy as np
+from config import CONFIG
 
-logger = setup_logger(__name__)
 
 if __name__ == "__main__":
     # Paths
@@ -26,17 +19,17 @@ if __name__ == "__main__":
     OUTPUT_SUMMARY_FILE = CONFIG["data"]["bert_summary"]
     MODEL_SAVE_DIR = CONFIG["paths"]["models"]
 
-    logger.info("=" * 80)
-    logger.info("BERT TOPIC MODELING - 7 TOPICS")
-    logger.info("=" * 80)
+    print("=" * 80)
+    print("BERT TOPIC MODELING - 7 TOPICS")
+    print("=" * 80)
 
     # Load data
     df = pd.read_csv(INPUT_FILE)
     texts = df["clean_text"].astype(str).tolist()
-    logger.info(f"Loaded {len(texts)} documents")
+    print(f"Loaded {len(texts)} documents")
 
     # Embedding Model
-    logger.info("Initializing embedding model...")
+    print("Initializing embedding model...")
     embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
     # CUSTOM UMAP + HDBSCAN → prevents collapsing topics
@@ -44,7 +37,8 @@ if __name__ == "__main__":
         n_neighbors=15,
         n_components=5,
         min_dist=0.0,
-        metric="cosine"
+        metric="cosine",
+        random_state=42
     )
 
     hdbscan_model = hdbscan.HDBSCAN(
@@ -56,18 +50,19 @@ if __name__ == "__main__":
     )
 
     # CREATE BERTopic WITH FORCED 7 TOPICS
-    logger.info("Creating BERTopic model with 7 topics...")
+    print("Creating BERTopic model with 7 topics...")
     topic_model = BERTopic(
         embedding_model=embedding_model,
         umap_model=umap_model,
         hdbscan_model=hdbscan_model,
-        nr_topics=7,  # FORCE EXACTLY 7 TOPICS
-        min_topic_size=3,
+        nr_topics=CONFIG["bert"]["num_topics"],  # From config
+        min_topic_size=CONFIG["bert"]["min_topic_size"],  # From config
         verbose=True
     )
 
+
     # Fit model
-    logger.info("Fitting BERTopic model...")
+    print("Fitting BERTopic model...")
     topics, probabilities = topic_model.fit_transform(texts)
     df["topic"] = topics
     if probabilities is None:
@@ -82,18 +77,18 @@ if __name__ == "__main__":
             df["topic_probability"] = probabilities.max(axis=1)
 
     df.to_csv(OUTPUT_TOPICS_FILE, index=False)
-    logger.info(f"Saved: {OUTPUT_TOPICS_FILE}")
+    print(f"Saved: {OUTPUT_TOPICS_FILE}")
 
     # Save summary
     topic_summary = topic_model.get_topic_info()
     topic_summary.to_csv(OUTPUT_SUMMARY_FILE, index=False)
-    logger.info(f"Saved summary: {OUTPUT_SUMMARY_FILE}")
+    print(f"Saved summary: {OUTPUT_SUMMARY_FILE}")
 
     # Save model
     os.makedirs(MODEL_SAVE_DIR, exist_ok=True)
     topic_model.save(f"{MODEL_SAVE_DIR}/bertopic_model.pkl")
-    logger.info("Model saved")
+    print("Model saved")
 
-    logger.info("=" * 80)
-    logger.info("BERT TOPIC MODELING COMPLETED")
-    logger.info("=" * 80)
+    print("=" * 80)
+    print("BERT TOPIC MODELING COMPLETED")
+    print("=" * 80)

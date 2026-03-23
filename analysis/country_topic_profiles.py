@@ -1,18 +1,18 @@
 # ---------------------------------------------
-# University-level Multi-Topic Profiling
+# country-level Multi-Topic Profiling
 # ---------------------------------------------
 
 import pandas as pd
 import os
+from config import CONFIG
 
 # ---------------------------------------------
 # Paths
 # ---------------------------------------------
-TOPIC_RESULTS = "data/bert_topic_model_results.csv"
-TOPIC_LABELS = "data/bert_topic_labels.csv"
-OUTPUT_FILE = "analysis_results/university_top_topics.csv"
-
-os.makedirs("analysis_results", exist_ok=True)
+TOPIC_RESULTS = CONFIG["data"]["bert_results"]
+TOPIC_LABELS = CONFIG["data"]["bert_labels"]
+OUTPUT_FILE = CONFIG["data"]["country_top_topics"]
+os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 
 # ---------------------------------------------
 # Load data
@@ -45,7 +45,7 @@ df = df_topics.merge(
 df["topic_name"] = df["topic_name"].fillna("Unlabeled")
 
 # ---------------------------------------------
-# Count topics per university
+# Count topics per country
 # ---------------------------------------------
 topic_counts = (
     df.groupby(["country", "topic_name"])
@@ -54,7 +54,7 @@ topic_counts = (
 )
 
 # ---------------------------------------------
-# Rank topics within each university
+# Rank topics within each country
 # ---------------------------------------------
 topic_counts["rank"] = (
     topic_counts
@@ -63,7 +63,7 @@ topic_counts["rank"] = (
 )
 
 # ---------------------------------------------
-# Keep top 3 topics per university
+# Keep top 3 topics per country
 # ---------------------------------------------
 top_topics = topic_counts[topic_counts["rank"] <= 3]
 
@@ -89,5 +89,5 @@ profile.columns = [
 # ---------------------------------------------
 profile.to_csv(OUTPUT_FILE, index=False)
 
-print("✓ University-level multi-topic profiling completed")
-print("✓ Saved →", OUTPUT_FILE)
+print("University-level multi-topic profiling completed")
+print(" Saved ", OUTPUT_FILE)

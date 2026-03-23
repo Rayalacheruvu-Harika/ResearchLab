@@ -1,33 +1,14 @@
 """
-Improved Topic Labeling Script (Final Version)
----------------------------------------------
-Outputs:
-- topic_id
-- topic_name (clean human topic label)
-- top_keywords
-- example texts
-
 Ensures:
 - NO "Other"
 - NO "Unlabeled Topic"
 - Every topic gets a readable label
 """
 
-import sys
-import os
-from pathlib import Path
-
-# Add project root to path
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
-from config import CONFIG
-from config.logger import setup_logger
-
 import pandas as pd
 from bertopic import BERTopic
+from config import CONFIG
 
-logger = setup_logger(__name__)
 
 # Category Rules → High-level labels
 CATEGORY_RULES = {
@@ -66,26 +47,26 @@ def assign_category(keywords):
 
 
 if __name__ == "__main__":
-    logger.info("=" * 80)
-    logger.info("BERT TOPIC LABELING")
-    logger.info("=" * 80)
+    print("=" * 80)
+    print("BERT TOPIC LABELING")
+    print("=" * 80)
 
     # Paths
-    MODEL_PATH = CONFIG["paths"]["bertopic_model"]
+    MODEL_PATH = CONFIG["data"]["bertopic_model"]
     DATA_PATH = CONFIG["data"]["bert_results"]
     OUTPUT_PATH = CONFIG["data"]["bert_labels"]
 
     # Load BERTopic model + dataset
-    logger.info("Loading BERTopic model...")
+    print("Loading BERTopic model...")
     topic_model = BERTopic.load(MODEL_PATH)
-    logger.info("Loading dataset...")
+    print("Loading dataset...")
     df = pd.read_csv(DATA_PATH)
     topic_info = topic_model.get_topic_info()
     topic_ids = [t for t in topic_info["Topic"] if t != -1]  # remove noise cluster
 
     # Generate labels
     labels = []
-    logger.info("Generating topic labels...")
+    print("Generating topic labels...")
     for topic_id in topic_ids:
         topic_keywords = topic_model.get_topic(topic_id)
         keywords = [w[0] for w in topic_keywords[:10]]
@@ -118,6 +99,6 @@ if __name__ == "__main__":
     labels_df = pd.DataFrame(labels)
     labels_df.to_csv(OUTPUT_PATH, index=False, encoding="utf-8")
 
-    logger.info("Topic labeling completed")
-    logger.info(f"Saved: {OUTPUT_PATH}")
-    logger.info("=" * 80)
+    print("Topic labeling completed")
+    print(f"Saved: {OUTPUT_PATH}")
+    print("=" * 80)

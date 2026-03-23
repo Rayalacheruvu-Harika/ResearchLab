@@ -3,16 +3,21 @@ import matplotlib.pyplot as plt
 import os
 import numpy as np
 from scipy.stats import chi2_contingency
+from config import CONFIG
 
-# =====================================================
-# PATHS
-# =====================================================
-INPUT_FILE = "data/final_clean_dataset.csv"
-OUT_DATA_FILE = "analysis_results/rq3/policy_sentiment_university.csv"
-OUT_FIG_DIR = "analysis_results/rq3/figures"
+SENTIMENT_PALETTE = {
+    "Supportive":   "#1E3A5F",  # deep navy
+    "Conditional":  "#2E86AB",  # steel blue
+    "Restrictive":  "#44BBA4",  # teal
+    "Risk-Focused": "#48CAE4",  # muted blue
+    "Neutral":      "#A0AEC0",  # grey — neutral concept = grey
+}
+
+INPUT_FILE = CONFIG["data"]["clean"]
+OUT_DATA_FILE = CONFIG["data"]["policy_sentiment_university"]
 
 os.makedirs(os.path.dirname(OUT_DATA_FILE), exist_ok=True)
-os.makedirs(OUT_FIG_DIR, exist_ok=True)
+os.makedirs(os.path.dirname(CONFIG["data"]["policy_sentiment_by_country"]), exist_ok=True)
 
 # =====================================================
 # POLICY-ORIENTED SENTIMENT LABELS
@@ -92,7 +97,7 @@ uni_sentiment["dominant_sentiment"] = uni_sentiment[LABEL_ORDER].idxmax(axis=1)
 
 # Save university-level results
 uni_sentiment.to_csv(OUT_DATA_FILE, index=False)
-print(f"✓ Saved university-level policy sentiment → {OUT_DATA_FILE}")
+print(f" Saved university-level policy sentiment  {OUT_DATA_FILE}")
 
 # =====================================================
 # COUNTRY-LEVEL % STACKED BAR CHART
@@ -112,7 +117,8 @@ country_pct = country_counts.div(
 country_pct.plot(
     kind="bar",
     stacked=True,
-    figsize=(11, 6)
+    figsize=(11, 6),
+    color=[SENTIMENT_PALETTE.get(col, "#A0AEC0") for col in country_pct.columns]
 )
 
 plt.title(
@@ -123,11 +129,8 @@ plt.ylabel("Percentage of Universities (%)")
 plt.xticks(rotation=0)
 plt.legend(title="Policy Sentiment", bbox_to_anchor=(1.05, 1))
 plt.tight_layout()
-plt.savefig(
-    f"{OUT_FIG_DIR}/policy_sentiment_by_country_percentage.png",
-    dpi=300
-)
-plt.show()
+plt.savefig(CONFIG["data"]["policy_sentiment_by_country"], dpi=300)
+plt.close()
 
 # =====================================================
 # OVERALL SENTIMENT DISTRIBUTION (PERCENTAGE)
@@ -141,7 +144,10 @@ overall_counts = (
 overall_pct = overall_counts / overall_counts.sum() * 100
 
 plt.figure(figsize=(8, 5))
-overall_pct.plot(kind="bar")
+overall_pct.plot(
+    kind="bar",
+    color=[SENTIMENT_PALETTE.get(i, "#A0AEC0") for i in overall_pct.index]
+)
 
 plt.title(
     "Overall Policy-Oriented Sentiment of LLM Policies\n(University Level)"
@@ -150,11 +156,8 @@ plt.xlabel("Policy Sentiment")
 plt.ylabel("Percentage of Universities (%)")
 plt.xticks(rotation=0)
 plt.tight_layout()
-plt.savefig(
-    f"{OUT_FIG_DIR}/policy_sentiment_overall_percentage.png",
-    dpi=300
-)
-plt.show()
+plt.savefig(CONFIG["data"]["policy_sentiment_overall"], dpi=300)
+plt.close()
 
 # =====================================================
 # STATISTICAL VALIDATION
@@ -179,6 +182,6 @@ cramers_v = np.sqrt(chi2 / (n * (min(contingency.shape) - 1)))
 print(f"Cramér’s V: {cramers_v:.3f}")
 
 if p_value < 0.05:
-    print("✓ Sentiment distributions differ significantly across countries.")
+    print(" Sentiment distributions differ significantly across countries.")
 else:
-    print("✓ No statistically significant difference in sentiment distributions across countries.")
+    print(" No statistically significant difference in sentiment distributions across countries.")

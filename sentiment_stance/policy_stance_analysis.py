@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 from transformers import pipeline
-
+from config import CONFIG
 # Non-overlapping stance labels (best for university policy analysis)
 STANCE_LABELS = [
     "SUPPORTIVE",
@@ -49,8 +49,8 @@ def split_into_chunks(text, max_chunk_chars=700):
     return chunks
 
 def classify_policy_stance(
-    input_csv="data/final_clean_dataset.csv",
-    output_csv="data/final_clean_dataset_with_stance.csv",
+    input_csv=CONFIG["data"]["clean"],
+    output_csv=CONFIG["data"]["clean_with_stance"],
     text_col="clean_text"
 ):
     df = pd.read_csv(input_csv)
@@ -105,10 +105,10 @@ def classify_policy_stance(
 
     df.to_csv(output_csv, index=False)
 
-    print("✅ Saved stance results to:", output_csv)
-    print("\n📌 Stance label distribution:")
+    print(f"Saved: {output_csv}")
+    print("\nStance label distribution:")
     print(df["policy_stance_label"].value_counts())
-    print("\n📌 Average restrictiveness index:", df["restrictiveness_index"].mean())
+    print("\nAverage restrictiveness index:", df["restrictiveness_index"].mean())
 
 if __name__ == "__main__":
     classify_policy_stance()

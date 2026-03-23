@@ -1,31 +1,27 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
-import matplotlib.cm as cm
+from config import CONFIG
 
-# ==============================
-# PATHS
-# ==============================
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+HUMAN_TONE_PALETTE = {
+    "neutral":               "#A8DADC",  
+    "allowed-with-conditions":"#2E86AB",  
+    "risk-awareness":        "#44BBA4",  
+    "restrictive":           "#1E3A5F",  
+    "allowed":               "#48CAE4",  
+}
 
-LABEL_FILE = os.path.join(BASE_DIR, "sentiment_manual.xlsx")
-META_FILE = os.path.join(BASE_DIR, "../data/final_clean_dataset.csv")
+LABEL_FILE = CONFIG["data"]["sentiment_manual"]
+META_FILE = CONFIG["data"]["clean"]
 
-OUT_DIR = os.path.join(BASE_DIR, "../analysis_results")
-FIG_DIR = os.path.join(OUT_DIR, "Manual_sentiment")
-os.makedirs(FIG_DIR, exist_ok=True)
-
-# ==============================
-# LOAD DATA
-# ==============================
+os.makedirs(os.path.dirname(CONFIG["data"]["overall_tone_distribution"]), exist_ok=True)
 labels_df = pd.read_excel(LABEL_FILE)
 labels_df.columns = ["url", "label"]
 
 meta_df = pd.read_csv(META_FILE)[["url", "country"]]
 
 df = labels_df.merge(meta_df, on="url", how="left")
-print("✓ Data loaded")
+print(" Data loaded")
 
 # ==============================
 # SPLIT MULTI-LABEL CELLS
@@ -75,7 +71,7 @@ def align_tone(label):
 
 
 df["tone_group"] = df["label_clean"].apply(align_tone)
-print("✓ Semantic alignment complete")
+print(" Semantic alignment complete")
 
 # ==============================
 # UNIVERSITY-LEVEL WEIGHTED + SUPPORT AGGREGATION
@@ -121,7 +117,7 @@ university_tone = (
       .reset_index()
 )
 
-print(f"✓ Aggregated to {len(university_tone)} universities")
+print(f" Aggregated to {len(university_tone)} universities")
 
 # ==============================
 # OVERALL DISTRIBUTION
@@ -149,11 +145,8 @@ plt.xlabel("Policy Tone")
 plt.ylabel("Number of Universities")
 plt.xticks(rotation=30, ha="right")
 plt.tight_layout()
-plt.savefig(
-    os.path.join(FIG_DIR, "overall_tone_distribution_university_final.png"),
-    dpi=300
-)
-plt.show()
+plt.savefig(CONFIG["data"]["overall_tone_distribution"], dpi=300)
+plt.close()
 
 # ==============================
 # COUNTRY-WISE DISTRIBUTION
@@ -169,7 +162,8 @@ country_tone = pd.pivot_table(
 country_tone.plot(
     kind="bar",
     stacked=True,
-    figsize=(11, 6)
+    figsize=(11, 6),
+    color=[HUMAN_TONE_PALETTE.get(col, "#A0AEC0") for col in country_tone.columns]
 )
 
 plt.title("Country-wise Policy Tone Distribution (Human-annotated, University-Level)")
@@ -178,10 +172,6 @@ plt.ylabel("Number of Universities")
 plt.xticks(rotation=0)
 plt.legend(title="Policy Tone", bbox_to_anchor=(1.05, 1), loc="upper left")
 plt.tight_layout()
-plt.savefig(
-    os.path.join(FIG_DIR, "country_tone_distribution_university_final.png"),
-    dpi=300
-)
-plt.show()
-
-print("✓ Analysis complete. Restrictive tone preserved and balanced.")
+plt.savefig(CONFIG["data"]["country_tone_distribution"], dpi=300)
+plt.close()
+print(" Analysis complete. Restrictive tone preserved and balanced.")

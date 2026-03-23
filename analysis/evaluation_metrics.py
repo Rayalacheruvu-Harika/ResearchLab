@@ -2,31 +2,26 @@
  # METRICS ALLOCATED:
 
 LDA MODEL (7 METRICS):
-  [1/7] Chi-Square Test (Country × Topic)        → BOTH models
-  [2/7] Coherence Score (c_v)                    → LDA only
-  [3/7] Perplexity                               → LDA ONLY (model-specific)
-  [4/7] Topic Diversity                          → LDA only
-  [5/7] Silhouette Score (TF-IDF clustering)     → LDA only
-  [6/7] Davies-Bouldin Index                     → LDA only
-  [7/7] Cosine Similarity (within-country)       → LDA only
+  Chi-Square Test (Country × Topic)        
+  Coherence Score (c_v)                     
+  Perplexity                               
+  Topic Diversity                          
+  Silhouette Score (TF-IDF clustering)      
+  Davies-Bouldin Index                      
+  Cosine Similarity (within-country)        
 
 BERT MODEL (6 METRICS):
-  [1/6] Chi-Square Test (Country × Topic)        → BOTH models
-  [2/6] Coherence Score (c_v) - BERT topics      → BERT only
-  [3/6] Topic Diversity                          → BERT only
-  [4/6] Silhouette Score (BERT embeddings)       → BERT only
-  [5/6] Davies-Bouldin Index                     → BERT only
-  [6/6] Cosine Similarity (within-country)       → BERT only
+  Chi-Square Test (Country × Topic)        
+  Coherence Score (c_v) - BERT topics      
+  Topic Diversity                       
+  Silhouette Score (BERT embeddings)       
+  Davies-Bouldin Index                     
+  Cosine Similarity (within-country)       
 
-DATA USED:
-  • Final clean dataset: clean_data.csv
-  • LDA results: lda_topic_model_results.csv  (column: 'lda_topic')
-  • BERT results: bert_topic_model_results.csv (column: 'bert_topic')
 """
 
 import pandas as pd
 import numpy as np
-import logging
 import yaml
 from pathlib import Path
 from scipy.spatial.distance import pdist, squareform, cosine
@@ -40,8 +35,7 @@ import json
 import warnings
 
 warnings.filterwarnings('ignore')
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+
 
 
 class EvaluationPipeline:
@@ -60,35 +54,35 @@ class EvaluationPipeline:
 
     def load_lda_data(self):
         """Load clean_data and merge with LDA topics"""
-        logger.info("📂 Loading LDA data...")
+        print(" Loading LDA data...")
         try:
             clean_data = pd.read_csv(self.config['data']['clean'])
             lda_results = pd.read_csv(self.config['data']['lda_results'])
             
-            logger.info(f"  ✓ clean_data.csv: {clean_data.shape}")
-            logger.info(f"  ✓ lda_topic_model_results.csv: {lda_results.shape}")
+            print(f"   clean_data.csv: {clean_data.shape}")
+            print(f"   lda_topic_model_results.csv: {lda_results.shape}")
             
             if len(clean_data) == len(lda_results):
                 self.data_lda = clean_data.copy()
                 self.data_lda['lda_topic'] = lda_results['lda_topic'].values
-                logger.info(f"  ✓ Merged: added 'lda_topic' column")
+                print(f"   Merged: added 'lda_topic' column")
                 return self.data_lda
             else:
-                logger.error(f"  ✗ Row count mismatch: {len(clean_data)} vs {len(lda_results)}")
+                print(f"   Row count mismatch: {len(clean_data)} vs {len(lda_results)}")
                 return None
         except Exception as e:
-            logger.error(f"✗ LDA data loading failed: {e}")
+            print(f" LDA data loading failed: {e}")
             return None
 
     def load_bert_data(self):
         """Load clean_data and merge with BERT topics"""
-        logger.info("📂 Loading BERT data...")
+        print(" Loading BERT data...")
         try:
             clean_data = pd.read_csv(self.config['data']['clean'])
             bert_results = pd.read_csv(self.config['data'].get('bert_results', 'data/bert_topic_model_results.csv'))
             
-            logger.info(f"  ✓ clean_data.csv: {clean_data.shape}")
-            logger.info(f"  ✓ bert_topic_model_results.csv: {bert_results.shape}")
+            print(f"   clean_data.csv: {clean_data.shape}")
+            print(f"   bert_topic_model_results.csv: {bert_results.shape}")
             
             # Normalize BERT topic column name
             topic_col_candidates = ['bert_topic', 'topic', 'Topic', 'topic_id', 'cluster']
@@ -99,19 +93,19 @@ class EvaluationPipeline:
                     break
             
             if bert_topic_col is None:
-                logger.error(f"  ✗ No topic column found in BERT results")
+                print(f"   No topic column found in BERT results")
                 return None
             
             if len(clean_data) == len(bert_results):
                 self.data_bert = clean_data.copy()
                 self.data_bert['bert_topic'] = bert_results[bert_topic_col].values
-                logger.info(f"  ✓ Merged: added 'bert_topic' column from '{bert_topic_col}'")
+                print(f"   Merged: added 'bert_topic' column from '{bert_topic_col}'")
                 return self.data_bert
             else:
-                logger.error(f"  ✗ Row count mismatch: {len(clean_data)} vs {len(bert_results)}")
+                print(f"   Row count mismatch: {len(clean_data)} vs {len(bert_results)}")
                 return None
         except Exception as e:
-            logger.error(f"✗ BERT data loading failed: {e}")
+            print(f" BERT data loading failed: {e}")
             return None
 
     def _build_tfidf_matrix(self):
@@ -119,20 +113,20 @@ class EvaluationPipeline:
         if self.X_tfidf is not None:
             return
         
-        logger.info("  🔨 Building TF-IDF matrix from clean_data...")
+        print(" Building TF-IDF matrix from clean_data...")
         try:
             vectorizer = TfidfVectorizer(max_features=100)
             data = self.data_lda if self.data_lda is not None else self.data_bert
             self.X_tfidf = vectorizer.fit_transform(data['clean_text']).toarray()
-            logger.info(f"  ✓ TF-IDF shape: {self.X_tfidf.shape}")
+            print(f"   TF-IDF shape: {self.X_tfidf.shape}")
         except Exception as e:
-            logger.error(f"  ✗ TF-IDF build failed: {e}")
+            print(f"   TF-IDF build failed: {e}")
 
     # ============ CHI-SQUARE TEST (SHARED) ============
 
     def compute_chi_square_lda(self):
         """Chi-Square: Country × LDA Topic distribution"""
-        logger.info("\n[1/7 LDA] Computing Chi-Square Test (Country × LDA Topic)")
+        print("\n Computing Chi-Square Test (Country × LDA Topic)")
         try:
             data = self.data_lda.copy()
             contingency = pd.crosstab(data['country'], data['lda_topic'])
@@ -163,13 +157,13 @@ class EvaluationPipeline:
                 f.write(f"  - p ≥ 0.05: No significant differences\n")
             
             self.results_lda['chi_square'] = result
-            logger.info(f"  ✓ χ²={chi2:.4f}, p={p_value:.6f} → {result['interpretation']}")
+            print(f"   χ²={chi2:.4f}, p={p_value:.6f} → {result['interpretation']}")
         except Exception as e:
-            logger.error(f"  ✗ Chi-Square (LDA) failed: {e}")
+            print(f"   Chi-Square (LDA) failed: {e}")
 
     def compute_chi_square_bert(self):
         """Chi-Square: Country × BERT Topic distribution"""
-        logger.info("\n[1/6 BERT] Computing Chi-Square Test (Country × BERT Topic)")
+        print("\n Computing Chi-Square Test (Country × BERT Topic)")
         try:
             data = self.data_bert.copy()
             contingency = pd.crosstab(data['country'], data['bert_topic'])
@@ -200,20 +194,20 @@ class EvaluationPipeline:
                 f.write(f"  - p ≥ 0.05: No significant differences\n")
             
             self.results_bert['chi_square'] = result
-            logger.info(f"  ✓ χ²={chi2:.4f}, p={p_value:.6f} → {result['interpretation']}")
+            print(f"   χ²={chi2:.4f}, p={p_value:.6f} → {result['interpretation']}")
         except Exception as e:
-            logger.error(f"  ✗ Chi-Square (BERT) failed: {e}")
+            print(f"   Chi-Square (BERT) failed: {e}")
 
     # ============ COHERENCE (LDA) ============
 
     def compute_coherence_lda(self):
         """Coherence (c_v metric) for LDA topics"""
-        logger.info("\n[2/7 LDA] Computing Coherence Score (c_v) for LDA")
+        print("\n Computing Coherence Score (c_v) for LDA")
         try:
             lda_data = pd.read_csv(self.config['data']['lda_results'])
             
             if 'tokens' not in lda_data.columns:
-                logger.warning("  ⚠ 'tokens' column not found in LDA results. Skipping.")
+                print("   'tokens' column not found in LDA results. Skipping.")
                 return
             
             texts = lda_data['tokens'].apply(
@@ -226,7 +220,7 @@ class EvaluationPipeline:
             )
             
             if not Path(lda_model_path).exists():
-                logger.warning(f"  ⚠ LDA model not found at {lda_model_path}")
+                print(f"   LDA model not found at {lda_model_path}")
                 return
             
             lda_model = LdaModel.load(lda_model_path)
@@ -259,15 +253,15 @@ class EvaluationPipeline:
                 'interpretation': 'HIGH' if overall_coherence > 0.5 else 'MODERATE' if overall_coherence > 0.3 else 'LOW'
             }
             
-            logger.info(f"  ✓ Overall Coherence (c_v): {overall_coherence:.4f} ({self.results_lda['coherence']['interpretation']})")
+            print(f"   Overall Coherence (c_v): {overall_coherence:.4f} ({self.results_lda['coherence']['interpretation']})")
         except Exception as e:
-            logger.error(f"  ✗ Coherence (LDA) failed: {e}")
+            print(f"   Coherence (LDA) failed: {e}")
 
     # ============ COHERENCE (BERT) ============
 
     def compute_coherence_bert(self):
         """Coherence (c_v metric) for BERT topics"""
-        logger.info("\n[2/6 BERT] Computing Coherence Score (c_v) for BERT")
+        print("\n Computing Coherence Score (c_v) for BERT")
         try:
             from bertopic import BERTopic
             
@@ -276,7 +270,7 @@ class EvaluationPipeline:
             ))
             
             if 'tokens' not in bert_data.columns:
-                logger.warning("  ⚠ 'tokens' column not found in BERT results. Skipping.")
+                print("   'tokens' column not found in BERT results. Skipping.")
                 return
             
             texts = bert_data['tokens'].apply(
@@ -295,18 +289,18 @@ class EvaluationPipeline:
             for path in bert_model_paths:
                 try:
                     loaded_model = BERTopic.load(path)
-                    logger.info(f"  ✓ Loaded BERTopic model from: {path}")
+                    print(f"   Loaded BERTopic model from: {path}")
                     break
                 except (FileNotFoundError, Exception):
                     continue
             
             if loaded_model is None:
-                logger.warning(f"  ⚠ BERTopic model not found. Skipping BERT coherence.")
+                print(f"   BERTopic model not found. Skipping BERT coherence.")
                 return
             
             topic_dict = loaded_model.get_topics()
             if not topic_dict or len(topic_dict) == 0:
-                logger.warning("  ⚠ No topics found in BERT model.")
+                print("   No topics found in BERT model.")
                 return
             
             # Extract top words per topic
@@ -317,7 +311,7 @@ class EvaluationPipeline:
                     topics_for_coherence.append(top_words)
             
             if len(topics_for_coherence) == 0:
-                logger.warning("  ⚠ No valid topics extracted from BERT.")
+                print("   No valid topics extracted from BERT.")
                 return
             
             coherence_model = CoherenceModel(
@@ -348,22 +342,22 @@ class EvaluationPipeline:
                 'interpretation': 'HIGH' if overall_coherence > 0.5 else 'MODERATE' if overall_coherence > 0.3 else 'LOW'
             }
             
-            logger.info(f"  ✓ Overall Coherence (c_v): {overall_coherence:.4f} ({self.results_bert['coherence']['interpretation']})")
+            print(f"   Overall Coherence (c_v): {overall_coherence:.4f} ({self.results_bert['coherence']['interpretation']})")
         except ImportError:
-            logger.warning("  ⚠ BERTopic not installed. Skipping BERT coherence.")
+            print("   BERTopic not installed. Skipping BERT coherence.")
         except Exception as e:
-            logger.error(f"  ✗ Coherence (BERT) failed: {e}")
+            print(f"   Coherence (BERT) failed: {e}")
 
     # ============ PERPLEXITY (LDA ONLY) ============
 
     def compute_perplexity_lda(self):
         """Perplexity for LDA model - BERT doesn't have this metric"""
-        logger.info("\n[3/7 LDA] Computing Perplexity (LDA ONLY - BERT N/A)")
+        print("\n Computing Perplexity (LDA ONLY - BERT N/A)")
         try:
             lda_data = pd.read_csv(self.config['data']['lda_results'])
             
             if 'tokens' not in lda_data.columns:
-                logger.warning("  ⚠ 'tokens' column not found. Skipping perplexity.")
+                print("   'tokens' column not found. Skipping perplexity.")
                 return
             
             texts = lda_data['tokens'].apply(
@@ -377,7 +371,7 @@ class EvaluationPipeline:
             )
             
             if not Path(lda_model_path).exists():
-                logger.warning(f"  ⚠ LDA model not found at {lda_model_path}")
+                print(f"   LDA model not found at {lda_model_path}")
                 return
             
             lda_model = LdaModel.load(lda_model_path)
@@ -404,15 +398,15 @@ class EvaluationPipeline:
                 'interpretation': 'GOOD' if perplexity > -10 else 'NEEDS_REVIEW'
             }
             
-            logger.info(f"  ✓ Perplexity: {perplexity:.4f}")
+            print(f"   Perplexity: {perplexity:.4f}")
         except Exception as e:
-            logger.error(f"  ✗ Perplexity (LDA) failed: {e}")
+            print(f"   Perplexity (LDA) failed: {e}")
 
     # ============ TOPIC DIVERSITY (LDA) ============
 
     def compute_topic_diversity_lda(self):
         """Topic diversity for LDA topics"""
-        logger.info("\n[4/7 LDA] Computing Topic Diversity (LDA)")
+        print("\n Computing Topic Diversity (LDA)")
         try:
             data = self.data_lda.copy()
             diversity_scores = []
@@ -446,15 +440,15 @@ class EvaluationPipeline:
                 'interpretation': 'HIGH' if overall_diversity > 0.5 else 'LOW'
             }
             
-            logger.info(f"  ✓ Topic Diversity: {overall_diversity:.4f} ({self.results_lda['topic_diversity']['interpretation']})")
+            print(f"   Topic Diversity: {overall_diversity:.4f} ({self.results_lda['topic_diversity']['interpretation']})")
         except Exception as e:
-            logger.error(f"  ✗ Topic Diversity (LDA) failed: {e}")
+            print(f"   Topic Diversity (LDA) failed: {e}")
 
     # ============ TOPIC DIVERSITY (BERT) ============
 
     def compute_topic_diversity_bert(self):
         """Topic diversity for BERT topics"""
-        logger.info("\n[3/6 BERT] Computing Topic Diversity (BERT)")
+        print("\n Computing Topic Diversity (BERT)")
         try:
             data = self.data_bert.copy()
             diversity_scores = []
@@ -488,20 +482,20 @@ class EvaluationPipeline:
                 'interpretation': 'HIGH' if overall_diversity > 0.5 else 'LOW'
             }
             
-            logger.info(f"  ✓ Topic Diversity: {overall_diversity:.4f} ({self.results_bert['topic_diversity']['interpretation']})")
+            print(f"   Topic Diversity: {overall_diversity:.4f} ({self.results_bert['topic_diversity']['interpretation']})")
         except Exception as e:
-            logger.error(f"  ✗ Topic Diversity (BERT) failed: {e}")
+            print(f"   Topic Diversity (BERT) failed: {e}")
 
     # ============ SILHOUETTE SCORE (LDA) ============
 
     def compute_silhouette_lda(self):
         """Silhouette Score for LDA topic clustering"""
-        logger.info("\n[5/7 LDA] Computing Silhouette Score (LDA)")
+        print("\n Computing Silhouette Score (LDA)")
         try:
             self._build_tfidf_matrix()
             
             if self.X_tfidf is None:
-                logger.warning("  ⚠ TF-IDF matrix not available.")
+                print("   TF-IDF matrix not available.")
                 return
             
             data = self.data_lda.copy()
@@ -530,20 +524,20 @@ class EvaluationPipeline:
                 'interpretation': 'GOOD' if silhouette > 0.5 else 'ACCEPTABLE' if silhouette > 0.3 else 'POOR'
             }
             
-            logger.info(f"  ✓ Silhouette Score: {silhouette:.4f} ({self.results_lda['silhouette']['interpretation']})")
+            print(f"   Silhouette Score: {silhouette:.4f} ({self.results_lda['silhouette']['interpretation']})")
         except Exception as e:
-            logger.error(f"  ✗ Silhouette (LDA) failed: {e}")
+            print(f"   Silhouette (LDA) failed: {e}")
 
     # ============ SILHOUETTE SCORE (BERT) ============
 
     def compute_silhouette_bert(self):
         """Silhouette Score for BERT topic clustering"""
-        logger.info("\n[4/6 BERT] Computing Silhouette Score (BERT)")
+        print("\n Computing Silhouette Score (BERT)")
         try:
             self._build_tfidf_matrix()
             
             if self.X_tfidf is None:
-                logger.warning("  ⚠ TF-IDF matrix not available.")
+                print("   TF-IDF matrix not available.")
                 return
             
             data = self.data_bert.copy()
@@ -572,20 +566,20 @@ class EvaluationPipeline:
                 'interpretation': 'GOOD' if silhouette > 0.5 else 'ACCEPTABLE' if silhouette > 0.3 else 'POOR'
             }
             
-            logger.info(f"  ✓ Silhouette Score: {silhouette:.4f} ({self.results_bert['silhouette']['interpretation']})")
+            print(f"   Silhouette Score: {silhouette:.4f} ({self.results_bert['silhouette']['interpretation']})")
         except Exception as e:
-            logger.error(f"  ✗ Silhouette (BERT) failed: {e}")
+            print(f"   Silhouette (BERT) failed: {e}")
 
     # ============ DAVIES-BOULDIN INDEX (LDA) ============
 
     def compute_davies_bouldin_lda(self):
         """Davies-Bouldin Index for LDA topic clustering"""
-        logger.info("\n[6/7 LDA] Computing Davies-Bouldin Index (LDA)")
+        print("\n Computing Davies-Bouldin Index (LDA)")
         try:
             self._build_tfidf_matrix()
             
             if self.X_tfidf is None:
-                logger.warning("  ⚠ TF-IDF matrix not available.")
+                print("   TF-IDF matrix not available.")
                 return
             
             data = self.data_lda.copy()
@@ -613,20 +607,20 @@ class EvaluationPipeline:
                 'interpretation': 'EXCELLENT' if dbi < 0.5 else 'GOOD' if dbi < 1.0 else 'NEEDS_REVIEW'
             }
             
-            logger.info(f"  ✓ Davies-Bouldin Index: {dbi:.4f} ({self.results_lda['davies_bouldin']['interpretation']})")
+            print(f"   Davies-Bouldin Index: {dbi:.4f} ({self.results_lda['davies_bouldin']['interpretation']})")
         except Exception as e:
-            logger.error(f"  ✗ Davies-Bouldin (LDA) failed: {e}")
+            print(f"   Davies-Bouldin (LDA) failed: {e}")
 
     # ============ DAVIES-BOULDIN INDEX (BERT) ============
 
     def compute_davies_bouldin_bert(self):
         """Davies-Bouldin Index for BERT topic clustering"""
-        logger.info("\n[5/6 BERT] Computing Davies-Bouldin Index (BERT)")
+        print("\n Computing Davies-Bouldin Index (BERT)")
         try:
             self._build_tfidf_matrix()
             
             if self.X_tfidf is None:
-                logger.warning("  ⚠ TF-IDF matrix not available.")
+                print("   TF-IDF matrix not available.")
                 return
             
             data = self.data_bert.copy()
@@ -654,20 +648,20 @@ class EvaluationPipeline:
                 'interpretation': 'EXCELLENT' if dbi < 0.5 else 'GOOD' if dbi < 1.0 else 'NEEDS_REVIEW'
             }
             
-            logger.info(f"  ✓ Davies-Bouldin Index: {dbi:.4f} ({self.results_bert['davies_bouldin']['interpretation']})")
+            print(f"   Davies-Bouldin Index: {dbi:.4f} ({self.results_bert['davies_bouldin']['interpretation']})")
         except Exception as e:
-            logger.error(f"  ✗ Davies-Bouldin (BERT) failed: {e}")
+            print(f"   Davies-Bouldin (BERT) failed: {e}")
 
     # ============ COSINE SIMILARITY (LDA) ============
 
     def compute_cosine_similarity_lda(self):
         """Within-country cosine similarity for LDA topics"""
-        logger.info("\n[7/7 LDA] Computing Cosine Similarity (LDA)")
+        print("\n Computing Cosine Similarity (LDA)")
         try:
             self._build_tfidf_matrix()
             
             if self.X_tfidf is None:
-                logger.warning("  ⚠ TF-IDF matrix not available.")
+                print("   TF-IDF matrix not available.")
                 return
             
             data = self.data_lda.copy()
@@ -695,20 +689,20 @@ class EvaluationPipeline:
             
             self.results_lda['cosine_similarity'] = country_similarity
             
-            logger.info(f"  ✓ Computed for {len(country_similarity)} countries")
+            print(f"   Computed for {len(country_similarity)} countries")
         except Exception as e:
-            logger.error(f"  ✗ Cosine Similarity (LDA) failed: {e}")
+            print(f"   Cosine Similarity (LDA) failed: {e}")
 
     # ============ COSINE SIMILARITY (BERT) ============
 
     def compute_cosine_similarity_bert(self):
         """Within-country cosine similarity for BERT topics"""
-        logger.info("\n[6/6 BERT] Computing Cosine Similarity (BERT)")
+        print("\n Computing Cosine Similarity (BERT)")
         try:
             self._build_tfidf_matrix()
             
             if self.X_tfidf is None:
-                logger.warning("  ⚠ TF-IDF matrix not available.")
+                print("   TF-IDF matrix not available.")
                 return
             
             data = self.data_bert.copy()
@@ -736,15 +730,15 @@ class EvaluationPipeline:
             
             self.results_bert['cosine_similarity'] = country_similarity
             
-            logger.info(f"  ✓ Computed for {len(country_similarity)} countries")
+            print(f"   Computed for {len(country_similarity)} countries")
         except Exception as e:
-            logger.error(f"  ✗ Cosine Similarity (BERT) failed: {e}")
+            print(f"   Cosine Similarity (BERT) failed: {e}")
 
     # ============ SAVE REPORTS ============
 
     def save_lda_report(self):
         """Save LDA evaluation report"""
-        logger.info("\n📊 Saving LDA evaluation report...")
+        print("\n Saving LDA evaluation report...")
         try:
             output_path = self.config['evaluation_metrics'].get(
                 'lda_report_output', 'analysis_results/lda_evaluation_report.json'
@@ -755,13 +749,13 @@ class EvaluationPipeline:
             with open(output_path, 'w') as f:
                 json.dump(report, f, indent=2)
             
-            logger.info(f"  ✓ Saved to {output_path}")
+            print(f"   Saved to {output_path}")
         except Exception as e:
-            logger.error(f"  ✗ Failed to save LDA report: {e}")
+            print(f"   Failed to save LDA report: {e}")
 
     def save_bert_report(self):
         """Save BERT evaluation report"""
-        logger.info("\n📊 Saving BERT evaluation report...")
+        print("\n Saving BERT evaluation report...")
         try:
             output_path = self.config['evaluation_metrics'].get(
                 'bert_report_output', 'analysis_results/bert_evaluation_report.json'
@@ -772,9 +766,9 @@ class EvaluationPipeline:
             with open(output_path, 'w') as f:
                 json.dump(report, f, indent=2)
             
-            logger.info(f"  ✓ Saved to {output_path}")
+            print(f"   Saved to {output_path}")
         except Exception as e:
-            logger.error(f"  ✗ Failed to save BERT report: {e}")
+            print(f"   Failed to save BERT report: {e}")
 
     @staticmethod
     def _serialize_results(results):
@@ -796,12 +790,12 @@ class EvaluationPipeline:
 
     def run_lda_pipeline(self):
         """Execute all LDA metrics"""
-        logger.info("\n" + "=" * 70)
-        logger.info("STARTING LDA EVALUATION PIPELINE (7 METRICS)")
-        logger.info("=" * 70)
+        print("\n" + "=" * 70)
+        print("STARTING LDA EVALUATION PIPELINE (7 METRICS)")
+        print("=" * 70)
         
         if self.load_lda_data() is None:
-            logger.error("✗ Cannot proceed without LDA data. Exiting.")
+            print(" Cannot proceed without LDA data. Exiting.")
             return self.results_lda
         
         self.compute_chi_square_lda()
@@ -815,20 +809,20 @@ class EvaluationPipeline:
         
         self.save_lda_report()
         
-        logger.info("\n" + "=" * 70)
-        logger.info("LDA EVALUATION COMPLETE ✅")
-        logger.info("=" * 70)
+        print("\n" + "=" * 70)
+        print("LDA EVALUATION COMPLETE ")
+        print("=" * 70)
         
         return self.results_lda
 
     def run_bert_pipeline(self):
         """Execute all BERT metrics"""
-        logger.info("\n" + "=" * 70)
-        logger.info("STARTING BERT EVALUATION PIPELINE (6 METRICS)")
-        logger.info("=" * 70)
+        print("\n" + "=" * 70)
+        print("STARTING BERT EVALUATION PIPELINE (6 METRICS)")
+        print("=" * 70)
         
         if self.load_bert_data() is None:
-            logger.error("✗ Cannot proceed without BERT data. Exiting.")
+            print(" Cannot proceed without BERT data. Exiting.")
             return self.results_bert
         
         self.compute_chi_square_bert()
@@ -841,9 +835,9 @@ class EvaluationPipeline:
         
         self.save_bert_report()
         
-        logger.info("\n" + "=" * 70)
-        logger.info("BERT EVALUATION COMPLETE ✅")
-        logger.info("=" * 70)
+        print("\n" + "=" * 70)
+        print("BERT EVALUATION COMPLETE ")
+        print("=" * 70)
         
         return self.results_bert
 
@@ -858,13 +852,13 @@ if __name__ == '__main__':
     pipeline.run_all()
     
     print("\n" + "=" * 70)
-    print("📊 FINAL EVALUATION SUMMARY")
+    print(" FINAL EVALUATION SUMMARY")
     print("=" * 70)
     
-    print("\n🔵 LDA RESULTS (7 metrics):")
+    print("\n LDA RESULTS (7 metrics):")
     for metric, result in pipeline.results_lda.items():
-        print(f"  • {metric}: {result}")
+        print(f"   {metric}: {result}")
     
-    print("\n🟣 BERT RESULTS (6 metrics):")
+    print("\n BERT RESULTS (6 metrics):")
     for metric, result in pipeline.results_bert.items():
-        print(f"  • {metric}: {result}")
+        print(f"   {metric}: {result}")

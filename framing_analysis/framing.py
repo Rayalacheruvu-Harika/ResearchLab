@@ -1,11 +1,11 @@
 import pandas as pd
 import os
-
+from config import CONFIG
 # --------------------------------------------------
 # Paths
 # --------------------------------------------------
-INPUT = "analysis_results/multi_topic_profiling/university_multi_topic_profiles.csv"
-OUTPUT = "analysis_results/framing/university_framing_profiles.csv"
+INPUT = CONFIG["data"]["uni_multi_topic_profiles"]
+OUTPUT = CONFIG["data"]["university_framing_profiles"]
 
 # --------------------------------------------------
 # FRAME DEFINITIONS (INSIDE CODE – as requested)
@@ -19,9 +19,7 @@ FRAME_MAP = {
     "GenAI Tools": "Technological Enablement"
 }
 
-# --------------------------------------------------
-# Load data
-# --------------------------------------------------
+
 df = pd.read_csv(INPUT)
 
 # --------------------------------------------------
@@ -53,5 +51,5 @@ final = (
 # --------------------------------------------------
 os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
 final.to_csv(OUTPUT, index=False)
-print("✅ RQ1 Framing analysis completed")
+print("RQ1 Framing analysis completed")
 print("Saved →", OUTPUT)

@@ -8,13 +8,14 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from itertools import combinations
 import os
+from config import CONFIG
 
 # -------------------------------------------------
 # Paths
 # -------------------------------------------------
-TOPIC_RESULTS = "data/bert_topic_model_results.csv"
-TOPIC_LABELS = "data/bert_topic_labels.csv"
-OUTPUT_DIR = "analysis_results/topic_cooccurence"
+TOPIC_RESULTS = CONFIG["data"]["bert_results"]
+TOPIC_LABELS = CONFIG["data"]["bert_labels"]
+OUTPUT_DIR = CONFIG["paths"]["topic_cooccurence"]
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # -------------------------------------------------
@@ -78,7 +79,7 @@ co_counts = (
 
 os.makedirs(os.path.dirname(OUTPUT_DIR), exist_ok=True)
 
-co_counts.to_csv(f"{OUTPUT_DIR}/topic_cooccurrence_pairs.csv", index=False)
+co_counts.to_csv(CONFIG["data"]["topic_cooccurrence_pairs"], index=False)
 
 # -------------------------------------------------
 # Create co-occurrence matrix
@@ -93,7 +94,7 @@ matrix = co_counts.pivot_table(
 # Make symmetric
 matrix = matrix.add(matrix.T, fill_value=0)
 
-matrix.to_csv(f"{OUTPUT_DIR}/topic_cooccurrence_matrix.csv")
+matrix.to_csv(CONFIG["data"]["topic_cooccurrence_matrix"])
 
 # -------------------------------------------------
 # Heatmap visualization
@@ -101,7 +102,7 @@ matrix.to_csv(f"{OUTPUT_DIR}/topic_cooccurrence_matrix.csv")
 plt.figure(figsize=(14, 10))
 sns.heatmap(
     matrix,
-    cmap="Reds",
+    cmap="Blues",
     linewidths=0.5,
     annot=True
 )
@@ -109,7 +110,7 @@ plt.title("Topic Co-Occurrence Heatmap (University Level)")
 plt.xlabel("Policy Topic")
 plt.ylabel("Policy Topic")
 plt.tight_layout()
-plt.savefig(f"{OUTPUT_DIR}/topic_cooccurrence_heatmap.png", dpi=300)
+plt.savefig(CONFIG["data"]["topic_cooccurrence_heatmap"], dpi=300)
 plt.show()
 
 # -------------------------------------------------
@@ -138,8 +139,8 @@ nx.draw_networkx_labels(G, pos, font_size=10)
 plt.title("Topic Co-Occurrence Network Across Universities")
 plt.axis("off")
 plt.tight_layout()
-plt.savefig(f"{OUTPUT_DIR}/topic_cooccurrence_network.png", dpi=300)
+plt.savefig(CONFIG["data"]["topic_cooccurrence_network"], dpi=300)
 plt.show()
 
-print("\n✅ Topic co-occurrence analysis completed")
-print("📁 Outputs saved in:", OUTPUT_DIR)
+print("\n Topic co-occurrence analysis completed")
+print("Outputs saved in:", OUTPUT_DIR)

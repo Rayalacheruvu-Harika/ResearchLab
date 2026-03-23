@@ -1,14 +1,13 @@
 import pandas as pd
 import re
 import nltk
+nltk.download('vader_lexicon', quiet=True)
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from transformers import pipeline
+from config import CONFIG
 
-# ----------------------------
-# CONFIG
-# ----------------------------
-INPUT_CSV = "data/final_clean_dataset.csv"
-OUTPUT_CSV = "data/final_clean_dataset_sentiment_stance.csv"
+INPUT_CSV = CONFIG["data"]["clean"]
+OUTPUT_CSV = CONFIG["data"]["clean_sentiment_stance"]
 TEXT_COL = "clean_text"
 
 STANCE_LABELS = [
@@ -102,7 +101,7 @@ def bert_stance(text, stance_pipe):
 
 
 def main():
-    print("✅ Loading dataset:", INPUT_CSV)
+    print(" Loading dataset:", INPUT_CSV)
     df = pd.read_csv(INPUT_CSV)
     df[TEXT_COL] = df[TEXT_COL].fillna("").astype(str)
 
@@ -110,10 +109,10 @@ def main():
     vader = SentimentIntensityAnalyzer()
 
     # ---- Transformer pipelines ----
-    print("✅ Loading BERT sentiment model...")
+    print(" Loading BERT sentiment model...")
     sentiment_pipe = pipeline("sentiment-analysis")
 
-    print("✅ Loading BERT stance (zero-shot) model...")
+    print(" Loading BERT stance (zero-shot) model...")
     stance_pipe = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
     # ---- Run analysis ----
@@ -155,15 +154,15 @@ def main():
     df["policy_stance_confidence"] = stance_scores
 
     df.to_csv(OUTPUT_CSV, index=False)
-    print("\n✅ Saved output:", OUTPUT_CSV)
+    print("\n Saved output:", OUTPUT_CSV)
 
-    print("\n📌 VADER compound summary:")
+    print("\n VADER compound summary:")
     print(df["vader_compound"].describe())
 
-    print("\n📌 BERT Sentiment label counts:")
+    print("\n BERT Sentiment label counts:")
     print(df["bert_sentiment_label"].value_counts())
 
-    print("\n📌 Policy stance label counts:")
+    print("\n Policy stance label counts:")
     print(df["policy_stance_label"].value_counts())
 
 

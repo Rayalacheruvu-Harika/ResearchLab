@@ -1,19 +1,17 @@
 import pandas as pd
 from datetime import datetime
-import sys
-import os
+from pathlib import Path
+from config import CONFIG
 
-# Get the project root directory (parent of the script's parent directory)
-script_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.dirname(script_dir)
 
-# Construct paths relative to project root
-raw_data_path = os.path.join(project_root, "data/raw_genai_data.csv")
-manual_data_path = os.path.join(project_root, "data/manual_corrected_data.xlsx")
+project_root = Path(__file__).resolve().parents[1]  
 
-# Load the data
-df = pd.read_csv(raw_data_path)
-manual_df = pd.read_excel(manual_data_path)
+raw_path = project_root / CONFIG["data"]["raw_genai"]
+manual_path = project_root / CONFIG["data"]["manual_corrected"]
+
+df = pd.read_csv(raw_path)
+manual_df = pd.read_excel(manual_path)  # Your file CELL 2
+
 
 def detect_document_type(text):
     if "policy" in text.lower(): return "Policy"
@@ -63,7 +61,8 @@ for _, row in manual_df.iterrows():
         df.loc[mask,"date_accessed"] = datetime.today().strftime("%Y-%m-%d")
         updated += 1
 
-print(f"✔ Manually updated rows: {updated}")
+print(f"Manually updated rows: {updated}")
 
-df.to_csv("data/merged_dataset.csv", index=False, encoding="utf-8")
-print("📌 Saved → ../data/merged_dataset.csv")
+output_path = project_root / CONFIG["data"]["merged"]
+df.to_csv(output_path, index=False, encoding="utf-8")
+print(f"Saved --- {output_path}")

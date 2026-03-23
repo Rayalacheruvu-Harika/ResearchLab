@@ -3,6 +3,8 @@ import pandas as pd
 import re
 import requests
 import time
+from pathlib import Path
+from config import CONFIG
 from bs4 import BeautifulSoup
 from datetime import datetime
 from io import BytesIO
@@ -43,11 +45,12 @@ def clean_text(t):
 def detect_country(url):
     u = url.lower()
     if ".ac.uk" in u: return "United Kingdom"
-    if ".edu.au" in url or ".monash.edu" in url: return "Australia"
+    if ".edu.au" in u or ".monash.edu" in u: return "Australia"
     if ".ca" in u: return "Canada"
     if ".edu" in u: return "United States"
     if ".de" in u: return "Germany"
     return "Unknown"
+
 
 def extract_all(url):
     print("\nExtracting:", url)
@@ -97,7 +100,10 @@ def extract_all(url):
 # -------------------------------
 # Load URLs
 # -------------------------------
-with open("data/urls.txt", "r", encoding="utf-8") as f:
+project_root = Path(__file__).resolve().parent.parent
+urls_path = project_root / CONFIG["data"]["urls"]
+
+with open(urls_path, "r", encoding="utf-8") as f:
     urls = [line.strip() for line in f.readlines() if line.strip()]
 
 # -------------------------------
@@ -116,8 +122,14 @@ for url in urls:
         "date_accessed": datetime.today().strftime("%Y-%m-%d")
     })
 
+output_path = project_root / CONFIG["data"]["raw_extracted"]
 df = pd.DataFrame(results)
-df.to_excel("data/raw_extracted_data.xlsx", index=False)
-print("✔ Saved → data/raw_extracted_data.xlsx")
+def sanitize(val):
+    if isinstance(val, str):
+        return re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', val)
+    return val
 
+df = df.map(sanitize)
+df.to_excel(output_path, index=False)
+print(f"Saved-- data/raw_extracted_data.xlsx")
 driver.quit()
