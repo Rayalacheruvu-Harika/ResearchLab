@@ -1,0 +1,12 @@
+Silhouette Score (LDA Topic Clustering on TF-IDF)
+==================================================
+
+Score: -0.0410
+
+Interpretation:
+  - Range: -1 to +1
+  - > 0.5: Well-separated clusters
+  - 0.3-0.5: Overlapping clusters
+  - < 0.3: Poor cluster quality
+
+Result: POOR

@@ -1,0 +1,46 @@
+university_domain,university_name,url,lda_topic,topic_label,lda_topic_probability
+ox.ac.uk,OX,https://www.ox.ac.uk/students/life/it/guidance-safe-and-responsible-use-gen-ai-tools,4,Student Use of Generative AI in Coursework,0.9998426
+information-compliance.admin.cam.ac.uk,INFORMATION-COMPLIANCE,https://www.information-compliance.admin.cam.ac.uk/data-protection/guidance/ai-guidance,1,General Guidance on Generative AI Tools,0.999935
+ucl.ac.uk,UCL,https://www.ucl.ac.uk/students/exams-and-assessments/assessment-success-guide/engaging-generative-ai-your-education-and-assessment,0,Miscellaneous / Low-Frequency Content,0.9994841
+imperial.ac.uk,IMPERIAL,https://www.imperial.ac.uk/admin-services/library/learning-support/generative-ai-guidance/,0,Miscellaneous / Low-Frequency Content,0.8348961
+information-services.ed.ac.uk,INFORMATION-SERVICES,https://information-services.ed.ac.uk/computing/comms-and-collab/elm/generative-ai-guidance-for-students/using-generative,1,General Guidance on Generative AI Tools,0.51891243
+gla.ac.uk,GLA,https://www.gla.ac.uk/myglasgow/sld/ai/students/,0,Miscellaneous / Low-Frequency Content,0.99984926
+staffnet.manchester.ac.uk,STAFFNET,https://www.staffnet.manchester.ac.uk/dcmsr/communications/ai-guidelines/,1,General Guidance on Generative AI Tools,0.9998605
+kcl.ac.uk,KCL,https://www.kcl.ac.uk/about/strategy/learning-and-teaching/ai-guidance/student-guidance,0,Miscellaneous / Low-Frequency Content,0.987882
+warwick.ac.uk,WARWICK,https://warwick.ac.uk/fac/soc/law/student-hub/ai-guidance-students/,2,"Responsible Use, Risks, and Policy Frameworks",0.68286794
+nottingham.ac.uk,NOTTINGHAM,https://www.nottingham.ac.uk/studyingeffectively/ai/ai.aspx,1,General Guidance on Generative AI Tools,0.48937893
+policies.mq.edu.au,POLICIES,https://policies.mq.edu.au/document/view.php?id=394,1,General Guidance on Generative AI Tools,0.9997133
+sydney.edu.au,SYDNEY,https://www.sydney.edu.au/news-opinion/news/2024/11/27/university-of-sydney-ai-assessment-policy.html,1,General Guidance on Generative AI Tools,0.7519802
+unsw.edu.au,UNSW,https://www.unsw.edu.au/student/managing-your-studies/academic-skills-support/toolkit/ai#levels,2,"Responsible Use, Risks, and Policy Frameworks",0.7829079
+anu.edu.au,ANU,https://www.anu.edu.au/students/academic-skills/academic-integrity/best-practice-principles/guide-for-students-best,2,"Responsible Use, Risks, and Policy Frameworks",0.9997938
+publicpolicydms.monash.edu,PUBLICPOLICYDMS,https://publicpolicydms.monash.edu/Monash/documents/2904420,1,General Guidance on Generative AI Tools,0.5877769
+my.uq.edu.au,MY,https://my.uq.edu.au/information-and-services/manage-my-program/student-integrity-and-conduct/academic-integrity-and-student-conduct,4,Student Use of Generative AI in Coursework,0.9998974
+uwa.edu.au,UWA,https://www.uwa.edu.au/students/-/media/project/uwa/uwa/students/academic-support/ai-assessment-guidelines-student_2025_final.pdf,0,Miscellaneous / Low-Frequency Content,0.6871559
+adelaide.edu.au,ADELAIDE,https://www.adelaide.edu.au/technology/secure-it/generative-ai-it-security-guidelines,1,General Guidance on Generative AI Tools,0.9994214
+uts.edu.au,UTS,https://www.uts.edu.au/about/leadership-governance/policies/a-z/artificial-intelligence-operations-policy,1,General Guidance on Generative AI Tools,0.99989235
+curtin.edu.au,CURTIN,https://www.curtin.edu.au/news/oasis-news/how-to-navigate-gen-ai-tools-at-curtin/,0,Miscellaneous / Low-Frequency Content,0.99946725
+ualberta.ca,UALBERTA,https://www.ualberta.ca/en/centre-for-teaching-and-learning/resources/generative-ai/academic-integrity-ai-use/index.html,2,"Responsible Use, Risks, and Policy Frameworks",0.9999112
+sgs.utoronto.ca,SGS,https://www.sgs.utoronto.ca/about/guidance-on-the-use-of-generative-artificial-intelligence/,2,"Responsible Use, Risks, and Policy Frameworks",0.9999105
+teachingkb.mcgill.ca,TEACHINGKB,https://teachingkb.mcgill.ca/tlk/using-generative-ai-in-teaching-and-learning,2,"Responsible Use, Risks, and Policy Frameworks",0.9998123
+uottawa.ca,UOTTAWA,https://www.uottawa.ca/faculty-social-sciences/sites/g/files/bhrskd371/files/2025-06/Policy%20on%20use%20of%20generative%20artificial%20intelligence%20%28AI%29%20in%20Major%20Research%20Papers%20%28MRP%29.pdf,1,General Guidance on Generative AI Tools,0.5637143
+uwaterloo.ca,UWATERLOO,https://uwaterloo.ca/academic-integrity/artificial-intelligence-and-chatgpt,2,"Responsible Use, Risks, and Policy Frameworks",0.5772355
+provost.mcmaster.ca,PROVOST,https://provost.mcmaster.ca/generative-artificial-intelligence-2/task-force-on-generative-ai-in-teaching-and-learning/provisional-guidelines-on-the-use-of-generative-ai-in-teaching-and-learning/,2,"Responsible Use, Risks, and Policy Frameworks",0.9999001
+genai.ubc.ca,GENAI,https://genai.ubc.ca/guidance/teaching-learning-guidelines/,2,"Responsible Use, Risks, and Policy Frameworks",0.6451858
+otl.uoguelph.ca,OTL,https://otl.uoguelph.ca/teaching-assessment-resources/teaching-context-ai/provisional-recommendations-use-generative-ai,2,"Responsible Use, Risks, and Policy Frameworks",0.99991137
+uregina.ca,UREGINA,https://www.uregina.ca/policy/browse-policy/policy-ops-080-050.html,1,General Guidance on Generative AI Tools,0.99983054
+upeifa.ca,UPEIFA,https://www.upeifa.ca/wp-content/uploads/2024/01/4.-Guidelines-on-the-Use-of-Generative-AI-in-Teaching-and-Learning.pdf,2,"Responsible Use, Risks, and Policy Frameworks",0.9998374
+law.berkeley.edu,LAW,https://www.law.berkeley.edu/wp-content/uploads/2025/08/Sedona-AI-guidelines-for-Judge.pdf,0,Miscellaneous / Low-Frequency Content,0.99982613
+it.uw.edu,IT,https://it.uw.edu/guides/security-authentication/artificial-intelligence-guidelines/?_gl=1,5,"Academic Integrity, Misconduct, and Plagiarism",0.62111944
+provost.utexas.edu,PROVOST,https://provost.utexas.edu/the-office/academic-affairs/office-of-academic-technology/limitations/,1,General Guidance on Generative AI Tools,0.93560314
+it.purdue.edu,IT,https://it.purdue.edu/ai/generative-ai/,5,"Academic Integrity, Misconduct, and Plagiarism",0.99937785
+ethics.msu.edu,ETHICS,https://ethics.msu.edu/gen-ai,1,General Guidance on Generative AI Tools,0.77263397
+ai.unc.edu,AI,https://ai.unc.edu/teaching-generative-ai-usage-guidance-2/,1,General Guidance on Generative AI Tools,0.60322976
+extension.illinois.edu,EXTENSION,https://extension.illinois.edu/commit/ai-guidelines,4,Student Use of Generative AI in Coursework,0.5210385
+oit.colorado.edu,OIT,https://oit.colorado.edu/services/it-security/artificial-intelligence-ai-data-security-guidelines,2,"Responsible Use, Risks, and Policy Frameworks",0.517408
+tum.de,TUM,https://www.tum.de/en/news-and-events/all-news/press-releases/details/guidelines-for-the-use-of-ai-in-science,3,"Teaching, Learning, and Assessment Guidance",0.9992189
+tu.berlin,TU,https://www.tu.berlin/en/dima/news-details/announcement-the-usage-of-ai-tools-policy,4,Student Use of Generative AI in Coursework,0.99853516
+uni-freiburg.de,UNI-FREIBURG,https://uni-freiburg.de/en/research/quality-assurance/good-research-practice/policy-on-the-use-of-generative-ai-in-research/,4,Student Use of Generative AI in Coursework,0.8823111
+uni-erfurt.de,UNI-ERFURT,https://www.uni-erfurt.de/en/studies/study-services/digital-learning-teaching/generative-ai-in-studies,2,"Responsible Use, Risks, and Policy Frameworks",0.78886604
+uni-jena.de,UNI-JENA,https://www.uni-jena.de/en/278883/working-with-generative-ai-tools-at-the-university-of-jena,1,General Guidance on Generative AI Tools,0.99973625
+uni-tuebingen.de,UNI-TUEBINGEN,https://uni-tuebingen.de/en/lehrende/generative-ki-in-lehre-und-forschung/guideline-of-the-university-of-tuebingen/,4,Student Use of Generative AI in Coursework,0.9996857
+lehre-virtuell.uni-frankfurt.de,LEHRE-VIRTUELL,https://lehre-virtuell.uni-frankfurt.de/knowhow/allgemeine-empfehlungen-im-umgang-mit-generativer-ki-in-studium-und-lehre/,4,Student Use of Generative AI in Coursework,0.94985175

@@ -1,0 +1,46 @@
+url,country,Supportive,Conditional,Restrictive,Risk-Focused,Neutral,dominant_sentiment
+https://ai.unc.edu/teaching-generative-ai-usage-guidance-2/,United States,14,33,3,3,0,Conditional
+https://ethics.msu.edu/gen-ai,United States,22,32,0,12,3,Conditional
+https://extension.illinois.edu/commit/ai-guidelines,United States,4,7,0,7,1,Conditional
+https://genai.ubc.ca/guidance/teaching-learning-guidelines/,Canada,8,12,1,14,1,Risk-Focused
+https://information-services.ed.ac.uk/computing/comms-and-collab/elm/generative-ai-guidance-for-students/using-generative,United Kingdom,8,6,11,9,3,Restrictive
+https://it.purdue.edu/ai/generative-ai/,United States,8,10,0,0,1,Conditional
+https://it.uw.edu/guides/security-authentication/artificial-intelligence-guidelines/?_gl=1,United States,2,17,2,2,4,Conditional
+https://lehre-virtuell.uni-frankfurt.de/knowhow/allgemeine-empfehlungen-im-umgang-mit-generativer-ki-in-studium-und-lehre/,Germany,20,11,4,2,2,Supportive
+https://my.uq.edu.au/information-and-services/manage-my-program/student-integrity-and-conduct/academic-integrity-and-student-conduct,Australia,21,23,93,2,24,Restrictive
+https://oit.colorado.edu/services/it-security/artificial-intelligence-ai-data-security-guidelines,United States,3,7,1,12,0,Risk-Focused
+https://otl.uoguelph.ca/teaching-assessment-resources/teaching-context-ai/provisional-recommendations-use-generative-ai,Canada,14,17,9,11,6,Conditional
+https://policies.mq.edu.au/document/view.php?id=394,Australia,8,23,1,11,25,Neutral
+https://provost.mcmaster.ca/generative-artificial-intelligence-2/task-force-on-generative-ai-in-teaching-and-learning/provisional-guidelines-on-the-use-of-generative-ai-in-teaching-and-learning/,Canada,22,41,3,7,10,Conditional
+https://provost.utexas.edu/the-office/academic-affairs/office-of-academic-technology/limitations/,United States,3,12,1,2,2,Conditional
+https://publicpolicydms.monash.edu/Monash/documents/2904420,Australia,17,50,3,41,67,Neutral
+https://teachingkb.mcgill.ca/tlk/using-generative-ai-in-teaching-and-learning,Canada,5,14,2,0,3,Conditional
+https://uni-freiburg.de/en/research/quality-assurance/good-research-practice/policy-on-the-use-of-generative-ai-in-research/,Germany,6,36,3,17,7,Conditional
+https://uni-tuebingen.de/en/lehrende/generative-ki-in-lehre-und-forschung/guideline-of-the-university-of-tuebingen/,Germany,5,10,1,1,1,Conditional
+https://uwaterloo.ca/academic-integrity/artificial-intelligence-and-chatgpt,Canada,0,2,1,1,1,Conditional
+https://warwick.ac.uk/fac/soc/law/student-hub/ai-guidance-students/,United Kingdom,6,16,7,5,5,Conditional
+https://www.adelaide.edu.au/technology/secure-it/generative-ai-it-security-guidelines,Australia,2,4,1,0,4,Conditional
+https://www.anu.edu.au/students/academic-skills/academic-integrity/best-practice-principles/guide-for-students-best,Australia,6,13,7,3,2,Conditional
+https://www.curtin.edu.au/news/oasis-news/how-to-navigate-gen-ai-tools-at-curtin/,Australia,2,5,1,0,0,Conditional
+https://www.gla.ac.uk/myglasgow/sld/ai/students/,United Kingdom,4,14,5,1,2,Conditional
+https://www.imperial.ac.uk/admin-services/library/learning-support/generative-ai-guidance/,United Kingdom,3,6,2,0,3,Conditional
+https://www.information-compliance.admin.cam.ac.uk/data-protection/guidance/ai-guidance,United Kingdom,10,37,11,46,13,Risk-Focused
+https://www.kcl.ac.uk/about/strategy/learning-and-teaching/ai-guidance/student-guidance,United Kingdom,12,15,8,3,11,Conditional
+https://www.law.berkeley.edu/wp-content/uploads/2025/08/Sedona-AI-guidelines-for-Judge.pdf,United States,8,33,0,2,1,Conditional
+https://www.nottingham.ac.uk/studyingeffectively/ai/ai.aspx,United Kingdom,3,3,1,0,2,Supportive
+https://www.ox.ac.uk/students/life/it/guidance-safe-and-responsible-use-gen-ai-tools,United Kingdom,39,18,3,3,4,Supportive
+https://www.sgs.utoronto.ca/about/guidance-on-the-use-of-generative-artificial-intelligence/,Canada,10,43,5,4,7,Conditional
+https://www.staffnet.manchester.ac.uk/dcmsr/communications/ai-guidelines/,United Kingdom,17,22,1,6,0,Conditional
+https://www.sydney.edu.au/news-opinion/news/2024/11/27/university-of-sydney-ai-assessment-policy.html,Australia,5,3,0,2,1,Supportive
+https://www.tu.berlin/en/dima/news-details/announcement-the-usage-of-ai-tools-policy,Germany,0,0,5,2,5,Restrictive
+https://www.tum.de/en/news-and-events/all-news/press-releases/details/guidelines-for-the-use-of-ai-in-science,Germany,0,8,0,3,3,Conditional
+https://www.ualberta.ca/en/centre-for-teaching-and-learning/resources/generative-ai/academic-integrity-ai-use/index.html,Canada,20,49,14,7,19,Conditional
+https://www.ucl.ac.uk/students/exams-and-assessments/assessment-success-guide/engaging-generative-ai-your-education-and-assessment,United Kingdom,4,10,6,1,0,Conditional
+https://www.uni-erfurt.de/en/studies/study-services/digital-learning-teaching/generative-ai-in-studies,Germany,5,12,4,1,1,Conditional
+https://www.uni-jena.de/en/278883/working-with-generative-ai-tools-at-the-university-of-jena,Germany,2,10,0,3,4,Conditional
+https://www.unsw.edu.au/student/managing-your-studies/academic-skills-support/toolkit/ai#levels,Australia,7,20,7,2,3,Conditional
+https://www.uottawa.ca/faculty-social-sciences/sites/g/files/bhrskd371/files/2025-06/Policy%20on%20use%20of%20generative%20artificial%20intelligence%20%28AI%29%20in%20Major%20Research%20Papers%20%28MRP%29.pdf,Canada,3,5,4,2,3,Conditional
+https://www.upeifa.ca/wp-content/uploads/2024/01/4.-Guidelines-on-the-Use-of-Generative-AI-in-Teaching-and-Learning.pdf,Canada,7,22,2,12,4,Conditional
+https://www.uregina.ca/policy/browse-policy/policy-ops-080-050.html,Canada,6,20,0,15,14,Conditional
+https://www.uts.edu.au/about/leadership-governance/policies/a-z/artificial-intelligence-operations-policy,Australia,8,49,6,30,77,Neutral
+https://www.uwa.edu.au/students/-/media/project/uwa/uwa/students/academic-support/ai-assessment-guidelines-student_2025_final.pdf,Australia,11,9,0,0,1,Supportive

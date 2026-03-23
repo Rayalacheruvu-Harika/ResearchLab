@@ -1,0 +1,14 @@
+url,country,stance_score_mean,stance_score_std,stance_score_min,stance_score_max,n_policies,dominant_tone,stance_category,category
+https://www.tu.berlin/en/dima/news-details/announcement-the-usage-of-ai-tools-policy,Germany,0.8888888888888888,,0.8888888888888888,0.8888888888888888,1,risk-awareness,Highly Restrictive,Most Restrictive
+https://oit.colorado.edu/services/it-security/artificial-intelligence-ai-data-security-guidelines,United States,0.75,,0.75,0.75,1,allowed,Highly Restrictive,Most Restrictive
+https://www.gla.ac.uk/myglasgow/sld/ai/students/,United Kingdom,0.6956521739130435,,0.6956521739130435,0.6956521739130435,1,allowed-with-conditions,Highly Restrictive,Most Restrictive
+https://www.information-compliance.admin.cam.ac.uk/data-protection/guidance/ai-guidance,United Kingdom,0.6301369863013698,,0.6301369863013698,0.6301369863013698,1,risk-awareness,Highly Restrictive,Most Restrictive
+https://my.uq.edu.au/information-and-services/manage-my-program/student-integrity-and-conduct/academic-integrity-and-student-conduct,Australia,0.5465116279069767,,0.5465116279069767,0.5465116279069767,1,allowed-with-conditions,Moderately Restrictive,Most Restrictive
+https://uwaterloo.ca/academic-integrity/artificial-intelligence-and-chatgpt,Canada,-0.6666666666666666,,-0.6666666666666666,-0.6666666666666666,1,neutral,Highly Permissive,Most Permissive
+https://www.nottingham.ac.uk/studyingeffectively/ai/ai.aspx,United Kingdom,-0.5,,-0.5,-0.5,1,risk-awareness,Highly Permissive,Most Permissive
+https://lehre-virtuell.uni-frankfurt.de/knowhow/allgemeine-empfehlungen-im-umgang-mit-generativer-ki-in-studium-und-lehre/,Germany,-0.5,,-0.5,-0.5,1,risk-awareness,Highly Permissive,Most Permissive
+https://www.ox.ac.uk/students/life/it/guidance-safe-and-responsible-use-gen-ai-tools,United Kingdom,-0.4745762711864407,,-0.4745762711864407,-0.4745762711864407,1,allowed-with-conditions,Highly Permissive,Most Permissive
+https://www.staffnet.manchester.ac.uk/dcmsr/communications/ai-guidelines/,United Kingdom,-0.4411764705882353,,-0.4411764705882353,-0.4411764705882353,1,allowed,Highly Permissive,Most Permissive
+https://information-services.ed.ac.uk/computing/comms-and-collab/elm/generative-ai-guidance-for-students/using-generative,United Kingdom,0.2962962962962963,,0.2962962962962963,0.2962962962962963,1,restrictive,Balanced,Balanced
+https://www.uregina.ca/policy/browse-policy/policy-ops-080-050.html,Canada,0.25806451612903225,,0.25806451612903225,0.25806451612903225,1,allowed-with-conditions,Balanced,Balanced
+https://uni-freiburg.de/en/research/quality-assurance/good-research-practice/policy-on-the-use-of-generative-ai-in-research/,Germany,0.23333333333333334,,0.23333333333333334,0.23333333333333334,1,risk-awareness,Balanced,Balanced

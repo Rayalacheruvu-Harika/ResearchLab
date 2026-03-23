@@ -1,0 +1,15 @@
+topic_1,topic_2,count
+Data Privacy,GenAI Tools,5
+Assessment Policies,Data Privacy,4
+Assessment Policies,GenAI Tools,4
+Data Privacy,Teaching & Learning,4
+GenAI Tools,Teaching & Learning,4
+AI Governance,Assessment Policies,3
+AI Governance,Data Privacy,3
+AI Governance,GenAI Tools,3
+AI Governance,Teaching & Learning,3
+Assessment Policies,Teaching & Learning,3
+Data Privacy,Unlabeled,2
+GenAI Tools,Unlabeled,2
+Assessment Policies,Unlabeled,1
+Teaching & Learning,Unlabeled,1

@@ -1,0 +1,12 @@
+Chi-Square Test: Country × LDA Topic Distribution
+============================================================
+
+Chi-square statistic: 45.2378
+p-value: 0.001024
+Degrees of freedom: 20
+Result: SIGNIFICANT (p<0.05)
+
+Interpretation:
+  - Tests if topic distributions differ across countries
+  - p < 0.05: Significant country-level differences in LDA topics
+  - p ≥ 0.05: No significant differences

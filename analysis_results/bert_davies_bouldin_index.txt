@@ -1,0 +1,11 @@
+Davies-Bouldin Index (BERT)
+========================================
+
+DBI: 2.9027
+
+Interpretation:
+  - Lower values = more distinct clusters
+  - Optimal range: 0.0-1.0
+  - DBI > 2: Poor separation
+
+Result: NEEDS_REVIEW
