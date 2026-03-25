@@ -10,6 +10,7 @@ FRAME_PALETTE = {
     "Technological Enablement": "#44BBA4",
     "Risk & Compliance":        "#A8DADC",
     "Control & Integrity":      "#48CAE4",
+    "Unmapped Frame": "#A0AEC0"
 }
 
 # ---------------------------------

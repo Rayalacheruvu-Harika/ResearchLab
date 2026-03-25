@@ -1,7 +1,7 @@
 Silhouette Score (BERT Topic Clustering on TF-IDF)
 ==================================================
 
-Score: -0.0415
+Score: -0.0000
 
 Interpretation:
   - Range: -1 to +1

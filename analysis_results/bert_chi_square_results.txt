@@ -1,9 +1,9 @@
 Chi-Square Test: Country × BERT Topic Distribution
 ============================================================
 
-Chi-square statistic: 25.4799
-p-value: 0.380071
-Degrees of freedom: 24
+Chi-square statistic: 16.8489
+p-value: 0.155370
+Degrees of freedom: 12
 Result: NOT SIGNIFICANT (p≥0.05)
 
 Interpretation:

@@ -25,7 +25,10 @@ python -m venv .venv
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Download NLP models and resources
+#3 
+pip install -e .
+
+# 4. Download NLP models and resources
 python -m spacy download en_core_web_sm
 python -c "import nltk; nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('vader_lexicon')"
 ```
@@ -42,10 +45,10 @@ Run all commands from the project root directory.
 
 | Step | Script                          | Command                                                                                 |
 | ---- | ------------------------------- | --------------------------------------------------------------------------------------- |
-| 0    | Manual                          | Prepare data/urls.txt and `manual/university_list.csv`                               |
-| 1    | `extraction/extract_data.py`  | `python extraction/extract_data.py`                                                   |
-| 2    | Manual                          | Correct extraction errors → save `raw_genai_data.csv`+`manual_corrected_data.xlsx` |
-| 3    | `manual/merge_manual_data.py` | `python manual/merge_manual_data.py`                                                  |
+| 0    | Manual Step                     | Prepare data/urls.txt and `manual/university_list.csv`                              |
+| 1    | `extraction/extract_data.py`  | `python -m extraction.extract_data`                                                   |
+| 2    | Manual Step                     | Correct extraction errors → save `raw_genai_data.csv`+`manual_corrected_data.xlsx` |
+| 3    | `manual/merge_manual_data.py` | `python -m manual.merge_manual_data`                                                  |
 | 4    | `cleaning/clean_data.py`      | `python -m cleaning.clean_data`                                                       |
 
 ### Topic Modeling
@@ -95,7 +98,7 @@ Run all commands from the project root directory.
 | 13.4 | `sentiment_stance/policy_sentiment_analysis.py`    | `python -m sentiment_stance.policy_sentiment_analysis`    |
 | 13.5 | `sentiment_stance/sentiment_stance_analysis.py`    | `python -m sentiment_stance.sentiment_stance_analysis`    |
 | 13.6 | `sentiment_stance/roberta_sentiment.py`            | `python -m sentiment_stance.roberta_sentiment`            |
-| 14.1 | Manual                                               | Annotate `manual/sentiment_manual.xlsx`                   |
+| 14.1 | Manual Step                                          | Annotate `manual/sentiment_manual.xlsx`                   |
 | 14.2 | `sentiment_stance/manual_tone_frequency.py`        | `python -m sentiment_stance.manual_tone_frequency`        |
 | 14.3 | `sentiment_stance/manual_tone_groups.py`           | `python -m sentiment_stance.manual_tone_groups`           |
 | 15   | `sentiment_stance/manual_annotation_evaluation.py` | `python -m sentiment_stance.manual_annotation_evaluation` |
@@ -103,8 +106,8 @@ Run all commands from the project root directory.
 ## Outputs
 
 * `data/` — stores all intermediate and final datasets (cleaned text, topic assignments, stance scores)
-* `models/` — stores trained LDA model (`models/lda/`) and BERTopic model (`models/bertopic_model/`)
-* `analysis_results/` — stores all charts, tables, reports, and evaluation outputs organized by analysis type
+* `models/` — stores trained LDA model (models/lda/) and BERTopic model (models/bertopic_model/)
+* `analysis_results/ `— stores all charts, tables, reports, and evaluation outputs organized by analysis type
 
 ## Project Structure
 

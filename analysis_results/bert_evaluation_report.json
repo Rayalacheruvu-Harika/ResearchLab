@@ -1,28 +1,35 @@
 {
   "chi_square": {
-    "chi_square_statistic": 25.479893320964752,
-    "p_value": 0.380070799878455,
-    "degrees_of_freedom": 24,
+    "chi_square_statistic": 16.8489010989011,
+    "p_value": 0.15537009409284652,
+    "degrees_of_freedom": 12,
     "interpretation": "NOT SIGNIFICANT (p\u22650.05)"
   },
-  "topic_diversity": {
-    "overall_score": 21.053227074077668,
+  "coherence": {
+    "overall_score": 0.42751062688512054,
     "per_topic_scores": [
-      21.074074074074073,
-      19.82882882882883,
-      18.661971830985916,
-      18.676056338028168,
-      25.11764705882353,
-      22.96078431372549
+      0.5177083525074188,
+      0.4022322748420038,
+      0.36259125330593894
+    ],
+    "metric": "c_v (R\u00f6der et al. 2015)",
+    "interpretation": "MODERATE"
+  },
+  "topic_diversity": {
+    "overall_score": 13.84301060412421,
+    "per_topic_scores": [
+      19.53846153846154,
+      12.34351145038168,
+      9.647058823529411
     ],
     "interpretation": "HIGH"
   },
   "silhouette": {
-    "score": -0.041507404723681356,
+    "score": -1.2468684901166114e-05,
     "interpretation": "POOR"
   },
   "davies_bouldin": {
-    "score": 2.9027128392838364,
+    "score": 2.963513352785934,
     "interpretation": "NEEDS_REVIEW"
   },
   "cosine_similarity": {

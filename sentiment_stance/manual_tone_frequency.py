@@ -91,13 +91,10 @@ top_labels_per_country = sorted(top_labels_per_country)
 # Filter table to country-wise top labels
 country_label_counts_top = country_label_counts[top_labels_per_country]
 
-# ==============================
-# STACKED BAR: TOP 10 PER COUNTRY ONLY
-# ==============================
 
 TOP_N = 7
 
-# Build a filtered table where each country keeps only its own top 10 labels
+
 filtered_rows = []
 
 for country in country_label_counts.index:
