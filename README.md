@@ -18,18 +18,26 @@ These files must exist before running the pipeline:
 ## Setup
 
 ```bash
-# 1. Create virtual environment
+# 1. Clone the repository
+git clone -b dash https://github.com/Rayalacheruvu-Harika/ResearchLab.git
+
+cd ResearchLab
+
+
+# 2. Create virtual environment
 python -m venv .venv
+
 .venv\Scripts\activate          # Windows
 
-# 2. Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 
-#3 
+#4 Install project configuration
 pip install -e .
 
-# 4. Download NLP models and resources
+# 5. Download NLP models and resources
 python -m spacy download en_core_web_sm
+
 python -c "import nltk; nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('vader_lexicon')"
 ```
 
