@@ -3,28 +3,38 @@ https://www.information-compliance.admin.cam.ac.uk/data-protection/guidance/ai-g
 https://www.ucl.ac.uk/students/exams-and-assessments/assessment-success-guide/engaging-generative-ai-your-education-and-assessment
 https://www.imperial.ac.uk/admin-services/library/learning-support/generative-ai-guidance/ 
 https://information-services.ed.ac.uk/computing/comms-and-collab/elm/generative-ai-guidance-for-students/using-generative
-https://www.gla.ac.uk/myglasgow/sld/ai/students/ https://www.staffnet.manchester.ac.uk/dcmsr/communications/ai-guidelines/ https://www.kcl.ac.uk/about/strategy/learning-and-teaching/ai-guidance/student-guidance 
+https://www.gla.ac.uk/myglasgow/sld/ai/students/ 
+https://www.staffnet.manchester.ac.uk/dcmsr/communications/ai-guidelines/ 
+https://www.kcl.ac.uk/about/strategy/learning-and-teaching/ai-guidance/student-guidance 
 https://warwick.ac.uk/fac/soc/law/student-hub/ai-guidance-students/
 https://www.nottingham.ac.uk/studyingeffectively/ai/ai.aspx
 https://policies.mq.edu.au/document/view.php?id=394
 https://www.sydney.edu.au/news-opinion/news/2024/11/27/university-of-sydney-ai-assessment-policy.html
 https://www.unsw.edu.au/student/managing-your-studies/academic-skills-support/toolkit/ai#levels
-https://www.anu.edu.au/students/academic-skills/academic-integrity/best-practice-principles/guide-for-students-best https://publicpolicydms.monash.edu/Monash/documents/2904420
-https://my.uq.edu.au/information-and-services/manage-my-program/student-integrity-and-conduct/academic-integrity-and-student-conduct https://www.uwa.edu.au/students/-/media/project/uwa/uwa/students/academic-support/ai-assessment-guidelines-student_2025_final.pdf https://www.adelaide.edu.au/technology/secure-it/generative-ai-it-security-guidelines
+https://www.anu.edu.au/students/academic-skills/academic-integrity/best-practice-principles/guide-for-students-best 
+https://publicpolicydms.monash.edu/Monash/documents/2904420
+https://my.uq.edu.au/information-and-services/manage-my-program/student-integrity-and-conduct/academic-integrity-and-student-conduct 
+https://www.uwa.edu.au/students/-/media/project/uwa/uwa/students/academic-support/ai-assessment-guidelines-student_2025_final.pdf 
+https://www.adelaide.edu.au/technology/secure-it/generative-ai-it-security-guidelines
 https://www.uts.edu.au/about/leadership-governance/policies/a-z/artificial-intelligence-operations-policy
 https://www.curtin.edu.au/news/oasis-news/how-to-navigate-gen-ai-tools-at-curtin/
-https://www.ualberta.ca/en/centre-for-teaching-and-learning/resources/generative-ai/academic-integrity-ai-use/index.html https://www.sgs.utoronto.ca/about/guidance-on-the-use-of-generative-artificial-intelligence/
+https://www.ualberta.ca/en/centre-for-teaching-and-learning/resources/generative-ai/academic-integrity-ai-use/index.html 
+https://www.sgs.utoronto.ca/about/guidance-on-the-use-of-generative-artificial-intelligence/
 https://teachingkb.mcgill.ca/tlk/using-generative-ai-in-teaching-and-learning
 https://www.uottawa.ca/faculty-social-sciences/sites/g/files/bhrskd371/files/2025-06/Policy%20on%20use%20of%20generative%20artificial%20intelligence%20%28AI%29%20in%20Major%20Research%20Papers%20%28MRP%29.pdf
 https://uwaterloo.ca/academic-integrity/artificial-intelligence-and-chatgpt
 https://provost.mcmaster.ca/generative-artificial-intelligence-2/task-force-on-generative-ai-in-teaching-and-learning/provisional-guidelines-on-the-use-of-generative-ai-in-teaching-and-learning/
 https://genai.ubc.ca/guidance/teaching-learning-guidelines/
-https://otl.uoguelph.ca/teaching-assessment-resources/teaching-context-ai/provisional-recommendations-use-generative-ai https://www.uregina.ca/policy/browse-policy/policy-ops-080-050.html
+https://otl.uoguelph.ca/teaching-assessment-resources/teaching-context-ai/provisional-recommendations-use-generative-ai 
+https://www.uregina.ca/policy/browse-policy/policy-ops-080-050.html
 https://www.upeifa.ca/wp-content/uploads/2024/01/4.-Guidelines-on-the-Use-of-Generative-AI-in-Teaching-and-Learning.pdf
 https://www.law.berkeley.edu/wp-content/uploads/2025/08/Sedona-AI-guidelines-for-Judge.pdf
 https://it.uw.edu/guides/security-authentication/artificial-intelligence-guidelines/?_gl=1
 https://provost.utexas.edu/the-office/academic-affairs/office-of-academic-technology/limitations/
-https://it.purdue.edu/ai/generative-ai/ https://ethics.msu.edu/gen-ai https://ai.unc.edu/teaching-generative-ai-usage-guidance-2/ https://extension.illinois.edu/commit/ai-guidelines
+https://it.purdue.edu/ai/generative-ai/ 
+https://ethics.msu.edu/gen-ai
+https://ai.unc.edu/teaching-generative-ai-usage-guidance-2/ 
+https://extension.illinois.edu/commit/ai-guidelines
 https://oit.colorado.edu/services/it-security/artificial-intelligence-ai-data-security-guidelines
 https://www.tum.de/en/news-and-events/all-news/press-releases/details/guidelines-for-the-use-of-ai-in-science
 https://www.tu.berlin/en/dima/news-details/announcement-the-usage-of-ai-tools-policy
