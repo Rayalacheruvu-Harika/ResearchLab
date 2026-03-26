@@ -19,7 +19,7 @@ These files must exist before running the pipeline:
 
 ```bash
 # 1. Clone the repository
-git clone -b dash https://github.com/Rayalacheruvu-Harika/ResearchLab.git
+git clone https://github.com/Rayalacheruvu-Harika/ResearchLab.git
 
 cd ResearchLab
 
