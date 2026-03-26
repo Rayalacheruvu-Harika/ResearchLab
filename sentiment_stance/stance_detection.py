@@ -1,13 +1,9 @@
 """
-================================================================================
 RQ3: STANCE DETECTION ANALYSIS
 ================================================================================
 Objective: Quantify policy restrictiveness and identify extreme cases
-Input: analysis_results/sentiment_analysis/policy_tone_distilbert.csv
 Output: University-level stance scores + extremes + visualizations
-Author: Research Team
-Date: January 2026
-================================================================================
+
 """
 
 import os
@@ -17,36 +13,24 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from collections import Counter
 import warnings
-
+from config import CONFIG
 warnings.filterwarnings('ignore')
 
-# ================================================================================
-# CONFIGURATION & PATHS
-# ================================================================================
+INPUT_FILE = CONFIG["data"]["policy_tone_distilbert"]
+uni_df = pd.read_csv(CONFIG["data"]["university_list"], sep=";")
+OUT_DOCUMENT = CONFIG["data"]["stance_scores_document"]
+OUT_UNIVERSITY = CONFIG["data"]["stance_scores_university"]
+OUT_EXTREMES = CONFIG["data"]["stance_extremes_summary"]
+OUT_REPORT = CONFIG["data"]["stance_rq3_report"]
+FIG_SCATTER = CONFIG["data"]["stance_scatter"]
+FIG_EXTREMES = CONFIG["data"]["stance_extremes_bar"]
+FIG_COUNTRY = CONFIG["data"]["stance_country_dist"]
+FIG_EXAMPLES = CONFIG["data"]["stance_examples_fig"]
 
-INPUT_FILE = "analysis_results/sentiment_analysis/policy_tone_distilbert.csv"
-uni_df = pd.read_csv("manual/university_list.csv", sep=";")
+os.makedirs(os.path.dirname(OUT_DOCUMENT), exist_ok=True)
+os.makedirs(os.path.dirname(FIG_SCATTER), exist_ok=True)
 
-OUTPUT_DIR = "analysis_results/rq3/Stance_detection"
-FIG_DIR = os.path.join(OUTPUT_DIR, "figures")
-
-# Output files
-OUT_DOCUMENT = os.path.join(OUTPUT_DIR, "stance_scores_document_level.csv")
-OUT_UNIVERSITY = os.path.join(OUTPUT_DIR, "stance_scores_university_level.csv")
-OUT_EXTREMES = os.path.join(OUTPUT_DIR, "stance_extremes_summary.csv")
-OUT_REPORT = os.path.join(OUTPUT_DIR, "stance_rq3_report.txt")
-
-# Visualizations
-FIG_SCATTER = os.path.join(FIG_DIR, "stance_scatter_universities.png")
-FIG_EXTREMES = os.path.join(FIG_DIR, "stance_extremes_bar_chart.png")
-FIG_COUNTRY = os.path.join(FIG_DIR, "stance_distribution_by_country.png")
-FIG_EXAMPLES = os.path.join(FIG_DIR, "stance_university_examples.png")
-
-# Create directories
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-os.makedirs(FIG_DIR, exist_ok=True)
-
-print("✓ Directories created")
+print("Directories created")
 
 # ================================================================================
 # SECTION 1: LOAD DATA
@@ -56,10 +40,10 @@ print("\n[STEP 1] Loading policy tone data...")
 
 try:
     df = pd.read_csv(INPUT_FILE)
-    print(f"✓ Loaded {len(df)} policy documents")
-    print(f"✓ Columns: {list(df.columns)}")
+    print(f" Loaded {len(df)} policy documents")
+    print(f" Columns: {list(df.columns)}")
 except FileNotFoundError:
-    print(f"❌ ERROR: Input file not found: {INPUT_FILE}")
+    print(f"ERROR: Input file not found: {INPUT_FILE}")
     print("   Make sure policy_tone_distilbert.py has been run first")
     exit(1)
 
@@ -67,10 +51,10 @@ except FileNotFoundError:
 required_cols = ['url', 'country', 'clean_text', 'policy_tone_label']
 for col in required_cols:
     if col not in df.columns:
-        print(f"❌ ERROR: Missing required column: {col}")
+        print(f"ERROR: Missing required column: {col}")
         exit(1)
 
-print(f"✓ Data validation passed")
+print(f" Data validation passed")
 
 # ================================================================================
 # SECTION 2: DEFINE STANCE LEXICONS
@@ -117,8 +101,8 @@ RESTRICTIVE_LEXICON = {
     ]
 }
 
-print("✓ Permissive lexicon categories:", list(PERMISSIVE_LEXICON.keys()))
-print("✓ Restrictive lexicon categories:", list(RESTRICTIVE_LEXICON.keys()))
+print(" Permissive lexicon categories:", list(PERMISSIVE_LEXICON.keys()))
+print(" Restrictive lexicon categories:", list(RESTRICTIVE_LEXICON.keys()))
 
 # ================================================================================
 # SECTION 3: CALCULATE STANCE SCORES (DOCUMENT LEVEL)
@@ -175,11 +159,11 @@ for idx, row in df.iterrows():
     stance_scores.append(score)
     
     if (idx + 1) % 500 == 0:
-        print(f"  → Processed {idx + 1}/{len(df)} documents")
+        print(f"   Processed {idx + 1}/{len(df)} documents")
 
 df['stance_score'] = stance_scores
 
-print(f"✓ Calculated stance scores for all {len(df)} documents")
+print(f" Calculated stance scores for all {len(df)} documents")
 print(f"  Mean stance: {df['stance_score'].mean():.3f}")
 print(f"  Std dev: {df['stance_score'].std():.3f}")
 print(f"  Min: {df['stance_score'].min():.3f}")
@@ -187,7 +171,7 @@ print(f"  Max: {df['stance_score'].max():.3f}")
 
 # Save document-level scores
 df.to_csv(OUT_DOCUMENT, index=False)
-print(f"✓ Saved document-level scores → {OUT_DOCUMENT}")
+print(f" Saved document-level scores  {OUT_DOCUMENT}")
 
 # ================================================================================
 # SECTION 4: AGGREGATE TO UNIVERSITY LEVEL
@@ -228,8 +212,8 @@ uni_stance = uni_stance.sort_values('stance_score_mean', ascending=False).reset_
 # Save university-level aggregation
 uni_stance.to_csv(OUT_UNIVERSITY, index=False)
 
-print(f"✓ Aggregated to {len(uni_stance)} universities")
-print(f"✓ Saved university-level stance scores → {OUT_UNIVERSITY}")
+print(f" Aggregated to {len(uni_stance)} universities")
+print(f" Saved university-level stance scores  {OUT_UNIVERSITY}")
 print(f"\nUniversity Stance Distribution:")
 print(uni_stance['stance_category'].value_counts())
 
@@ -256,12 +240,12 @@ for idx, row in top_restrictive.iterrows():
     print(f"  {idx+1}. {row['country']:<12} | Stance: +{row['stance_score_mean']:.3f} | "
           f"Tone: {row['dominant_tone']:<20} | N policies: {row['n_policies']}")
 
-print("\n🟢 TOP 5 MOST PERMISSIVE UNIVERSITIES:")
+print("\nTOP 5 MOST PERMISSIVE UNIVERSITIES:")
 for idx, row in top_permissive.iterrows():
     print(f"  {idx+1}. {row['country']:<12} | Stance: {row['stance_score_mean']:.3f} | "
           f"Tone: {row['dominant_tone']:<20} | N policies: {row['n_policies']}")
 
-print("\n⚪ MIDDLE GROUND (BALANCED) UNIVERSITIES:")
+print("\n MIDDLE GROUND (BALANCED) UNIVERSITIES:")
 for idx, row in middle_ground.iterrows():
     print(f"  • {row['country']:<12} | Stance: {row['stance_score_mean']:.3f} | "
           f"Tone: {row['dominant_tone']:<20} | N policies: {row['n_policies']}")
@@ -274,7 +258,7 @@ extremes = pd.concat([
 ])
 
 extremes.to_csv(OUT_EXTREMES, index=False)
-print(f"\n✓ Saved extremes summary → {OUT_EXTREMES}")
+print(f"\n Saved extremes summary  {OUT_EXTREMES}")
 
 # ================================================================================
 # SECTION 6: EXTRACT POLICY QUOTES FOR EXAMPLES
@@ -297,35 +281,29 @@ extremes['policy_example'] = extremes['url'].apply(extract_example_quote)
 
 # Create examples file with quotes
 examples_report = extremes[['url', 'country', 'stance_score_mean', 'category', 'policy_example']]
-examples_report.to_csv(os.path.join(OUTPUT_DIR, "stance_examples_with_quotes.csv"), index=False)
+examples_report.to_csv(CONFIG["data"]["stance_examples_quotes"], index=False)
 
-print("✓ Extracted policy examples for all extreme cases")
+print(" Extracted policy examples for all extreme cases")
 
 # ================================================================================
 # SECTION 7: VISUALIZATION 1 - SCATTER PLOT (UNIVERSITY WISE)
 # ================================================================================
 
 print("\n[STEP 7] Creating visualizations...")
-print("\n  → Visualization 1: Scatter plot (university-wise stance)")
+print("\n   Visualization 1: Scatter plot (university-wise stance)")
 
 plt.figure(figsize=(14, 8))
 
-# -----------------------------
-# Fixed high-contrast colors (5 countries)
-# -----------------------------
+# Create scatter plot
 countries = uni_stance['country'].unique()
-
 country_colors = {
-    countries[0]: "#0072B2",  # Blue
-    countries[1]: "#D55E00",  # Vermillion
-    countries[2]: "#009E73",  # Green
-    countries[3]: "#CC79A7",  # Purple
-    countries[4]: "#E69F00"   # Orange
+    countries[0]: "#0072B2",
+    countries[1]: "#D55E00",
+    countries[2]: "#009E73",
+    countries[3]: "#CC79A7",
+    countries[4]: "#E69F00"
 }
 
-# -----------------------------
-# Scatter plot (Top 10 per country)
-# -----------------------------
 for country in countries:
     country_data = (
         uni_stance[uni_stance['country'] == country]
@@ -333,7 +311,6 @@ for country in countries:
         .head(10)
         .reset_index(drop=True)
     )
-
     plt.scatter(
         country_data.index,
         country_data['stance_score_mean'],
@@ -343,14 +320,17 @@ for country in countries:
         color=country_colors[country]
     )
 
-# -----------------------------
 # Highlight extremes
-# -----------------------------
 top_restrictive_first = top_restrictive.reset_index(drop=True).loc[0]
 top_permissive_first = top_permissive.reset_index(drop=True).loc[0]
 
+# Get index position safely
+restrictive_idx = uni_stance.index[
+    uni_stance['url'] == top_restrictive_first['url']
+][0]
+
 plt.scatter(
-    0,
+    restrictive_idx,
     top_restrictive_first['stance_score_mean'],
     s=500,
     marker='X',
@@ -361,8 +341,13 @@ plt.scatter(
     zorder=5
 )
 
+
+permissive_idx = uni_stance.index[
+    uni_stance['url'] == top_permissive_first['url']
+][0]
+
 plt.scatter(
-    9,
+    permissive_idx,
     top_permissive_first['stance_score_mean'],
     s=500,
     marker='*',
@@ -373,69 +358,53 @@ plt.scatter(
     zorder=5
 )
 
-# -----------------------------
-# Reference lines
-# -----------------------------
+
+# Format plot
 plt.axhline(y=0, color='gray', linestyle='--', alpha=0.5, label='Neutral')
 plt.axhline(y=0.3, color='orange', linestyle=':', alpha=0.3)
 plt.axhline(y=-0.3, color='blue', linestyle=':', alpha=0.3)
 
-# -----------------------------
-# Formatting
-# -----------------------------
-plt.xticks(range(10))
-plt.xlabel("University Rank", fontsize=12, fontweight="bold")
-plt.ylabel("Stance Score (-1 = Permissive, +1 = Restrictive)", fontsize=12, fontweight="bold")
-plt.title(
-    "Policy Stance by University (Size = Number of Policies)",
-    fontsize=14,
-    fontweight="bold"
-)
-
+plt.xlabel('University Index', fontsize=12, fontweight='bold')
+plt.ylabel('Stance Score (-1=Permissive, +1=Restrictive)', fontsize=12, fontweight='bold')
+plt.title('Policy Stance by University (Size = Number of Policies)', fontsize=14, fontweight='bold')
 plt.ylim(-1, 1)
 plt.grid(True, alpha=0.3)
-plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left", fontsize=9)
-
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
 plt.tight_layout()
-plt.savefig(FIG_SCATTER, dpi=300, bbox_inches="tight")
+plt.savefig(FIG_SCATTER, dpi=300, bbox_inches='tight')
 plt.close()
 
-print(f"  ✓ Saved → {FIG_SCATTER}")
+print(f"   Saved  {FIG_SCATTER}")
 
 # ================================================================================
 # SECTION 8: VISUALIZATION 2 - EXTREMES BAR CHART
 # ================================================================================
 
-print("  → Visualization 2: Extremes bar chart (top/bottom 5)")
-
-print(uni_df.columns)
-
+print("   Visualization 2: Extremes bar chart (top/bottom 5)")
 # Merge university names
 top_restrictive = top_restrictive.merge(
     uni_df[["url", "university_name"]],
     on="url",
     how="left"
 )
-
 top_permissive = top_permissive.merge(
     uni_df[["url", "university_name"]],
     on="url",
     how="left"
 )
-
-# Plot
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
 # Most restrictive
 top_res_sorted = top_restrictive.sort_values('stance_score_mean')
 ax1.barh(range(len(top_res_sorted)), top_res_sorted['stance_score_mean'], color='#2E86AB')
 ax1.set_yticks(range(len(top_res_sorted)))
-ax1.set_yticklabels(top_res_sorted['university_name'])
-ax1.set_xlabel('Stance Score (Restrictive →)', fontweight='bold')
+ax1.set_yticklabels(top_res_sorted['university_name'].fillna(top_res_sorted['country']))
+ax1.set_xlabel('Stance Score (Restrictive )', fontweight='bold')
 ax1.set_title('Top 5 Most Restrictive Universities', fontweight='bold', color='#2E86AB')
 ax1.set_xlim(0, 1)
 ax1.grid(True, alpha=0.3, axis='x')
 
+# Add value labels
 for i, v in enumerate(top_res_sorted['stance_score_mean']):
     ax1.text(v + 0.02, i, f'{v:.3f}', va='center', fontweight='bold')
 
@@ -443,12 +412,13 @@ for i, v in enumerate(top_res_sorted['stance_score_mean']):
 top_perm_sorted = top_permissive.sort_values('stance_score_mean')
 ax2.barh(range(len(top_perm_sorted)), top_perm_sorted['stance_score_mean'], color='#44BBA4')
 ax2.set_yticks(range(len(top_perm_sorted)))
-ax2.set_yticklabels(top_perm_sorted['university_name'])
+ax2.set_yticklabels(top_perm_sorted['university_name'].fillna(top_perm_sorted['country']))
 ax2.set_xlabel('← Stance Score (Permissive)', fontweight='bold')
 ax2.set_title('Top 5 Most Permissive Universities', fontweight='bold', color='#44BBA4')
 ax2.set_xlim(-1, 0)
 ax2.grid(True, alpha=0.3, axis='x')
 
+# Add value labels
 for i, v in enumerate(top_perm_sorted['stance_score_mean']):
     ax2.text(v - 0.05, i, f'{v:.3f}', va='center', fontweight='bold', ha='right')
 
@@ -456,13 +426,13 @@ plt.tight_layout()
 plt.savefig(FIG_EXTREMES, dpi=300, bbox_inches='tight')
 plt.close()
 
-print(f"  ✓ Saved → {FIG_EXTREMES}")
+print(f"   Saved  {FIG_EXTREMES}")
 
 # ================================================================================
 # SECTION 9: VISUALIZATION 3 - COUNTRY-WISE DISTRIBUTION
 # ================================================================================
 
-print("  → Visualization 3: Country-wise stance distribution")
+print("   Visualization 3: Country-wise stance distribution")
 
 country_stats = uni_stance.groupby('country').agg({
     'stance_score_mean': ['mean', 'std', 'count']
@@ -503,13 +473,13 @@ plt.tight_layout()
 plt.savefig(FIG_COUNTRY, dpi=300, bbox_inches='tight')
 plt.close()
 
-print(f"  ✓ Saved → {FIG_COUNTRY}")
+print(f"   Saved  {FIG_COUNTRY}")
 
 # ================================================================================
 # SECTION 10: VISUALIZATION 4 - STANCE CATEGORIES DISTRIBUTION
 # ================================================================================
 
-print("  → Visualization 4: Stance categories distribution")
+print("   Visualization 4: Stance categories distribution")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -517,11 +487,11 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
 # Define color mapping by category name
 color_map = {
-    'Highly Restrictive': '#1E3A5F',    # Dark red
-    'Moderately Restrictive': '#2E86AB', # Orange-red
-    'Balanced': '#A8DADC',               # Light orange (neutral)
-    'Moderately Permissive': '#44BBA4',  # Light green
-    'Highly Permissive': '#48CAE4'       # Dark green
+    'Highly Restrictive': '#1E3A5F',    
+    'Moderately Restrictive': '#2E86AB',
+    'Balanced': '#A8DADC',              
+    'Moderately Permissive': '#44BBA4', 
+    'Highly Permissive': '#48CAE4'      
 }
 
 # Pie chart
@@ -529,14 +499,8 @@ stance_dist = uni_stance['stance_category'].value_counts()
 # Get colors in the order of stance_dist.index (category names)
 colors_pie = [color_map[cat] for cat in stance_dist.index]
 
-ax1.pie(
-    stance_dist.values, 
-    labels=stance_dist.index, 
-    autopct='%1.1f%%',
-    colors=colors_pie, 
-    startangle=90
-)
-
+ax1.pie(stance_dist.values, labels=stance_dist.index, autopct='%1.1f%%',
+        colors=colors_pie, startangle=90)
 ax1.set_title('Distribution of Universities by Stance Category', fontweight='bold')
 
 # Bar chart with countries stacked
@@ -562,7 +526,7 @@ plt.tight_layout()
 plt.savefig(FIG_EXAMPLES, dpi=300, bbox_inches='tight')
 plt.close()
 
-print(f"  ✓ Saved → {FIG_EXAMPLES}")
+print(f"   Saved  {FIG_EXAMPLES}")
 
 
 # ================================================================================
@@ -697,7 +661,8 @@ with open(OUT_REPORT, 'w', encoding='utf-8') as f:
     f.write(report)
 
 
-print(f"✓ Saved report → {OUT_REPORT}")
+print(f" Saved report  {OUT_REPORT}")
+
 # ================================================================================
 # FINAL SUMMARY
 # ================================================================================
@@ -706,7 +671,7 @@ print("\n" + "="*80)
 print("RQ3 STANCE DETECTION ANALYSIS COMPLETE")
 print("="*80)
 
-print(f"\n✓ All outputs saved to: {os.path.abspath(OUTPUT_DIR)}")
+print(f"\nAll outputs saved to: {os.path.dirname(OUT_DOCUMENT)}")
 print(f"\nFiles created:")
 print(f"  1. {OUT_DOCUMENT}")
 print(f"  2. {OUT_UNIVERSITY}")

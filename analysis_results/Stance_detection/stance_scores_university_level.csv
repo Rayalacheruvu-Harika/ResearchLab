@@ -1,0 +1,46 @@
+url,country,stance_score_mean,stance_score_std,stance_score_min,stance_score_max,n_policies,dominant_tone,stance_category
+https://www.tu.berlin/en/dima/news-details/announcement-the-usage-of-ai-tools-policy,Germany,0.8888888888888888,,0.8888888888888888,0.8888888888888888,1,risk-awareness,Highly Restrictive
+https://oit.colorado.edu/services/it-security/artificial-intelligence-ai-data-security-guidelines,United States,0.75,,0.75,0.75,1,allowed,Highly Restrictive
+https://www.gla.ac.uk/myglasgow/sld/ai/students/,United Kingdom,0.6956521739130435,,0.6956521739130435,0.6956521739130435,1,allowed-with-conditions,Highly Restrictive
+https://www.information-compliance.admin.cam.ac.uk/data-protection/guidance/ai-guidance,United Kingdom,0.6301369863013698,,0.6301369863013698,0.6301369863013698,1,risk-awareness,Highly Restrictive
+https://my.uq.edu.au/information-and-services/manage-my-program/student-integrity-and-conduct/academic-integrity-and-student-conduct,Australia,0.5465116279069767,,0.5465116279069767,0.5465116279069767,1,allowed-with-conditions,Moderately Restrictive
+https://warwick.ac.uk/fac/soc/law/student-hub/ai-guidance-students/,United Kingdom,0.5128205128205128,,0.5128205128205128,0.5128205128205128,1,allowed-with-conditions,Moderately Restrictive
+https://www.tum.de/en/news-and-events/all-news/press-releases/details/guidelines-for-the-use-of-ai-in-science,Germany,0.5,,0.5,0.5,1,risk-awareness,Moderately Restrictive
+https://provost.utexas.edu/the-office/academic-affairs/office-of-academic-technology/limitations/,United States,0.4642857142857143,,0.4642857142857143,0.4642857142857143,1,allowed-with-conditions,Moderately Restrictive
+https://www.anu.edu.au/students/academic-skills/academic-integrity/best-practice-principles/guide-for-students-best,Australia,0.4444444444444444,,0.4444444444444444,0.4444444444444444,1,restrictive,Moderately Restrictive
+https://www.upeifa.ca/wp-content/uploads/2024/01/4.-Guidelines-on-the-Use-of-Generative-AI-in-Teaching-and-Learning.pdf,Canada,0.4230769230769231,,0.4230769230769231,0.4230769230769231,1,risk-awareness,Moderately Restrictive
+https://ai.unc.edu/teaching-generative-ai-usage-guidance-2/,United States,0.42105263157894735,,0.42105263157894735,0.42105263157894735,1,allowed-with-conditions,Moderately Restrictive
+https://extension.illinois.edu/commit/ai-guidelines,United States,0.4166666666666667,,0.4166666666666667,0.4166666666666667,1,allowed-with-conditions,Moderately Restrictive
+https://www.uottawa.ca/faculty-social-sciences/sites/g/files/bhrskd371/files/2025-06/Policy%20on%20use%20of%20generative%20artificial%20intelligence%20%28AI%29%20in%20Major%20Research%20Papers%20%28MRP%29.pdf,Canada,0.4,,0.4,0.4,1,risk-awareness,Moderately Restrictive
+https://www.uts.edu.au/about/leadership-governance/policies/a-z/artificial-intelligence-operations-policy,Australia,0.3673469387755102,,0.3673469387755102,0.3673469387755102,1,allowed,Moderately Restrictive
+https://otl.uoguelph.ca/teaching-assessment-resources/teaching-context-ai/provisional-recommendations-use-generative-ai,Canada,0.35294117647058826,,0.35294117647058826,0.35294117647058826,1,risk-awareness,Moderately Restrictive
+https://policies.mq.edu.au/document/view.php?id=394,Australia,0.3181818181818182,,0.3181818181818182,0.3181818181818182,1,allowed-with-conditions,Moderately Restrictive
+https://www.uni-jena.de/en/278883/working-with-generative-ai-tools-at-the-university-of-jena,Germany,0.3157894736842105,,0.3157894736842105,0.3157894736842105,1,restrictive,Moderately Restrictive
+https://information-services.ed.ac.uk/computing/comms-and-collab/elm/generative-ai-guidance-for-students/using-generative,United Kingdom,0.2962962962962963,,0.2962962962962963,0.2962962962962963,1,restrictive,Balanced
+https://www.uregina.ca/policy/browse-policy/policy-ops-080-050.html,Canada,0.25806451612903225,,0.25806451612903225,0.25806451612903225,1,allowed-with-conditions,Balanced
+https://uni-freiburg.de/en/research/quality-assurance/good-research-practice/policy-on-the-use-of-generative-ai-in-research/,Germany,0.23333333333333334,,0.23333333333333334,0.23333333333333334,1,risk-awareness,Balanced
+https://publicpolicydms.monash.edu/Monash/documents/2904420,Australia,0.21428571428571427,,0.21428571428571427,0.21428571428571427,1,risk-awareness,Balanced
+https://provost.mcmaster.ca/generative-artificial-intelligence-2/task-force-on-generative-ai-in-teaching-and-learning/provisional-guidelines-on-the-use-of-generative-ai-in-teaching-and-learning/,Canada,0.20454545454545456,,0.20454545454545456,0.20454545454545456,1,allowed-with-conditions,Balanced
+https://ethics.msu.edu/gen-ai,United States,0.18181818181818182,,0.18181818181818182,0.18181818181818182,1,allowed,Balanced
+https://genai.ubc.ca/guidance/teaching-learning-guidelines/,Canada,0.15,,0.15,0.15,1,allowed-with-conditions,Balanced
+https://www.ualberta.ca/en/centre-for-teaching-and-learning/resources/generative-ai/academic-integrity-ai-use/index.html,Canada,0.12987012987012986,,0.12987012987012986,0.12987012987012986,1,allowed-with-conditions,Balanced
+https://www.kcl.ac.uk/about/strategy/learning-and-teaching/ai-guidance/student-guidance,United Kingdom,0.06060606060606061,,0.06060606060606061,0.06060606060606061,1,risk-awareness,Balanced
+https://www.uwa.edu.au/students/-/media/project/uwa/uwa/students/academic-support/ai-assessment-guidelines-student_2025_final.pdf,Australia,0.0,,0.0,0.0,1,allowed,Balanced
+https://it.purdue.edu/ai/generative-ai/,United States,0.0,,0.0,0.0,1,allowed,Balanced
+https://uni-tuebingen.de/en/lehrende/generative-ki-in-lehre-und-forschung/guideline-of-the-university-of-tuebingen/,Germany,0.0,,0.0,0.0,1,allowed-with-conditions,Balanced
+https://it.uw.edu/guides/security-authentication/artificial-intelligence-guidelines/?_gl=1,United States,-0.08333333333333333,,-0.08333333333333333,-0.08333333333333333,1,allowed,Moderately Permissive
+https://www.unsw.edu.au/student/managing-your-studies/academic-skills-support/toolkit/ai#levels,Australia,-0.13157894736842105,,-0.13157894736842105,-0.13157894736842105,1,allowed-with-conditions,Moderately Permissive
+https://www.sgs.utoronto.ca/about/guidance-on-the-use-of-generative-artificial-intelligence/,Canada,-0.14814814814814814,,-0.14814814814814814,-0.14814814814814814,1,restrictive,Moderately Permissive
+https://www.sydney.edu.au/news-opinion/news/2024/11/27/university-of-sydney-ai-assessment-policy.html,Australia,-0.16666666666666666,,-0.16666666666666666,-0.16666666666666666,1,allowed,Moderately Permissive
+https://www.uni-erfurt.de/en/studies/study-services/digital-learning-teaching/generative-ai-in-studies,Germany,-0.20833333333333334,,-0.20833333333333334,-0.20833333333333334,1,allowed-with-conditions,Moderately Permissive
+https://www.ucl.ac.uk/students/exams-and-assessments/assessment-success-guide/engaging-generative-ai-your-education-and-assessment,United Kingdom,-0.21428571428571427,,-0.21428571428571427,-0.21428571428571427,1,allowed,Moderately Permissive
+https://teachingkb.mcgill.ca/tlk/using-generative-ai-in-teaching-and-learning,Canada,-0.25,,-0.25,-0.25,1,allowed-with-conditions,Moderately Permissive
+https://www.adelaide.edu.au/technology/secure-it/generative-ai-it-security-guidelines,Australia,-0.25,,-0.25,-0.25,1,allowed,Moderately Permissive
+https://www.curtin.edu.au/news/oasis-news/how-to-navigate-gen-ai-tools-at-curtin/,Australia,-0.2857142857142857,,-0.2857142857142857,-0.2857142857142857,1,allowed,Moderately Permissive
+https://www.imperial.ac.uk/admin-services/library/learning-support/generative-ai-guidance/,United Kingdom,-0.2857142857142857,,-0.2857142857142857,-0.2857142857142857,1,allowed,Moderately Permissive
+https://www.law.berkeley.edu/wp-content/uploads/2025/08/Sedona-AI-guidelines-for-Judge.pdf,United States,-0.2962962962962963,,-0.2962962962962963,-0.2962962962962963,1,neutral,Moderately Permissive
+https://www.staffnet.manchester.ac.uk/dcmsr/communications/ai-guidelines/,United Kingdom,-0.4411764705882353,,-0.4411764705882353,-0.4411764705882353,1,allowed,Highly Permissive
+https://www.ox.ac.uk/students/life/it/guidance-safe-and-responsible-use-gen-ai-tools,United Kingdom,-0.4745762711864407,,-0.4745762711864407,-0.4745762711864407,1,allowed-with-conditions,Highly Permissive
+https://www.nottingham.ac.uk/studyingeffectively/ai/ai.aspx,United Kingdom,-0.5,,-0.5,-0.5,1,risk-awareness,Highly Permissive
+https://lehre-virtuell.uni-frankfurt.de/knowhow/allgemeine-empfehlungen-im-umgang-mit-generativer-ki-in-studium-und-lehre/,Germany,-0.5,,-0.5,-0.5,1,risk-awareness,Highly Permissive
+https://uwaterloo.ca/academic-integrity/artificial-intelligence-and-chatgpt,Canada,-0.6666666666666666,,-0.6666666666666666,-0.6666666666666666,1,neutral,Highly Permissive

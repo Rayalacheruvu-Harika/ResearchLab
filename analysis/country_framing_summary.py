@@ -2,26 +2,22 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+from config import CONFIG
 from matplotlib.colors import LinearSegmentedColormap
 
-#palette for heatmap (blue gradient)
 blue_cmap = LinearSegmentedColormap.from_list(
     "custom_blues",
-    ["#A8DADC", "#2E86AB", "#1E3A5F"]  # light → mid → dark blue
+    ["#A8DADC", "#2E86AB", "#1E3A5F"]
 )
 
-# -----------------------------
-# Paths
-# -----------------------------
-AFFECT = "analysis_results/rq1/affective_language_university.csv"
-ROLES  = "analysis_results/rq1/institutional_roles_university.csv"
-FRAMES = "analysis_results/rq1/policy_frames.csv"
+AFFECT = CONFIG["data"]["affective_language_university"]
+ROLES  = CONFIG["data"]["institutional_roles_university"]
+FRAMES = CONFIG["data"]["policy_frames"]
 
-OUT_DATA = "analysis_results/rq1/rq1_country_summary.csv"
-OUT_FIG  = "analysis_results/rq1/figures"
+OUT_DATA = CONFIG["data"]["rq1_country_summary"]
 
 os.makedirs(os.path.dirname(OUT_DATA), exist_ok=True)
-os.makedirs(OUT_FIG, exist_ok=True)
+os.makedirs(os.path.dirname(CONFIG["data"]["rq1_country_summary_heatmap"]), exist_ok=True)
 
 # -----------------------------
 # Load files
@@ -60,8 +56,8 @@ summary = (
       .reset_index()
 )
 
-summary.to_csv(OUT_DATA, index=False)
-print(f"✓ Saved RQ1 country summary → {OUT_DATA}")
+summary.to_csv(CONFIG["data"]["rq1_country_summary"], index=False)
+print(f"Saved RQ1 country summary {OUT_DATA}")
 
 # -----------------------------
 # Encode categories for heatmap
@@ -87,7 +83,7 @@ sns.heatmap(
         ["dominant_affect", "role_assumption", "policy_frame"]
     ],
     fmt="",
-    cmap= blue_cmap,
+    cmap=blue_cmap,
     cbar=False,
     linewidths=0.5
 )
@@ -96,5 +92,5 @@ plt.title("Country-Level Framing Summary")
 plt.ylabel("Country")
 plt.xlabel("Framing Dimension")
 plt.tight_layout()
-plt.savefig(f"{OUT_FIG}/rq1_country_summary_heatmap.png", dpi=300)
-plt.show()
+plt.savefig(CONFIG["data"]["rq1_country_summary_heatmap"], dpi=300)
+plt.close()

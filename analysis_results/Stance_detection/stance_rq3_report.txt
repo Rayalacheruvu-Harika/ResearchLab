@@ -1,0 +1,185 @@
+
+================================================================================
+RQ3: POLICY STANCE DETECTION ANALYSIS REPORT
+================================================================================
+
+RESEARCH QUESTION:
+What is the stance of university AI policies regarding usage restrictiveness?
+(Analysis of extremes: from most restrictive to most permissive)
+
+METHODOLOGY:
+1. Stance scoring using lexicon-based approach
+2. Score range: -1.0 (most permissive) to +1.0 (most restrictive)
+3. Document-level calculation aggregated to university level
+
+DATASET:
+- Total documents analyzed: 45
+- Total universities: 45
+- Countries represented: 5
+
+================================================================================
+KEY FINDINGS
+================================================================================
+
+OVERALL STANCE STATISTICS:
+- Mean stance score: 0.117
+- Median stance score: 0.182
+- Std deviation: 0.377
+- Range: [-0.667, 0.889]
+
+STANCE DISTRIBUTION:
+stance_category
+Moderately Restrictive    13
+Balanced                  12
+Moderately Permissive     11
+Highly Permissive          5
+Highly Restrictive         4
+
+BY COUNTRY:
+                 mean    min    max  count
+country                                   
+Australia       0.106 -0.286  0.547     10
+Canada          0.085 -0.667  0.423     10
+Germany         0.176 -0.500  0.889      7
+United Kingdom  0.028 -0.500  0.696     10
+United States   0.232 -0.296  0.750      8
+
+================================================================================
+TOP 5 MOST RESTRICTIVE UNIVERSITIES
+================================================================================
+
+
+1. GERMANY
+   - Stance Score: +0.889 (Highly Restrictive)
+   - Number of Policies: 1
+   - Dominant Tone: risk-awareness
+   - Interpretation: University has highly restrictive AI policies
+                     with strong prohibitive language and severe consequences
+
+
+2. UNITED STATES
+   - Stance Score: +0.750 (Highly Restrictive)
+   - Number of Policies: 1
+   - Dominant Tone: allowed
+   - Interpretation: University has highly restrictive AI policies
+                     with strong prohibitive language and severe consequences
+
+
+3. UNITED KINGDOM
+   - Stance Score: +0.696 (Highly Restrictive)
+   - Number of Policies: 1
+   - Dominant Tone: allowed-with-conditions
+   - Interpretation: University has highly restrictive AI policies
+                     with strong prohibitive language and severe consequences
+
+
+4. UNITED KINGDOM
+   - Stance Score: +0.630 (Highly Restrictive)
+   - Number of Policies: 1
+   - Dominant Tone: risk-awareness
+   - Interpretation: University has highly restrictive AI policies
+                     with strong prohibitive language and severe consequences
+
+
+5. AUSTRALIA
+   - Stance Score: +0.547 (Moderately Restrictive)
+   - Number of Policies: 1
+   - Dominant Tone: allowed-with-conditions
+   - Interpretation: University has highly restrictive AI policies
+                     with strong prohibitive language and severe consequences
+
+
+================================================================================
+TOP 5 MOST PERMISSIVE UNIVERSITIES
+================================================================================
+
+
+1. CANADA
+   - Stance Score: -0.667 (Highly Permissive)
+   - Number of Policies: 1
+   - Dominant Tone: neutral
+   - Interpretation: University has permissive AI policies
+                     with encouragement and support language
+
+
+2. UNITED KINGDOM
+   - Stance Score: -0.500 (Highly Permissive)
+   - Number of Policies: 1
+   - Dominant Tone: risk-awareness
+   - Interpretation: University has permissive AI policies
+                     with encouragement and support language
+
+
+3. GERMANY
+   - Stance Score: -0.500 (Highly Permissive)
+   - Number of Policies: 1
+   - Dominant Tone: risk-awareness
+   - Interpretation: University has permissive AI policies
+                     with encouragement and support language
+
+
+4. UNITED KINGDOM
+   - Stance Score: -0.475 (Highly Permissive)
+   - Number of Policies: 1
+   - Dominant Tone: allowed-with-conditions
+   - Interpretation: University has permissive AI policies
+                     with encouragement and support language
+
+
+5. UNITED KINGDOM
+   - Stance Score: -0.441 (Highly Permissive)
+   - Number of Policies: 1
+   - Dominant Tone: allowed
+   - Interpretation: University has permissive AI policies
+                     with encouragement and support language
+
+
+================================================================================
+STANCE CATEGORIES EXPLAINED
+================================================================================
+
+Highly Restrictive (Score ≥ +0.6):
+- Policies contain strong prohibition language
+- Emphasis on risks, violations, severe consequences
+- Examples: "AI use is banned", "disciplinary action"
+
+Moderately Restrictive (Score ≥ +0.3):
+- Policies limit AI use with conditions
+- Includes cautions and warnings
+- Examples: "limited use allowed", "with restrictions"
+
+Balanced (Score -0.3 to +0.3):
+- Policies show mixed signals
+- Both restrictions and permissions present
+- Examples: "use responsibly", "with guidance"
+
+Moderately Permissive (Score ≥ -0.3):
+- Policies allow AI use with minimal conditions
+- Some support and guidance
+- Examples: "permitted use", "with supervision"
+
+Highly Permissive (Score < -0.3):
+- Policies encourage AI use
+- Emphasis on support and innovation
+- Examples: "encouraged", "fully supported"
+
+================================================================================
+IMPLICATIONS FOR RQ3
+================================================================================
+
+This analysis reveals:
+1. Significant variation in policy stance across universities
+2. Some institutions are restrictive (mean score: +0.702)
+3. Others are permissive (mean score: -0.516)
+4. The stance is NOT random but relates to:
+   - Institutional governance models (RQ1: role assumptions)
+   - Affective framing (RQ1: threat vs opportunity orientation)
+   - Policy tone (from policy_tone_distilbert.py)
+
+RECOMMENDATIONS:
+- Universities with highly restrictive stance may need to reconsider
+  their stance to support beneficial AI applications
+- Universities should clearly communicate their AI stance in policy documents
+- Consider hybrid approaches balancing innovation with responsibility
+
+================================================================================

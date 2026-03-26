@@ -1,0 +1,12 @@
+Perplexity (LDA Model)
+==================================================
+
+Perplexity Score: -7.0856
+
+Interpretation:
+  - Measures negative log-likelihood on test set
+  - Lower values = better generalization
+  - Typical range: -10 to -5
+  - Your score: -7.0856
+
+Note: BERT models don't use perplexity metric

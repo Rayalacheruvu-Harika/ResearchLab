@@ -1,207 +1,194 @@
-# LLM Policy Analysis – Research Lab
+# ResearchLab - Evaluating Cross-Country University Policies on the Usage of LLMs in Higher Education.
 
-A comprehensive research pipeline for analyzing Generative AI and Large Language Model (LLM) policy guidelines across universities in multiple countries using advanced NLP and statistical techniques.
+This project analyzes university LLM policy documents across five countries using automated extraction, text preprocessing, topic modeling, semantic framing analysis, and multi-method sentiment and stance detection.
 
----
+## Required Initial Files
 
-## 📋 Table of Contents
+These files must exist before running the pipeline:
 
-- Project Overview
-- Research Questions
-- Methodology
-- System Requirements
-- Setup & Installation
-- Pipeline Architecture
-- How to Run the Project
-- Results & Evaluation
-- Output Files
-- Repository Structure
-- Research Context & Citation
-- Contributing
-- License & Contact
+| File                       | Location |
+| -------------------------- | -------- |
+| urls.txt                   | data/    |
+| university_list.csv        | manual/  |
+| sentiment_manual.xlsx      | manual/  |
+| annotations.csv            | manual/  |
+| raw_genai_data.csv         | data/    |
+| manual_corrected_data.xlsx | data/    |
 
----
-
-## 🎯 Project Overview
-
-This project investigates how universities across different countries frame, govern, and regulate the use of Generative AI and LLMs. Using topic modeling, policy framing analysis, and statistical evaluation, the study identifies similarities and differences in institutional AI governance.
-
-**Scope & Scale**
-
-- 45 universities
-- 5 countries: Germany, UK, USA, Canada, Australia
-- 1,200+ policy documents
-- Dual topic modeling: LDA (6 topics) and BERTopic (7 topics)
-- 13 quantitative evaluation metrics
-
-
----
-
-## 🛠️ Methodology
-
-### Data Collection
-
-- Web scraping using **Selenium** for dynamic pages
-- HTML extraction with **Trafilatura**
-- PDF extraction via **PDFMiner**
-- Manual correction for protected or missing pages
-
-### Data Processing
-
-- Text cleaning and normalization
-- Tokenization and lemmatization
-- Negation handling and AI-term detection
-
-### Analysis Techniques
-
-| Technique          | Purpose                      | Output                   |
-| ------------------ | ---------------------------- | ------------------------ |
-| LDA                | Probabilistic topic modeling | 6 interpretable topics   |
-| BERTopic           | Transformer-based clustering | 7 semantic topics        |
-| Chi-Square Test    | Country × Topic association | Statistical significance |
-| Coherence (c_v)    | Topic quality                | 0–1 scale               |
-| Clustering Metrics | Topic separation & quality   | Silhouette, DB Index     |
-| Policy Framing     | Rhetorical analysis          | Governance frames        |
-
----
-
-## 💻 System Requirements
-
-- Python **3.9 – 3.11** (recommended: 3.10)
-- OS: Windows, macOS, or Linux
-- Minimum 8 GB RAM (16 GB recommended for BERTopic)
-- Internet access (for scraping stage only)
-
----
-
-## 📦 Setup & Installation
-
-### 1. Clone the Repository
+## Setup
 
 ```bash
-git clone https://github.com/Rayalacheruvu-Harika/ResearchLab.git
+# 1. Clone the repository
+git clone -b dash https://github.com/Rayalacheruvu-Harika/ResearchLab.git
+
 cd ResearchLab
-git checkout dash
-```
 
-### 2. Create and Activate a Virtual Environment
 
-```bash
-# Windows
+# 2. Create virtual environment
 python -m venv .venv
-.venv\Scripts\activate
 
-# macOS / Linux
-python3 -m venv .venv
-source .venv/bin/activate
-```
+.venv\Scripts\activate          # Windows
 
-### 3. Install Dependencies
-
-```bash
+# 3. Install dependencies
 pip install -r requirements.txt
+
+#4 Install project configuration
+pip install -e .
+
+# 5. Download NLP models and resources
+python -m spacy download en_core_web_sm
+
+python -c "import nltk; nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('vader_lexicon')"
 ```
 
-Key packages include:
+**Python version:** 3.12 (Windows)
 
-- `gensim` – LDA topic modeling
-- `bertopic` – Transformer-based topic modeling
-- `scikit-learn` – Evaluation metrics
-- `selenium`, `trafilatura`, `pdfminer` – Data extraction
-- `pandas`, `numpy`, `matplotlib` – Data handling & visualization
+**Config system:** All scripts read paths from config/config.yaml via from config import CONFIG.
 
-### 4. Configure Paths
+## Execution Pipeline
 
-Edit `config/config.yaml` to match your local directory structure:
+Run all commands from the project root directory.
 
-```yaml
-data:
-  clean: "data/final_clean_dataset.csv"
-  lda_results: "data/lda_topic_model_results.csv"
-  bert_results: "data/bert_topic_model_results.csv"
+### Data Collection & Preprocessing
 
-paths:
-  models: "models/bertopic_model"
-  analysis: "analysis_results"
+| Step | Script                          | Command                                                                                 |
+| ---- | ------------------------------- | --------------------------------------------------------------------------------------- |
+| 0    | Manual Step                     | Prepare data/urls.txt and `manual/university_list.csv`                              |
+| 1    | `extraction/extract_data.py`  | `python -m extraction.extract_data`                                                   |
+| 2    | Manual Step                     | Correct extraction errors → save `raw_genai_data.csv`+`manual_corrected_data.xlsx` |
+| 3    | `manual/merge_manual_data.py` | `python -m manual.merge_manual_data`                                                  |
+| 4    | `cleaning/clean_data.py`      | `python -m cleaning.clean_data`                                                       |
+
+### Topic Modeling
+
+| Step | Script                                       | Command                                             |
+| ---- | -------------------------------------------- | --------------------------------------------------- |
+| 5    | `topic_modeling/train_lda_model.py`        | `python -m topic_modeling.train_lda_model`        |
+| 6    | `topic_modeling/lda_uni_topic_modeling.py` | `python -m topic_modeling.lda_uni_topic_modeling` |
+| 7    | `topic_modeling/bert_topic_modeling.py`    | `python -m topic_modeling.bert_topic_modeling`    |
+| 8    | `topic_modeling/bert_topic_labeling.py`    | `python -m topic_modeling.bert_topic_labeling`    |
+
+### Topic Profiling & Distribution
+
+| Step | Script                                     | Command                                           |
+| ---- | ------------------------------------------ | ------------------------------------------------- |
+| 9.1  | `analysis/uni_multi_topic_profiling.py`  | `python -m analysis.uni_multi_topic_profiling`  |
+| 9.2  | `analysis/country_topic_profiles.py`     | `python -m analysis.country_topic_profiles`     |
+| 10.1 | `analysis/country_distribution.py`       | `python -m analysis.country_distribution`       |
+| 10.2 | `analysis/country_topic_analysis_all.py` | `python -m analysis.country_topic_analysis_all` |
+| 10.3 | `analysis/topic_cooccurence.py`          | `python -m analysis.topic_cooccurence`          |
+
+### Framing & Semantic Analysis
+
+| Step | Script                                       | Command                                             |
+| ---- | -------------------------------------------- | --------------------------------------------------- |
+| 11.1 | `framing_analysis/framing.py`              | `python -m framing_analysis.framing`              |
+| 11.2 | `framing_analysis/framing_interpret.py`    | `python -m framing_analysis.framing_interpret`    |
+| 11.3 | `analysis/affective_language_analysis.py`  | `python -m analysis.affective_language_analysis`  |
+| 11.4 | `analysis/institutional_roles_analysis.py` | `python -m analysis.institutional_roles_analysis` |
+| 11.5 | `analysis/curriculum_framing_analysis.py`  | `python -m analysis.curriculum_framing_analysis`  |
+| 11.6 | `analysis/country_framing_summary.py`      | `python -m analysis.country_framing_summary`      |
+| 11.7 | `analysis/word_cloud.py`                   | `python -m analysis.word_cloud`                   |
+
+### Model Evaluation
+
+| Step | Script                         | Command                               |
+| ---- | ------------------------------ | ------------------------------------- |
+| 12   | `analysis/run_evaluation.py` | `python -m analysis.run_evaluation` |
+
+### Sentiment, Stance & Tone
+
+| Step | Script                                               | Command                                                     |
+| ---- | ---------------------------------------------------- | ----------------------------------------------------------- |
+| 13.1 | `sentiment_stance/policy_tone_distilbert.py`       | `python -m sentiment_stance.policy_tone_distilbert`       |
+| 13.2 | `sentiment_stance/stance_detection.py`             | `python -m sentiment_stance.stance_detection`             |
+| 13.3 | `sentiment_stance/policy_stance_analysis.py`       | `python -m sentiment_stance.policy_stance_analysis`       |
+| 13.4 | `sentiment_stance/policy_sentiment_analysis.py`    | `python -m sentiment_stance.policy_sentiment_analysis`    |
+| 13.5 | `sentiment_stance/sentiment_stance_analysis.py`    | `python -m sentiment_stance.sentiment_stance_analysis`    |
+| 13.6 | `sentiment_stance/roberta_sentiment.py`            | `python -m sentiment_stance.roberta_sentiment`            |
+| 14.1 | Manual Step                                          | Annotate `manual/sentiment_manual.xlsx`                   |
+| 14.2 | `sentiment_stance/manual_tone_frequency.py`        | `python -m sentiment_stance.manual_tone_frequency`        |
+| 14.3 | `sentiment_stance/manual_tone_groups.py`           | `python -m sentiment_stance.manual_tone_groups`           |
+| 15   | `sentiment_stance/manual_annotation_evaluation.py` | `python -m sentiment_stance.manual_annotation_evaluation` |
+
+## Outputs
+
+* `data/` — stores all intermediate and final datasets (cleaned text, topic assignments, stance scores)
+* `models/` — stores trained LDA model (models/lda/) and BERTopic model (models/bertopic_model/)
+* `analysis_results/ `— stores all charts, tables, reports, and evaluation outputs organized by analysis type
+
+## Project Structure
+
+```ResearchLab/
+├── config/
+│   ├── __init__.py
+│   └── config.yaml
+├── extraction/
+│   └── extract_data.py
+├── manual/
+│   ├── merge_manual_data.py
+│   ├── university_list.csv
+│   ├── sentiment_manual.xlsx
+│   └── annotations.csv
+├── cleaning/
+│   └── clean_data.py
+├── topic_modeling/
+│   ├── train_lda_model.py
+│   ├── lda_uni_topic_modeling.py
+│   ├── bert_topic_modeling.py
+│   └── bert_topic_labeling.py
+├── analysis/
+│   ├── uni_multi_topic_profiling.py
+│   ├── country_topic_profiles.py
+│   ├── country_distribution.py
+│   ├── country_topic_analysis_all.py
+│   ├── topic_cooccurence.py
+│   ├── affective_language_analysis.py
+│   ├── institutional_roles_analysis.py
+│   ├── curriculum_framing_analysis.py
+│   ├── country_framing_summary.py
+│   ├── word_cloud.py
+│   ├── evaluation_metrics.py
+│   └── run_evaluation.py
+├── framing_analysis/
+│   ├── framing.py
+│   └── framing_interpret.py
+├── sentiment_stance/
+│   ├── policy_tone_distilbert.py
+│   ├── stance_detection.py
+│   ├── policy_stance_analysis.py
+│   ├── policy_sentiment_analysis.py
+│   ├── sentiment_stance_analysis.py
+│   ├── roberta_sentiment.py
+│   ├── manual_tone_frequency.py
+│   ├── manual_tone_groups.py
+│   └── manual_annotation_evaluation.py
+├── data/
+├── models/
+├── analysis_results/
+│   ├── country/
+│   ├── framing/
+│   ├── multi_topic_profiling/
+│   ├── rq1/ + figures/
+│   ├── rq3/ + figures/
+│   ├── sentiment_analysis/ + figures/
+│   ├── Stance_detection/ + figures/
+│   ├── manual_sentiment/
+│   └── topic_cooccurrence/
+├── requirements.txt
+└── README.md
 ```
 
----
+## Help
 
-## 🔄 Pipeline Architecture
+* If you get `ModuleNotFoundError: No module named 'config'`, ensure the `.pth` file is set up correctly
 
 ```
-Data Extraction (HTML/PDF)
-        ↓
-Manual Verification
-        ↓
-Text Cleaning & Preprocessing
-        ↓
-   ┌───────────┬
-   ↓           ↓   
-  LDA         BERTopic   
-   ↓           ↓   
-Evaluation Metrics (13 total)
-        ↓
-Policy Framing Analysis
-        ↓
-Results, Visualizations & Paper
+echo %CD% > .venv\Lib\site-packages\researchlab.pth
 ```
 
----
+* If config changes are not reflected after editing `config.yaml`, clear Python cache
 
-## 🚀 How to Run the Project
-
-### Run the Full Pipeline (Recommended)
-
-Execute the following commands in order:
-
-```bash
-python extraction/extract_data.py
-python manual/merge_manual_data.py
-python cleaning/clean_data.py
-python lda_analysis/lda_uni_topic_modeling.py
-python bert_analysis/bert_topic_modeling.py
-python bert_analysis/bert_topic_labeling.py
-python framing_analysis/framing.py
-python framing_analysis/framing_interpret.py
-python run_evaluation.py
 ```
-
----
-
-## 📊 Results & Evaluation Summary
-
-### LDA (6 Topics)
-
-- Chi-Square: **p = 0.001** (significant country differences)
-- Coherence: 0.341
-- Perplexity: -7.08
-- Topic Diversity: 18.23
-
-### BERTopic (7 Topics)
-
-- Chi-Square: **p = 0.135** (not significant)
-- Coherence: 0.457 (34% higher than LDA)
-- Topic Diversity: 22.38
-- Davies–Bouldin Index: 2.91 (better separation)
-
-### Country-Level Consistency (Cosine Similarity)
-
-- UK: Highest consistency (0.552)
-- Australia: Most diverse policies (0.368)
-
----
-
-## 📁 Output Files
-
-All quantitative results are stored in `analysis_results/` as `.csv`, `.txt`, and `.json` files, including:
-
-- Chi-square statistics
-- Topic coherence scores
-- Clustering quality metrics
-- Consolidated evaluation reports
-
-Trained models are saved under:
-
-- `lda_analysis/lda_model.gensim`
-- `models/bertopic_model/`
+Get-ChildItem -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
+```

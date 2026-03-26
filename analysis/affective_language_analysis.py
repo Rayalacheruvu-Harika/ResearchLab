@@ -2,23 +2,21 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+from config import CONFIG
 
-# -----------------------------
-# Paths (FIXED)
-# -----------------------------
-INPUT = "data/final_clean_dataset.csv"
-OUT_DATA = "analysis_results/rq1/affective_language_university.csv"
-OUT_FIG = "analysis_results/rq1/figures"
-
-os.makedirs(os.path.dirname(OUT_DATA), exist_ok=True)
-os.makedirs(OUT_FIG, exist_ok=True)
-
-# Color palette for affective tones 
 AFFECTIVE_PALETTE = {
     "Cautionary":           "#2E86AB",
     "Opportunity-Oriented": "#44BBA4",
     "Threat-Oriented":      "#1E3A5F",
 }
+
+
+INPUT = CONFIG["data"]["clean"]
+OUT_DATA = CONFIG["data"]["affective_language_university"]
+OUT_FIG = "analysis_results/rq1/figures"
+
+os.makedirs(os.path.dirname(OUT_DATA), exist_ok=True)
+os.makedirs(OUT_FIG, exist_ok=True)
 
 # -----------------------------
 # Affective Lexicon
@@ -42,9 +40,6 @@ def score_affect(text):
     text = str(text).lower()
     return {k: sum(text.count(w) for w in v) for k, v in AFFECTIVE_LEXICON.items()}
 
-# -----------------------------
-# Load data
-# -----------------------------
 df = pd.read_csv(INPUT)
 
 # -----------------------------
@@ -67,8 +62,8 @@ uni_affect["dominant_affect"] = uni_affect[
 ].idxmax(axis=1)
 
 # Save university-level output
-uni_affect.to_csv(OUT_DATA, index=False)
-print(f"✓ Saved university-level affective analysis → {OUT_DATA}")
+uni_affect.to_csv(CONFIG["data"]["affective_language_university"], index=False)
+print(f"Saved: {CONFIG['data']['affective_language_university']}")
 
 # ============================================================
 # VISUALIZATION 1: Overall affective framing (University level)
@@ -78,14 +73,17 @@ sns.countplot(
     data=uni_affect,
     y="dominant_affect",
     order=uni_affect["dominant_affect"].value_counts().index,
-    palette=AFFECTIVE_PALETTE 
+    hue="dominant_affect",
+    palette=AFFECTIVE_PALETTE,
+    legend=False
 )
 plt.title("Overall Affective Framing of LLM Policies (University Level)")
 plt.xlabel("Number of Universities")
 plt.ylabel("Affective Tone")
 plt.tight_layout()
-plt.savefig(f"{OUT_FIG}/affective_overall_university.png", dpi=300)
-plt.show()
+plt.savefig(CONFIG["data"]["affective_overall_university"], dpi=300)
+plt.close()
+
 
 # ============================================================
 # VISUALIZATION 2: Dominant affect by country (University level)
@@ -112,8 +110,9 @@ plt.title("Dominant Affective Tone by Country (University Level)")
 plt.xlabel("Country")
 plt.ylabel("Number of Universities")
 plt.tight_layout()
-plt.savefig(f"{OUT_FIG}/affective_by_country_university.png", dpi=300)
-plt.show()
+plt.savefig(CONFIG["data"]["affective_by_country_university"], dpi=300)
+plt.close()
+
 # ============================================================
 # 🔹 NEW VISUAL 3: STACKED BAR (Country × Affect)
 # ============================================================
@@ -129,12 +128,11 @@ stacked.plot(
     figsize=(10, 6),
     color=[AFFECTIVE_PALETTE.get(col, "#999999") for col in stacked.columns]
 )
-
 plt.title("Distribution of Affective Tone Across Universities by Country")
 plt.xlabel("Country")
 plt.ylabel("Number of Universities")
 plt.legend(title="Affective Tone")
 plt.xticks(rotation=0)
 plt.tight_layout()
-plt.savefig(f"{OUT_FIG}/affective_stacked_university.png", dpi=300)
-plt.show()
+plt.savefig(CONFIG["data"]["affective_stacked_university"], dpi=300)
+plt.close()

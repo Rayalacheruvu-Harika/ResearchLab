@@ -1,13 +1,16 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
+from pathlib import Path
+from config import CONFIG
 
 # -------------------------
 # CONFIG
 # -------------------------
-INPUT_CSV = "../data/final_clean_dataset.csv"
+INPUT_CSV = CONFIG["data"]["clean"]
 TEXT_COL = "clean_text"
-OUTPUT_IMG = "../analysis_results/overall_policy_wordcloud.png"
+OUTPUT_IMG = CONFIG["data"]["wordcloud"]
+
 
 # -------------------------
 # Load data
@@ -47,7 +50,10 @@ plt.figure(figsize=(14, 7))
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
 plt.tight_layout()
+# Ensure output directory exists
+output_dir = Path(OUTPUT_IMG).parent
+output_dir.mkdir(parents=True, exist_ok=True)
+
 plt.savefig(OUTPUT_IMG, dpi=300)
 plt.show()
-
-print(f"✅ Word cloud saved to: {OUTPUT_IMG}")
+print(f"Word cloud saved to: {OUTPUT_IMG}")

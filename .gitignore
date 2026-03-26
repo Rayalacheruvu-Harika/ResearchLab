@@ -2,15 +2,9 @@
 __pycache__/
 *.pyc
 
-# Generated outputs
-data/*.csv
-data/*.xlsx
-data/*.html
-data/*.txt
-analysis_results/
-models/
-logs/
-topic_cooccurence/
+# Virtual environments
+.venv/
+.venv311/
 
 # IDE / OS
 .vscode/
@@ -19,5 +13,4 @@ topic_cooccurence/
 
 # Secrets
 .env
-.venv311/
-.venv/
+

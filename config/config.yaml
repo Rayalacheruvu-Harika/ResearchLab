@@ -3,6 +3,10 @@
 
 # Data paths
 data:
+  urls: "data/urls.txt"
+  raw_extracted: "data/raw_extracted_data.xlsx"
+  raw_genai: "data/raw_genai_data.csv"
+  manual_corrected: "data/manual_corrected_data.xlsx"
   merged: "data/merged_dataset.csv"
   clean: "data/final_clean_dataset.csv"
   bert_results: "data/bert_topic_model_results.csv"
@@ -13,8 +17,64 @@ data:
   lda_topics: "data/lda_topics.txt"
   lda_viz: "data/lda_visualization.html"
   bertopic_model: "models/bertopic_model/bertopic_model.pkl"
-  lda_model: "lda_analysis/lda_model.gensim"
-
+  lda_model: "models/lda/lda_model.gensim"
+  wordcloud: "analysis_results/overall_policy_wordcloud.png"
+  uni_policy_topic_mapping: "data/university_policy_topic_mapping.csv"
+  uni_topic_statistics: "data/university_topic_statistics.csv"
+  uni_topic_matrix: "data/university_topic_matrix.csv"
+  uni_multi_topic_profiles: "analysis_results/multi_topic_profiling/university_multi_topic_profiles.csv"
+  country_top_topics: "analysis_results/multi_topic_profiling/country_top_topics.csv"
+  country_topic_profile_table: "analysis_results/country/country_topic_profile_table.csv"
+  country_topic_heatmap_data: "analysis_results/country/country_topic_heatmap_data.csv"
+  heatmap_topic_importance: "analysis_results/country/heatmap_topic_importance.png"
+  topic_cooccurrence_network_country: "analysis_results/country/topic_cooccurrence_network.png"
+  primary_topic_bar_chart: "analysis_results/country/primary_topic_bar_chart.png"
+  topic_cooccurrence_pairs: "analysis_results/topic_cooccurence/topic_cooccurrence_pairs.csv"
+  topic_cooccurrence_matrix: "analysis_results/topic_cooccurence/topic_cooccurrence_matrix.csv"
+  topic_cooccurrence_heatmap: "analysis_results/topic_cooccurence/topic_cooccurrence_heatmap.png"
+  topic_cooccurrence_network: "analysis_results/topic_cooccurence/topic_cooccurrence_network.png"
+  university_framing_profiles: "analysis_results/framing/university_framing_profiles.csv"
+  overall_frame_distribution: "analysis_results/framing/overall_frame_distribution.png"
+  dominant_frame_by_country: "analysis_results/framing/dominant_frame_by_country.png"
+  affective_language_university: "analysis_results/rq1/affective_language_university.csv"
+  affective_overall_university: "analysis_results/rq1/figures/affective_overall_university.png"
+  affective_by_country_university: "analysis_results/rq1/figures/affective_by_country_university.png"
+  affective_stacked_university: "analysis_results/rq1/figures/affective_stacked_university.png"
+  institutional_roles_university: "analysis_results/rq1/institutional_roles_university.csv"
+  institutional_roles_by_country: "analysis_results/rq1/figures/institutional_roles_by_country_grouped.png"
+  policy_frames: "analysis_results/rq1/policy_frames.csv"
+  policy_frames_figure: "analysis_results/rq1/figures/policy_frames.png"
+  rq1_country_summary: "analysis_results/rq1/rq1_country_summary.csv"
+  rq1_country_summary_heatmap: "analysis_results/rq1/figures/rq1_country_summary_heatmap.png"
+  policy_tone_distilbert: "analysis_results/sentiment_analysis/policy_tone_distilbert.csv"
+  policy_tone_overall_bar: "analysis_results/sentiment_analysis/figures/policy_tone_overall_bar.png"
+  policy_tone_stacked_by_country: "analysis_results/sentiment_analysis/figures/policy_tone_stacked_by_country.png"
+  stance_scores_document: "analysis_results/Stance_detection/stance_scores_document_level.csv"
+  stance_scores_university: "analysis_results/Stance_detection/stance_scores_university_level.csv"
+  stance_extremes_summary: "analysis_results/Stance_detection/stance_extremes_summary.csv"
+  stance_examples_quotes: "analysis_results/Stance_detection/stance_examples_with_quotes.csv"
+  stance_rq3_report: "analysis_results/Stance_detection/stance_rq3_report.txt"
+  stance_scatter: "analysis_results/Stance_detection/figures/stance_scatter_universities.png"
+  stance_extremes_bar: "analysis_results/Stance_detection/figures/stance_extremes_bar_chart.png"
+  stance_country_dist: "analysis_results/Stance_detection/figures/stance_distribution_by_country.png"
+  stance_examples_fig: "analysis_results/Stance_detection/figures/stance_university_examples.png"
+  university_list: "manual/university_list.csv"
+  clean_with_stance: "data/final_clean_dataset_with_stance.csv"
+  policy_sentiment_university: "analysis_results/rq3/policy_sentiment_university.csv"
+  policy_sentiment_by_country: "analysis_results/rq3/figures/policy_sentiment_by_country_percentage.png"
+  policy_sentiment_overall: "analysis_results/rq3/figures/policy_sentiment_overall_percentage.png"
+  clean_sentiment_stance: "data/final_clean_dataset_sentiment_stance.csv"
+  sentiment_results: "analysis_results/sentiment_analysis/sentiment_results.csv"
+  sentiment_summary: "analysis_results/sentiment_analysis/sentiment_summary.csv"
+  annotations: "manual/annotations.csv"
+  sentiment_manual: "manual/sentiment_manual.xlsx"
+  top10_manual_labels: "analysis_results/Manual_sentiment/top10_manual_labels.csv"
+  top10_manual_labels_fig: "analysis_results/Manual_sentiment/top10_manual_labels.png"
+  manual_labels_by_country: "analysis_results/Manual_sentiment/manual_labels_by_country_top10_each.png"
+  overall_tone_distribution: "analysis_results/Manual_sentiment/overall_tone_distribution_university_final.png"
+  country_tone_distribution: "analysis_results/Manual_sentiment/country_tone_distribution_university_final.png"
+  policy_frames_lollipop: "analysis_results/rq1/figures/policy_frames_stacked_lollipop.png"
+  institutional_roles_small_multiples: "analysis_results/rq1/figures/institutional_roles_small_multiples_legend.png"
 
 
 # Directory paths
@@ -22,7 +82,9 @@ paths:
   models: "models/bertopic_model"
   bertopic_model: "models/bertopic_model/bertopic_model.pkl"
   analysis: "analysis_results"
-  logs: "logs"
+  country_topic_analysis: "analysis/country"
+  topic_cooccurence: "analysis_results/topic_cooccurence"
+
 
 # Preprocessing settings
 preprocessing:
@@ -56,11 +118,6 @@ preprocessing:
     - "nowhere"
     - "no one"
 
-# Logging configuration
-logging:
-  level: "INFO"
-  file: "logs/research_lab.log"
-  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
 # LDA settings
 lda:
@@ -77,7 +134,7 @@ bert:
 # Evaluation Metrics Configuration
 evaluation_metrics:
   enabled: true
-  
+  comparison_report: 'analysis_results/lda_vs_bert_comparison.json'
   # ====== LDA OUTPUTS (7 METRICS) ======
   chi_square_lda_output: 'analysis_results/lda_chi_square_results.txt'
   coherence_lda_output: 'analysis_results/lda_coherence_scores.csv'

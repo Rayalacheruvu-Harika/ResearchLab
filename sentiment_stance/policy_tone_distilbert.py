@@ -3,40 +3,25 @@ import pandas as pd
 from transformers import pipeline
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+from config import CONFIG
 
 POLICY_TONE_PALETTE = {
-    "allowed-with-conditions": "#A8DADC",  
-    "allowed":                 "#2E86AB",  
-    "neutral":                 "#44BBA4",  
-    "risk-awareness":          "#1E3A5F",  
-    "restrictive":             "#48CAE4",  
+    "allowed-with-conditions": "#A8DADC",
+    "allowed":                 "#2E86AB",
+    "neutral":                 "#44BBA4",
+    "risk-awareness":          "#1E3A5F",
+    "restrictive":             "#48CAE4",
 }
 
-# =====================================================
-# PATHS (FIXED)
-# =====================================================
-DATA_PATH = "data/final_clean_dataset.csv"
+DATA_PATH = CONFIG["data"]["clean"]
+OUTPUT_FILE = CONFIG["data"]["policy_tone_distilbert"]
+BAR_FIG_PATH = CONFIG["data"]["policy_tone_overall_bar"]
+STACKED_FIG_PATH = CONFIG["data"]["policy_tone_stacked_by_country"]
 
-OUTPUT_DIR = "analysis_results/sentiment_analysis"
-OUTPUT_FILE = os.path.join(
-    OUTPUT_DIR, "policy_tone_distilbert.csv"
-)
+os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+os.makedirs(os.path.dirname(BAR_FIG_PATH), exist_ok=True)
 
-FIG_DIR = os.path.join(OUTPUT_DIR, "figures")
-STACKED_FIG_PATH = os.path.join(
-    FIG_DIR, "policy_tone_stacked_by_country.png"
-)
-BAR_FIG_PATH = os.path.join(
-    FIG_DIR, "policy_tone_overall_bar.png"
-)
 
-# Create directories safely
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-os.makedirs(FIG_DIR, exist_ok=True)
-
-# =====================================================
-# LOAD DATA
-# =====================================================
 df = pd.read_csv(DATA_PATH)
 
 # =====================================================
@@ -78,7 +63,7 @@ df["policy_tone_label"] = tone_labels
 # SAVE CSV
 # =====================================================
 df.to_csv(OUTPUT_FILE, index=False)
-print("✓ Saved CSV to:", os.path.abspath(OUTPUT_FILE))
+print(f"Saved: {OUTPUT_FILE}")
 
 # =====================================================
 # NORMAL BAR CHART (OVERALL POLICY TONE)
@@ -91,7 +76,8 @@ overall_counts = (
 
 overall_counts.plot(
     kind="bar",
-    figsize=(8, 5)
+    figsize=(8, 5),
+    color=[POLICY_TONE_PALETTE.get(l, "#A0AEC0") for l in overall_counts.index]
 )
 
 plt.title("Overall Policy Tone Distribution")
@@ -101,9 +87,9 @@ plt.xticks(rotation=0)
 plt.tight_layout()
 
 plt.savefig(BAR_FIG_PATH, dpi=300)
-plt.show()
+plt.close() 
 
-print("✓ Overall bar chart saved to:", os.path.abspath(BAR_FIG_PATH))
+print(f"Saved: {BAR_FIG_PATH}")
 
 # =====================================================
 # STACKED BAR CHART (Country × Policy Tone)
@@ -137,6 +123,5 @@ plt.legend(
 plt.tight_layout()
 
 plt.savefig(STACKED_FIG_PATH, dpi=300)
-plt.show()
-
-print("✓ Stacked chart saved to:", os.path.abspath(STACKED_FIG_PATH))
+plt.close()
+print(f"Saved: {STACKED_FIG_PATH}")

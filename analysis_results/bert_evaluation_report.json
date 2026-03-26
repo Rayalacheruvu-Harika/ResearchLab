@@ -1,0 +1,62 @@
+{
+  "chi_square": {
+    "chi_square_statistic": 16.8489010989011,
+    "p_value": 0.15537009409284652,
+    "degrees_of_freedom": 12,
+    "interpretation": "NOT SIGNIFICANT (p\u22650.05)"
+  },
+  "coherence": {
+    "overall_score": 0.42751062688512054,
+    "per_topic_scores": [
+      0.5177083525074188,
+      0.4022322748420038,
+      0.36259125330593894
+    ],
+    "metric": "c_v (R\u00f6der et al. 2015)",
+    "interpretation": "MODERATE"
+  },
+  "topic_diversity": {
+    "overall_score": 13.84301060412421,
+    "per_topic_scores": [
+      19.53846153846154,
+      12.34351145038168,
+      9.647058823529411
+    ],
+    "interpretation": "HIGH"
+  },
+  "silhouette": {
+    "score": -1.2468684901166114e-05,
+    "interpretation": "POOR"
+  },
+  "davies_bouldin": {
+    "score": 2.963513352785934,
+    "interpretation": "NEEDS_REVIEW"
+  },
+  "cosine_similarity": {
+    "United Kingdom": {
+      "mean_similarity": 0.5516968413850822,
+      "std_similarity": 0.1268517169022349,
+      "n_documents": 10
+    },
+    "Australia": {
+      "mean_similarity": 0.3680817899873331,
+      "std_similarity": 0.16887594805329437,
+      "n_documents": 10
+    },
+    "Canada": {
+      "mean_similarity": 0.4979624472486151,
+      "std_similarity": 0.18691118061730216,
+      "n_documents": 10
+    },
+    "United States": {
+      "mean_similarity": 0.4524176086490989,
+      "std_similarity": 0.12749049657758268,
+      "n_documents": 8
+    },
+    "Germany": {
+      "mean_similarity": 0.43716224930605174,
+      "std_similarity": 0.15001746318484946,
+      "n_documents": 7
+    }
+  }
+}
